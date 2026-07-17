@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>100xdevs Career Curriculum Syllabus Dashboard</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brandnavy: '#1A365D',
+                        brandteal: '#0A5C6F',
+                        goldstar: '#D69E2E',
+                        slatecustom: '#0F172A'
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.2);
+            border-radius: 4px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Print-specific layout parameters to generate standard PDF pages */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 12mm 15mm 12mm 15mm;
+            }
+            body {
+                background: white !important;
+                color: #1a1a1a !important;
+                font-size: 10pt !important;
+            }
+            .no-print, .interactive-checkbox, #controls, #theme-toggle, .print-btn, .tab-navigation, .custom-topic-panel {
+                display: none !important;
+            }
+            .phase-content, .zone-content {
+                display: block !important;
+                max-height: none !important;
+                opacity: 1 !important;
+            }
+            .print-checkbox-indicator {
+                display: inline-block !important;
+                width: 12px;
+                height: 12px;
+                border: 1px solid #1a1a1a;
+                border-radius: 2px;
+                margin-right: 6px;
+            }
+            table {
+                width: 100% !important;
+                border-collapse: collapse !important;
+            }
+            tr {
+                page-break-inside: avoid !important;
+            }
+            h1, h2, h3, .phase-header, .zone-header {
+                page-break-after: avoid !important;
+                page-break-inside: avoid !important;
+            }
+            .card, .phase-card {
+                border: 1px solid #e2e8f0 !important;
+                box-shadow: none !important;
+                margin-bottom: 1rem !important;
+                background: transparent !important;
+                page-break-inside: avoid !important;
+            }
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 min-h-screen flex flex-col">
+
+    <!-- Sticky Floating Action bar for Web Interface -->
+    <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-4 py-3 no-print">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <span class="text-2xl">🚀</span>
+                <div>
+                    <h1 class="font-bold text-lg text-slate-900 dark:text-white leading-tight">100xdevs Professional Hub</h1>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Pristine 99-Video Course, Cloud, System Design, Applied AI & Web3 Sunday Tracks</p>
+                </div>
+            </div>
+            
+            <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto justify-end">
+                <button onclick="markCurrentSyllabusComplete()" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-lg text-xs font-semibold transition">
+                    Mark Selected Complete
+                </button>
+                <button onclick="resetCurrentSyllabusProgress()" class="px-3 py-1.5 bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900/50 hover:bg-red-100 rounded-lg text-xs font-semibold transition">
+                    Reset Selected Progress
+                </button>
+
+                <!-- Theme toggle button -->
+                <button id="theme-toggle" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:scale-105 transition-transform" title="Toggle Theme">
+                    <svg id="light-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m2.122-10.607l-.707-.707m12.728 12.728l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"></path></svg>
+                    <svg id="dark-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+
+                <!-- Trigger Print To PDF -->
+                <button onclick="window.print()" class="px-4 py-2.5 bg-brandteal hover:bg-teal-800 text-white rounded-xl font-semibold text-xs shadow-md flex items-center gap-1.5 hover:scale-105 transition duration-200">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                    Save as Printable PDF
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Unified Navigation Buttons (MERN Stack list & dedicated Whiteboard channels) -->
+    <nav class="bg-slate-100 dark:bg-slate-950 py-3 px-4 border-b border-slate-200 dark:border-slate-800 no-print tab-navigation">
+        <div class="max-w-7xl mx-auto flex flex-col gap-3">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Select Learning Syllabus Track:</span>
+            <div class="flex flex-wrap gap-2">
+                <!-- 99 Videos Main Button -->
+                <button id="nav-btn-mern" onclick="setTrackView('mern', 'all')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
+                    🚀 MERN Course (99 Videos)
+                </button>
+                
+                <!-- Web Dev Button -->
+                <button id="nav-btn-web" onclick="setTrackView('screenshot', 'web')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
+                    💻 Web Dev
+                </button>
+                
+                <!-- DevOps and Cloud Button -->
+                <button id="nav-btn-devops" onclick="setTrackView('screenshot', 'devops')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
+                    ⚙️ DevOps & Cloud
+                </button>
+                
+                <!-- DSA Button -->
+                <button id="nav-btn-dsa" onclick="setTrackView('screenshot', 'dsa')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
+                    🧠 DSA Track
+                </button>
+                
+                <!-- AI Button -->
+                <button id="nav-btn-ml" onclick="setTrackView('screenshot', 'ml')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
+                    🤖 Applied AI
+                </button>
+                
+                <!-- System Design Button -->
+                <button id="nav-btn-system_design" onclick="setTrackView('screenshot', 'system_design')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
+                    🏗️ System Design
+                </button>
+
+                <!-- Web3 Button -->
+                <button id="nav-btn-web3" onclick="setTrackView('screenshot', 'web3')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
+                    🌐 Web3 (Sunday)
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Workspace Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-1 w-full">
+        
+        <!-- Dashboard Executive Summary Cards -->
+        <section id="executive-summary" class="mb-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-gradient-to-tr from-brandnavy to-slate-800 text-white p-5 rounded-2xl shadow-xl card flex flex-col justify-between">
+                <div>
+                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-teal-400" id="metrics-syllabus-title">MERN Course Blueprint</span>
+                    <h3 class="text-3xl font-black mt-1" id="metrics-count-total">99 Lectures</h3>
+                    <p class="text-xs text-slate-300 mt-2" id="metrics-description-sub">Uncompromised sequence tracking structured across 12 targeted placement phases.</p>
+                </div>
+                <div class="mt-4 pt-3 border-t border-slate-700/30 flex justify-between items-center text-xs">
+                    <span class="text-slate-400">Rating Tier:</span>
+                    <span class="font-bold text-teal-400">System Architect Focus</span>
+                </div>
+            </div>
+            
+            <div class="bg-white dark:bg-slate-950 p-5 rounded-2xl shadow-md border border-slate-200 dark:border-slate-800 card flex flex-col justify-between">
+                <div>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Completed Syllabus Work</span>
+                    <h3 class="text-3xl font-extrabold mt-1 text-slate-900 dark:text-white" id="completed-fraction">0 / 99</h3>
+                    <div class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2 mt-3 overflow-hidden">
+                        <div id="overall-progress-bar" class="bg-brandteal h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="mt-4 text-[11px] text-slate-500 dark:text-slate-400 flex justify-between">
+                    <span>Overall Checklist Completion:</span>
+                    <span id="overall-percentage" class="font-bold text-brandteal">0%</span>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-slate-950 p-5 rounded-2xl shadow-md border border-slate-200 dark:border-slate-800 card flex flex-col justify-between">
+                <div>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Database & Scale Status</span>
+                    <h3 class="text-3xl font-extrabold mt-1 text-emerald-600 dark:text-emerald-400" id="metrics-duration">114h 51m</h3>
+                    <p class="text-xs text-slate-400 mt-2">Combined video runtime metrics with real-time checkbox status adjustment.</p>
+                </div>
+                <div class="mt-4 text-xs text-amber-500 font-semibold no-print flex items-center gap-1">
+                    <span>⭐⭐⭐⭐⭐ Junior Job Ready rating system</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Add Custom Topic Panel (Dynamic & Persistent) -->
+        <section class="mb-8 p-6 bg-white dark:bg-slate-950 rounded-2xl shadow border border-slate-200 dark:border-slate-800 no-print custom-topic-panel">
+            <div class="flex items-center gap-2.5 mb-4">
+                <span class="text-xl">➕</span>
+                <h3 class="text-base font-bold text-slate-900 dark:text-white">Add Topic to Current Active Track</h3>
+            </div>
+            
+            <form id="add-topic-form" onsubmit="handleFormSubmit(event)" class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
+                <div class="md:col-span-4">
+                    <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2" id="target-phase-label">Select Phase/Module Location</label>
+                    <select id="topic-target-module" class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-850 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brandteal">
+                        <!-- Populated programmatically -->
+                    </select>
+                </div>
+                
+                <div class="md:col-span-4">
+                    <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">Topic / Video Name</label>
+                    <input type="text" id="topic-name-input" placeholder="e.g. Advanced CI/CD Strategies" required class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-850 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brandteal">
+                </div>
+
+                <div class="md:col-span-2" id="duration-input-container">
+                    <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">Duration</label>
+                    <input type="text" id="topic-duration-input" placeholder="e.g. 1h 45m" class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-850 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brandteal">
+                </div>
+
+                <div class="md:col-span-2 flex flex-col items-start pb-2">
+                    <label class="flex items-center gap-2 cursor-pointer select-none">
+                        <input type="checkbox" id="topic-important-input" class="w-4.5 h-4.5 rounded text-brandteal focus:ring-brandteal border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 cursor-pointer transition">
+                        <span class="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide">Must Need? 🔥</span>
+                    </label>
+                </div>
+
+                <div class="md:col-span-12 flex justify-end">
+                    <button type="submit" class="px-4 py-2 bg-brandteal hover:bg-teal-800 text-white font-bold rounded-lg text-xs shadow transition-transform duration-200 hover:scale-105">
+                        Add to Syllabus
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Digital Filtering and Controls (Hidden during PDF print) -->
+        <section id="controls" class="mb-8 p-4 bg-white dark:bg-slate-950 rounded-xl shadow border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4 no-print">
+            
+            <!-- Search -->
+            <div class="relative w-full md:w-80">
+                <input type="text" id="search-bar" placeholder="Search syllabus topics..." class="w-full pl-9 pr-4 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-brandteal text-slate-800 dark:text-slate-100 placeholder-slate-400">
+                <svg class="absolute left-3 top-2.5 w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            </div>
+
+            <!-- Custom Filters and Quick Actions (Mode Dependent) -->
+            <div class="flex flex-wrap items-center gap-2 w-full md:w-auto md:justify-end" id="filters-wrapper">
+                <!-- Injected programmatically based on activeMode -->
+            </div>
+        </section>
+
+        <!-- Dynamic Workspace Content Holder -->
+        <section id="workspace-container" class="space-y-8">
+            <!-- Programmatic syllabus components mount here -->
+        </section>
+
+    </main>
+
+    <!-- Dynamic Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Complete Databases: MERN & Screenshot Multi-Zones -->
+    <script>
+        // BASE UNTOUCHED MERN DATA
+        const BASE_MERN_SYLLABUS = [
+            {
+                phaseTitle: "Phase 1: HTML, CSS, Responsive UI/UX & Tailwind",
+                phaseDuration: "5 Hours, 41 Minutes, 15 Seconds",
+                phaseObjective: "Translate static design mockups into beautiful, responsive components and modular static layouts.",
+                lectures: [
+                    { id: 1, name: "Week 0.2 - HTML basic (Tags, Attributes)", duration: "33m 47s", priority: 5, seconds: 2027 },
+                    { id: 2, name: "Week 0.3 - CSS Basic", duration: "59m 41s", priority: 5, seconds: 3581 },
+                    { id: 3, name: "8.0 | Tailwind from Cohort 1", duration: "1h 53m 11s", priority: 5, seconds: 6791 },
+                    { id: 4, name: "8.1 | Tailwind class - Cohort 2", duration: "2h 14m 36s", priority: 5, seconds: 8076 }
+                ]
+            },
+            {
+                phaseTitle: "Phase 2: JavaScript Foundations & Async Engine",
+                phaseDuration: "9 Hours, 49 Minutes, 10 Seconds",
+                phaseObjective: "Master JS engine mechanics, closures, advanced scope chains, array transformations, and callbacks.",
+                lectures: [
+                    { id: 5, name: "Week 1.2 | JS Foundations", duration: "2h 22m 11s", priority: 5, seconds: 8531 },
+                    { id: 6, name: "Week 1.3 | Offline class | Basic JS APIs", duration: "1h 07m 15s", priority: 4, seconds: 4035 },
+                    { id: 7, name: "Week 1.4 | Loops, Functions, Callback functions", duration: "35m 28s", priority: 5, seconds: 2128 },
+                    { id: 8, name: "2.6 | map, filter, arrow fns", duration: "19m 13s", priority: 5, seconds: 1153 },
+                    { id: 9, name: "Week 1.5 | Async functions, Promises and async await", duration: "1h 16m 10s", priority: 5, seconds: 4570 },
+                    { id: 10, name: "Week 2.1 | Promises and async JS revision, doubt session (Zoom upload)", duration: "3h 05m 43s", priority: 5, seconds: 11143 },
+                    { id: 11, name: "Week 3.0.2 | Js Foundation Revision", duration: "1m 28s", priority: 3, seconds: 88 },
+                    { id: 12, name: "8.3 | axios vs fetch", duration: "21m 42s", priority: 5, seconds: 1302 }
+                ]
+            },
+            {
+                phaseTitle: "Phase 3: React.js Ecosystem & Client-Side Runtimes",
+                phaseDuration: "19 Hours, 43 Minutes, 13 Seconds",
+                phaseObjective: "Transition from browser DOM interactions into virtual component trees, lifecycles, and TypeScript.",
+                lectures: [
+                    { id: 13, name: "3.5 | DOM Introduction (Laisha)", duration: "1h 26m 42s", priority: 4, seconds: 5202 },
+                    { id: 14, name: "4.0.1 | DOM Introduction", duration: "1h 26m 45s", priority: 4, seconds: 5205 },
+                    { id: 15, name: "4.1 | DOM Introduction", duration: "Included in 4.0.1", priority: 4, seconds: 0 },
+                    { id: 16, name: "4.2 | React foundation", duration: "2h 14m 46s", priority: 5, seconds: 8086 },
+                    { id: 17, name: "5.1 | Diving into React", duration: "2h 45m 25s", priority: 5, seconds: 9925 },
+                    { id: 18, name: "week 5.2 | Creating a To-Do App (Re-upload)", duration: "1h 58m 51s", priority: 5, seconds: 7131 },
+                    { id: 19, name: "Week 6.1 | Popular react hooks, React deep dive", duration: "2h 29m 27s", priority: 5, seconds: 8967 },
+                    { id: 20, name: "Week 6.2 | useEffect, useMemo, useCallback", duration: "2h 33m 03s", priority: 5, seconds: 9183 },
+                    { id: 21, name: "6.3 | Recap of everything in react, Intro to useRef", duration: "1h 10m 34s", priority: 4, seconds: 4234 },
+                    { id: 22, name: "9.2 | Typescript Intro", duration: "2h 18m 36s", priority: 5, seconds: 8316 },
+                    { id: 23, name: "9.3 | Generics, enums, imports, exports", duration: "42m 14s", priority: 4, seconds: 2534 }
+                ]
+            },
+            {
+                phaseTitle: "Phase 4: State Management & Optimization Patterns",
+                phaseDuration: "7 Hours, 47 Minutes, 14 Seconds",
+                phaseObjective: "Abstract client logic, bypass prop drilling, and optimize component re-render footprints.",
+                lectures: [
+                    { id: 24, name: "7.1 | Context, prop drilling", duration: "1h 48m 13s", priority: 5, seconds: 6493 },
+                    { id: 25, name: "7.2 | Recoil", duration: "2h 05m 21s", priority: 5, seconds: 7521 },
+                    { id: 26, name: "7.3 | Recoil Deep dive", duration: "1h 33m 36s", priority: 4, seconds: 5616 },
+                    { id: 27, name: "9.1 | Custom hooks", duration: "2h 20m 04s", priority: 5, seconds: 8404 }
+                ]
+            },
+            {
+                phaseTitle: "Phase 5: Node.js, Express.js & Backend Core",
+                phaseDuration: "9 Hours, 41 Minutes, 07 Seconds",
+                phaseObjective: "Configure runtime listeners, set up modular routing controllers, and validate payloads with Zod.",
+                lectures: [
+                    { id: 28, name: "Week 2.2 | Express and Backend (Zoom upload)", duration: "2h 55m 30s", priority: 5, seconds: 10530 },
+                    { id: 29, name: "2.3 | Bash and terminal", duration: "34m 34s", priority: 3, seconds: 2074 },
+                    { id: 30, name: "Week 2.4 | Bash and Terminal (Advance)", duration: "56m 05s", priority: 3, seconds: 3365 },
+                    { id: 31, name: "Week 2.5 | Express basics", duration: "1h 18m 44s", priority: 5, seconds: 4724 },
+                    { id: 32, name: "2.7 | Git basics to advance", duration: "1h 26m 44s", priority: 4, seconds: 5204 },
+                    { id: 33, name: "Week 3.0.1 | What We're Covering In Week 3", duration: "57s", priority: 3, seconds: 57 },
+                    { id: 34, name: "Week 3.0.3 | Node.Js Runtime", duration: "2m 50s", priority: 4, seconds: 170 },
+                    { id: 35, name: "Week 3.0.4 | Express Basics", duration: "1m 43s", priority: 4, seconds: 103 },
+                    { id: 36, name: "Week 3.0.5 | Express Advance Intro", duration: "1m 02s", priority: 3, seconds: 62 },
+                    { id: 37, name: "Week 3.1 | Middlewares, global catches and zod", duration: "2h 33m 56s", priority: 5, seconds: 9236 },
+                    { id: 38, name: "3.3 | Middleware recap and assignments", duration: "47m 06s", priority: 4, seconds: 2826 }
+                ]
+            },
+            {
+                phaseTitle: "Phase 6A: Database Engineering (MongoDB Strictly)",
+                phaseDuration: "2 Hours, 18 Minutes, 01 Second",
+                phaseObjective: "Configure active document clusters, construct mongoose ODM schemas, and perform secure CRUD queries.",
+                lectures: [
+                    { id: 39, name: "Week 3.0.6 | Databases Intro", duration: "1m 22s", priority: 3, seconds: 82 },
+                    { id: 40, name: "Week 3.0.7 | Mongo Installation", duration: "6m 43s", priority: 3, seconds: 403 },
+                    { id: 41, name: "4.3 | Mongo Deep dive, Assignments", duration: "2h 09m 56s", priority: 5, seconds: 7796 }
+                ]
+            },
+            {
+                phaseTitle: "Phase 6B: Relational Database Track (SQL & Prisma - Optional)",
+                phaseDuration: "11 Hours, 51 Minutes, 04 Seconds",
+                phaseObjective: "Relational tables are not immediately required for standard MongoDB tracks. Keep this section isolated for secondary focus.",
+                lectures: [
+                    { id: 42, name: "Week 3.0.8 | Postgres Installation", duration: "1m 10s", priority: 0, seconds: 70 },
+                    { id: 43, name: "week 10.1 | Postgres", duration: "2h 28m 30s", priority: 0, seconds: 8910 },
+                    { id: 44, name: "12.4 | SQL Joins and Relationships", duration: "1h 26m 04s", priority: 0, seconds: 5164 },
+                    { id: 45, name: "10.0.01 | Cohort 1 Postgress Video", duration: "1h 32m 24s", priority: 0, seconds: 5544 },
+                    { id: 46, name: "week 10.2 | Prisma", duration: "2h 03m 57s", priority: 0, seconds: 7437 },
+                    { id: 47, name: "12.5 | Prisma Recap, Relationships in Prisma", duration: "58m 23s", priority: 0, seconds: 3503 },
+                    { id: 48, name: "10.0.2 | Cohort 1 Prisma Video", duration: "1h 51m", priority: 0, seconds: 6660 },
+                    { id: 49, name: "Week 12.6 | Connection pooling in serverless envs", duration: "32m 04s", priority: 0, seconds: 1924 },
+                    { id: 50, name: "Week 22.3 | Indexing in databases", duration: "46m 09s", priority: 0, seconds: 2769 },
+                    { id: 51, name: "Week 22.4 | Normalization in DBs", duration: "55m 31s", priority: 0, seconds: 3331 }
+                ]
+            },
+            {
+                phaseTitle: "Phase 7: Web Application Security & Authentication",
+                phaseDuration: "8 Hours, 31 Minutes, 42 Seconds",
+                phaseObjective: "Implement token signatures, authorize protected API endpoints, and secure cookie-based session states.",
+                lectures: [
+                    { id: 52, name: "Week 3.2 | Dynamic backend Authentication using Express, JWT and monogodb", duration: "2h 38m 01s", priority: 5, seconds: 9481 },
+                    { id: 53, name: "3.4 | JWT recap and assignment", duration: "40m 16s", priority: 5, seconds: 2416 },
+                    { id: 54, name: "16.3 | Authentication using cookies", duration: "1h 17m 44s", priority: 5, seconds: 4664 },
+                    { id: 55, name: "16.4 | NextAuth", duration: "1h 20m 06s", priority: 0, seconds: 4806 },
+                    { id: 56, name: "21.1 | Rate limitting, DDoS and Captchas", duration: "2h 35m 35s", priority: 0, seconds: 9335 }
+                ]
+            },
+            {
+                phaseTitle: "Phase 8: Production Portfolio Projects (PayTM & Blogging App)",
+                phaseDuration: "17 Hours, 06 Minutes, 41 Seconds",
+                phaseObjective: "Coordinate frontend clients and backend APIs. Build robust transfer ledgers and dynamic Blogging systems.",
+                lectures: [
+                    { id: 57, name: "8.2 | Building PayTM Project", duration: "2h 05m 53s", priority: 5, seconds: 7553 },
+                    { id: 58, name: "8.4 | PayTM Frontend", duration: "1h 04m 22s", priority: 5, seconds: 3862 },
+                    { id: 59, name: "17.1 | PayTM part 1", duration: "1h 59m 19s", priority: 5, seconds: 7159 },
+                    { id: 60, name: "17.2 | PayTM Part 2", duration: "1h 44m 48s", priority: 5, seconds: 6288 },
+                    { id: 61, name: "Week 18.1 | PayTM Part 3", duration: "1h 29m 46s", priority: 5, seconds: 5386 },
+                    { id: 62, name: "18.1.2 | PayTM Part 3 (continued)", duration: "38m 52s", priority: 5, seconds: 2332 },
+                    { id: 63, name: "13.3 | Offline video - Backend of blogging app (improved audio)", duration: "1h 58m 38s", priority: 5, seconds: 7118 },
+                    { id: 64, name: "13.4 | Frontend of Blogging app", duration: "2h 39m 46s", priority: 5, seconds: 9586 },
+                    { id: 65, name: "Week 13.1 | Project (Local recording)", duration: "2h 25m 17s", priority: 4, seconds: 8717 }
+                ]
+            },
+            {
+                phaseTitle: "Phase 9: Full-Stack Next.js & Meta Frameworks",
+                phaseDuration: "7 Hours, 42 Minutes, 23 Seconds",
+                phaseObjective: "Explore server component rendering, API routing, server actions, and full-stack runtime bundles.",
+                lectures: [
+                    { id: 66, name: "12.2 | Typescript Advance APIs", duration: "41m 54s", priority: 0, seconds: 2514 },
+                    { id: 67, name: "Week 14.1 | NextJS Intro", duration: "2h 05m 16s", priority: 0, seconds: 7516 },
+                    { id: 68, name: "14.2 | Next Backend", duration: "2h 12m 54s", priority: 0, seconds: 7974 },
+                    { id: 69, name: "14.3 | NextJS Backend (Offline video)", duration: "1h 35m 59s", priority: 0, seconds: 5759 },
+                    { id: 70, name: "19.0.1 | Middlewares in Next.js", duration: "27m 34s", priority: 0, seconds: 1654 },
+                    { id: 71, name: "19.0.2 | CSR vs SSR vs SSG", duration: "38m 46s", priority: 0, seconds: 2326 }
+                ]
+            },
+            {
+                phaseTitle: "Phase 10: High-Concurrency Messaging & Advanced Protocols",
+                phaseDuration: "12 Hours, 19 Minutes, 04 Seconds",
+                phaseObjective: "Establish bidirectional pipelines via WebSockets, run tasks with Redis queues, and setup peer-to-peer configurations.",
+                lectures: [
+                    { id: 72, name: "19.1 | Websockets and Advance backend comm", duration: "2h 15m 44s", priority: 0, seconds: 8144 },
+                    { id: 73, name: "19.2 | Redis, Pub subs and Queues", duration: "2h 17m 21s", priority: 0, seconds: 8241 },
+                    { id: 74, name: "20.1 | OpenAPI Spec (Offline)", duration: "1h 12m 14s", priority: 0, seconds: 4334 },
+                    { id: 75, name: "20.3 | OpenAPI Spec Class (Cohort 1)", duration: "2h 16m 06s", priority: 0, seconds: 8166 },
+                    { id: 76, name: "23.1 | WebRTC", duration: "2h 24m 58s", priority: 0, seconds: 8698 },
+                    { id: 77, name: "Week 23.2 | Webrtc, setting up projects, 0-1 farewell", duration: "2h 02m 41s", priority: 0, seconds: 7361 }
+                ]
+            },
+            {
+                phaseTitle: "Phase 11: DevOps, Containerization & Cloud Infrastructure",
+                phaseDuration: "20 Hours, 15 Minutes, 36 Seconds",
+                phaseObjective: "Package services in Docker environments, deploy pipelines, write shell commands, and scale servers cleanly.",
+                lectures: [
+                    { id: 78, name: "15.1 | Docker part 1", duration: "2h 19m 41s", priority: 5, seconds: 8381 },
+                    { id: 79, name: "15.2 | Docker part 2 (Reuploaded)", duration: "2h 11m 21s", priority: 4, seconds: 7881 },
+                    { id: 80, name: "15.3 | docker-compose, exec command, docker push command", duration: "59m 55s", priority: 0, seconds: 3595 },
+                    { id: 81, name: "15.4 | Bind mounts", duration: "14m 22s", priority: 0, seconds: 862 },
+                    { id: 82, name: "12.3 | Actionable Docker to start packages", duration: "32m 27s", priority: 0, seconds: 1947 },
+                    { id: 83, name: "11.1 | Serverless Fns", duration: "2h 29m 02s", priority: 0, seconds: 8942 },
+                    { id: 84, name: "11.2 | Deploying to AWS", duration: "2h 20m 47s", priority: 0, seconds: 8447 },
+                    { id: 85, name: "Week 12.1 | Deploying Frontends on AWS", duration: "1h 04m 26s", priority: 0, seconds: 3866 },
+                    { id: 86, name: "Week 11.3 | Certificate Management", duration: "54m", priority: 0, seconds: 3240 },
+                    { id: 87, name: "Cohort 1 - Deploying npm packages, Intro to Monorepos", duration: "2h 03m 33s", priority: 0, seconds: 7413 },
+                    { id: 88, name: "16.1 | Monorepo part 1", duration: "1h 59m 32s", priority: 0, seconds: 7172 },
+                    { id: 89, name: "16.2 | Monorepo part 2", duration: "2h 05m 49s", priority: 0, seconds: 7549 },
+                    { id: 90, name: "18.2 | CI/CD", duration: "1h 53m 43s", priority: 0, seconds: 6823 },
+                    { id: 91, name: "Week 21.2 | Singleton pattern + Pub subs", duration: "2h 15m 03s", priority: 0, seconds: 8103 },
+                    { id: 92, name: "Week 22.1 | Scaling Node.js and ASGs (1/2)", duration: "2h 06m 48s", priority: 0, seconds: 7608 },
+                    { id: 93, name: "Week 22.2 | Auto Scaling Groups", duration: "2h 18m 21s", priority: 0, seconds: 8301 }
+                ]
+            },
+            {
+                phaseTitle: "Phase 12: General Onboarding, Orientation & AMA Labs",
+                phaseDuration: "5 Hours, 46 Minutes, 15 Seconds",
+                phaseObjective: "Administrative setups, assignment code walkthroughs, orientation calls, and general mentoring questions.",
+                lectures: [
+                    { id: 94, name: "Week 0.1 - Introduction, Settings up IDE", duration: "15m 05s", priority: 3, seconds: 905 },
+                    { id: 95, name: "Week 1.1 | Orientation Class", duration: "1h 32m 02s", priority: 3, seconds: 5522 },
+                    { id: 96, name: "How to solve assignments", duration: "9m 38s", priority: 3, seconds: 578 },
+                    { id: 97, name: "6.4 | Assignment solutions", duration: "46m 16s", priority: 4, seconds: 2776 },
+                    { id: 98, name: "13.2 | AMA Session", duration: "1h 25m 57s", priority: 3, seconds: 5157 },
+                    { id: 99, name: "1-100 orientation, setting up cms/daily | 13/04", duration: "1h 37m 17s", priority: 3, seconds: 5837 }
+                ]
+            }
+        ];
+
+        // BASE UNTOUCHED SCREENSHOT DATA
+        const BASE_SCREENSHOT_SYLLABUS = [
+            {
+                id: "web",
+                name: "Zone 1: Web dev (Every Friday Track)",
+                description: "Full stack layers from layout mechanics up to fast Bun runtimes and asynchronous queues.",
+                emoji: "💻",
+                gradient: "from-teal-600 to-cyan-750",
+                projects: [
+                    "todo app",
+                    "Lovable (easy AI component visualizer)",
+                    "codeforces tracker",
+                    "Trading platform layout"
+                ],
+                resources: [
+                    "This 100xdevs YouTube Channel",
+                    "Angela Yu CSS Masterclass",
+                    "Official react.dev guidelines",
+                    "Google Summer of Code (GSoC) & open-source repos"
+                ],
+                topics: [
+                    { id: "S-WEB-1", name: "1. HTML/CSS Layouts", priority: 5 },
+                    { id: "S-WEB-2", name: "2. JS Basics", priority: 5 },
+                    { id: "S-WEB-3", name: "3. JS architecture & Engine execution", priority: 5 },
+                    { id: "S-WEB-4", name: "4. Async JS & Task Queues", priority: 5 },
+                    { id: "S-WEB-5", name: "5. Node.js runtime vs Browser JS environment", priority: 4 },
+                    { id: "S-WEB-6", name: "6. HTTP protocol specifications and Express", priority: 5 },
+                    { id: "S-WEB-7", name: "7. Databases and MongoDB NoSQL storage", priority: 5 },
+                    { id: "S-WEB-8", name: "8. Postgres + Prisma/Drizzle mapping tiers", priority: 4 },
+                    { id: "S-WEB-9", name: "9. TypeScript Compilation and Static Checking", priority: 5 },
+                    { id: "S-WEB-10", name: "10. Turborepo Monorepo coordination", priority: 4 },
+                    { id: "S-WEB-11", name: "11. BunJS fast JS compiler runtime", priority: 3 },
+                    { id: "S-WEB-12", name: "12. React Components and Virtual DOM Trees", priority: 5 },
+                    { id: "S-WEB-13", name: "13. Tailwind utility framework layout styling", priority: 5 },
+                    { id: "S-WEB-14", name: "14. NextJS Server Component meta architecture", priority: 5 },
+                    { id: "S-WEB-15", name: "15. WebSockets + WebRTC live bidirectional pipelines", priority: 4 },
+                    { id: "S-WEB-16", name: "16. In-memory message Broker Queues & PubSubs", priority: 4 }
+                ]
+            },
+            {
+                id: "devops",
+                name: "Zone 2: Devops & Cloud (Every Friday Track)",
+                description: "Whiteboard track supplemented with Core Cloud Providers (AWS/GCP), Identity Management (IAM), Infrastructure as Code (Terraform), Secrets Security, and DevSecOps validations.",
+                emoji: "⚙️",
+                gradient: "from-blue-600 to-indigo-750",
+                projects: [
+                    "e2b VM sandbox orchestration",
+                    "Replit VM interactive environment",
+                    "cloudflare serverless workers",
+                    "Terraform multi-tier AWS deployment"
+                ],
+                resources: [
+                    "e2b sandbox deep dive blogs",
+                    "modal.com container scale layouts",
+                    "AWS Well-Architected Infrastructure checklist",
+                    "Terraform Registry official guidelines"
+                ],
+                topics: [
+                    { id: "S-DEV-1", name: "1. Bash/Terminal CLI", priority: 5 },
+                    { id: "S-DEV-2", name: "2. VMs / Baremetal physical machines", priority: 4 },
+                    { id: "S-DEV-3", name: "3. Process managers & reverse NGINX proxy configs", priority: 5 },
+                    { id: "S-DEV-4", name: "4. SSL Certificates and Certbot auto-rotation", priority: 4 },
+                    { id: "S-DEV-5", name: "5. Auto-Scaling Groups (ASGs) / MIGs", priority: 4 },
+                    { id: "S-DEV-6", name: "6. Container engines and container runtimes", priority: 4 },
+                    { id: "S-DEV-7", name: "7. Docker files & network isolation policies", priority: 5 },
+                    { id: "S-DEV-8", name: "8. Kubernetes clusters & Pod controller scheduling", priority: 5 },
+                    { id: "S-DEV-9", name: "9. Kubernetes networking, secrets & configurations", priority: 4 },
+                    { id: "S-DEV-10", name: "10. CI/CD automation pipelines (GitHub Actions, GitLab)", priority: 5 },
+                    { id: "S-DEV-11", name: "11. Monitoring dashboards & OpenTelemetry observability", priority: 4 },
+                    { id: "S-DEV-12", name: "12. Infrastructure as Code (IaC) architectures", priority: 4 },
+                    { id: "S-DEV-13", name: "13. CDNs & global S3 static object stores", priority: 5 },
+                    { id: "S-DEV-14", name: "14. Sandboxing and Firecracker MicroVM virtualization", priority: 4 },
+                    { id: "S-DEV-CL1", name: "15. Core Cloud Computing: AWS / GCP Compute, S3 Storage & VPC network topologies", priority: 5 },
+                    { id: "S-DEV-CL2", name: "16. Identity and Access Management (IAM): Least privilege roles & cloud service bounds", priority: 5 },
+                    { id: "S-DEV-CL3", name: "17. Declarative Infrastructure: Writing, executing & state tracking with Terraform", priority: 5 },
+                    { id: "S-DEV-CL4", name: "18. Cloud Security & Secrets Vaults: HashiCorp Vault, cloud parameter secrets protection", priority: 4 },
+                    { id: "S-DEV-CL5", name: "19. DevSecOps integration: Trivy vulnerability scans & OPA compliance inside pipelines", priority: 4 }
+                ]
+            },
+            {
+                id: "dsa",
+                name: "Zone 3: DSA (Every Thursday Track)",
+                description: "Whiteboard Track supplemented with foundational Sorting patterns, short Graph trajectories, and complex structural groupings.",
+                emoji: "🧠",
+                gradient: "from-purple-600 to-fuchsia-750",
+                projects: [
+                    "Competitive workflow presets",
+                    "Subarray computation tools",
+                    "Shortest path visualizer tool"
+                ],
+                resources: [
+                    "Harvard CS-50 introductory computer science",
+                    "Abdul Bari algorithm structures",
+                    "Pavel Marvin playlist walkthroughs",
+                    "Codeforces Edu / CP algorithmic pathways",
+                    "Interactive assessment spaces: Codeforces, Leetcode, Atcoder"
+                ],
+                topics: [
+                    { id: "S-DSA-1", name: "1. Introduction to C++", priority: 5 },
+                    { id: "S-DSA-2", name: "2. Loops and Pattern Printing", priority: 4 },
+                    { id: "S-DSA-3", name: "3. Arrays / 2D Arrays", priority: 5 },
+                    { id: "S-DSA-4", name: "4. Strings", priority: 5 },
+                    { id: "S-DSA-5", name: "5. Sorting and Searching foundations", priority: 5 },
+                    { id: "S-DSA-6", name: "6. Pointers / Pass by value, reference & memory address", priority: 5 },
+                    { id: "S-DSA-7", name: "7. Time and Space Complexity calculations", priority: 5 },
+                    { id: "S-DSA-8", name: "8. Sets and Maps", priority: 5 },
+                    { id: "S-DSA-9", name: "9. Prefix Sums / Sliding Window / Contribution formulas", priority: 5 },
+                    { id: "S-DSA-10", name: "10. Bit Manipulation basics", priority: 4 },
+                    { id: "S-DSA-11", name: "11. Number Theory Basics (Primes, GCD)", priority: 4 },
+                    { id: "S-DSA-12", name: "12. Recursion and Backtracking state tracks", priority: 5 },
+                    { id: "S-DSA-13", name: "13. Two Pointers algorithm designs", priority: 5 },
+                    { id: "S-DSA-14", name: "14. Linked List memory structures", priority: 5 },
+                    { id: "S-DSA-15", name: "15. Stack / Queue / Deque implementations", priority: 5 },
+                    { id: "S-DSA-16", name: "16. Binary Tree / Binary Search Tree (BST) designs", priority: 5 },
+                    { id: "S-DSA-17", name: "17. Priority Queue / Heap data arrays", priority: 4 },
+                    { id: "S-DSA-18", name: "18. Trie text-retrieval trees", priority: 3 },
+                    { id: "S-DSA-19", name: "19. Greedy choice optimization tracks", priority: 4 },
+                    { id: "S-DSA-20", name: "20. Dynamic Programming state memoization", priority: 5 },
+                    { id: "S-DSA-21", name: "21. Graphs (Adjacency matrices, DFS, BFS traversal)", priority: 5 },
+                    { id: "S-DSA-22", name: "22. Segment Tree / Ordered Set range queries", priority: 5 },
+                    { id: "S-DSA-DSU1", name: "23. Fast Sorting Algorithms: Merge Sort, Quick Sort (stable vs unstable partitions)", priority: 5 },
+                    { id: "S-DSA-DSU2", name: "24. Graph Shortest Paths: Dijkstra's Algorithm for routing logic", priority: 5 },
+                    { id: "S-DSA-DSU3", name: "25. Disjoint Set Union (DSU) & cyclic redundancy network leaks", priority: 5 }
+                ]
+            },
+            {
+                id: "ml",
+                name: "Zone 4: Applied AI Integration (Every Saturday Track)",
+                description: "Overhauled to focus entirely on Applied AI Engineering. Build intelligent tools, write context windows, leverage vector searches, and deploy autonomous loop architectures.",
+                emoji: "🤖",
+                gradient: "from-amber-600 to-rose-750",
+                projects: [
+                    "RAG private document knowledge worker",
+                    "Tool calling agent loop scheduler",
+                    "Autonomous project developer chatbot",
+                    "Context-engineered summary hub"
+                ],
+                resources: [
+                    "DeepLearning.ai developer training guides",
+                    "Anthropic API developer engineering docs",
+                    "Pinecone/pgvector search configurations",
+                    "Model Context Protocol (MCP) standards handbook"
+                ],
+                topics: [
+                    { id: "S-ML-1", name: "1. History - what is ai, how did we end up at trnsfmrs. Fast tracking to AI", priority: 4 },
+                    { id: "S-ML-2", name: "2. History - what is DL, backprop NLP", priority: 4 },
+                    { id: "S-ML-3", name: "3. Neural networks, Pytorch execution scopes", priority: 5 },
+                    { id: "S-ML-4", name: "4. Optional extra class - RNNs, LSTMs, Sequential models", priority: 3 },
+                    { id: "S-ML-5", name: "5. Optional extra class - CNNs", priority: 3 },
+                    { id: "S-ML-6", name: "6. Coding simple attention mathematical components", priority: 5 },
+                    { id: "S-ML-7", name: "7. Attention mechanisms -- Coding other variations of attn - Adding Kv cache, MQA, GQA, MLA (multi-head latent attention), DSA", priority: 5 },
+                    { id: "S-ML-8", name: "8. Huggingface end to end - datasets, spaces, models, blogs, courses etc.", priority: 4 },
+                    { id: "S-ML-9", name: "9. Instrumenting LLM calls/observability/tracing", priority: 4 },
+                    { id: "S-ML-10", name: "10. Vector DBs and RAG pipeline configurations", priority: 5 },
+                    { id: "S-ML-11", name: "11. Context engineering - Summarization, data collection", priority: 4 },
+                    { id: "S-ML-12", name: "12. Agents from first principles. Building an agent framework", priority: 5 },
+                    { id: "S-ML-13", name: "13. Agent frameworks", priority: 5 },
+                    { id: "S-ML-14", name: "14. Memory structures", priority: 4 },
+                    { id: "S-ML-15", name: "15. Model Context Protocol (MCP) tools", priority: 4 },
+                    { id: "S-ML-16", name: "16. Computer use & multimodal agents", priority: 5 },
+                    { id: "S-ML-17", name: "17. What is Finetuning and parameter adjustments", priority: 5 },
+                    { id: "S-ML-18", name: "18. Finetuning a model for any usecase", priority: 5 },
+                    { id: "S-ML-19", name: "19. RL fine tuning mechanics", priority: 5 },
+                    { id: "S-ML-20", name: "20. Evals -- Testing agents under standard scenarios", priority: 4 },
+                    { id: "S-ML-21", name: "21. Advance model configurations", priority: 4 },
+                    { id: "S-ML-22", name: "22. Other tangents --- Voice, image, video API synthesis", priority: 4 },
+                    { id: "S-ML-APP1", name: "23. Applied LLM API mechanics: parameters, system instructions, structured JSON outputs & fallback cascades", priority: 5 },
+                    { id: "S-ML-APP2", name: "24. Practical RAG Ingestion: document indexing, chunk splitting, embeddings and search strategies", priority: 5 },
+                    { id: "S-ML-APP3", name: "25. Vector Databases in Action: pgvector, ChromaDB, and Pinecone spatial querying", priority: 5 },
+                    { id: "S-ML-APP4", name: "26. Function Calling & Tool Binding: Allowing LLMs to autonomously run your app backend codes", priority: 5 },
+                    { id: "S-ML-APP5", name: "27. Agentic Workflows: Multi-step loop tasks, reflection loops, memory storage, and real-world execution", priority: 5 }
+                ]
+            },
+            {
+                id: "system_design",
+                name: "Zone 5: System Design & Scalability (New)",
+                description: "Essential architectural layout patterns required for high-concurrency systems, stateless design patterns, and decoupled communications.",
+                emoji: "🏗️",
+                gradient: "from-emerald-600 to-teal-800",
+                projects: [
+                    "High-volume Stateless API Gateway",
+                    "Token Bucket Rate Limiting middleware",
+                    "Decoupled asynchronous notification runner"
+                ],
+                resources: [
+                    "Designing Data-Intensive Applications (DDIA)",
+                    "ByteByteGo System Design guide",
+                    "System Design Primer (Interactive open-source library)"
+                ],
+                topics: [
+                    { id: "S-SD-1", name: "1. Load Balancing: Layer 4 vs Layer 7 load distribution, NGINX configurations, health checks", priority: 5 },
+                    { id: "S-SD-2", name: "2. Horizontal vs Vertical Scaling: Designing state-free, multi-node application server tiers", priority: 5 },
+                    { id: "S-SD-3", name: "3. Database Scaling: Primary-replica replication patterns, handling latency gaps", priority: 5 },
+                    { id: "S-SD-4", name: "4. Database Sharding: Partitioning keys, indexing sharded databases, and join limits", priority: 5 },
+                    { id: "S-SD-5", name: "5. High-Performance Caching: Redis Cache-Aside, Write-Through & cache invalidation", priority: 5 },
+                    { id: "S-SD-6", name: "6. Asynchronous Task decoupling: Message brokers & message pipelines (RabbitMQ, SQS)", priority: 5 },
+                    { id: "S-SD-7", name: "7. The CAP Theorem: Balancing Consistency, Availability, and Partition Tolerance", priority: 4 },
+                    { id: "S-SD-8", name: "8. API Guardrails: Rate Limiting Algorithms (Token Bucket, Leaky Bucket, Sliding Windows)", priority: 5 },
+                    { id: "S-SD-9", name: "9. Resilient Systems: Circuit breakers, fallback triggers, and graceful service degradation", priority: 5 }
+                ]
+            },
+            {
+                id: "web3",
+                name: "Zone 6: Web3 (Every Sunday Track)",
+                description: "Cryptography foundations, Rust systems program layout, Solana smart contract architectures, and decentralized finance protocols from Screenshot 2026-07-14 154929.jpg.",
+                emoji: "🌐",
+                gradient: "from-indigo-650 to-purple-800",
+                projects: [
+                    "DEX (Decentralized Exchange)",
+                    "CEX (Centralized Exchange index layers)",
+                    "Web-based HD Wallet",
+                    "Prediction Market contract framework",
+                    "Frontends / clients / tests for contracts (staking/escrow)"
+                ],
+                resources: [
+                    "https://github.com/solana-foundation/curriculum",
+                    "https://bitcoin.org/bitcoin.pdf",
+                    "Rust Programming Guide - Jon Gjengset"
+                ],
+                topics: [
+                    { id: "S-W3-1", name: "1. Intro to blockchains", priority: 5 },
+                    { id: "S-W3-2", name: "2. Cryptography", priority: 5 },
+                    { id: "S-W3-3", name: "3. Solana architecture", priority: 5 },
+                    { id: "S-W3-4", name: "4. Solana jargons (authority, owner)", priority: 4 },
+                    { id: "S-W3-5", name: "5. PDAs", priority: 5 },
+                    { id: "S-W3-6", name: "6. @solana/web3.js or gill", priority: 5 },
+                    { id: "S-W3-7", name: "7. Solana wallet adapter", priority: 4 },
+                    { id: "S-W3-8", name: "8. Data model", priority: 4 },
+                    { id: "S-W3-9", name: "9. Token program", priority: 5 },
+                    { id: "S-W3-10", name: "10. Defi (amm, dlmm, clmm, perps)", priority: 5 },
+                    { id: "S-W3-11", name: "11. Rust easy", priority: 5 },
+                    { id: "S-W3-12", name: "12. Rust advance", priority: 5 },
+                    { id: "S-W3-13", name: "13. Anchor", priority: 5 },
+                    { id: "S-W3-14", name: "14. common contracts (staking/escrow)", priority: 5 },
+                    { id: "S-W3-15", name: "15. Indexing", priority: 4 },
+                    { id: "S-W3-16", name: "16. MPC and Shamirs", priority: 4 },
+                    { id: "S-W3-17", name: "17. Ad hoc web2 + web3", priority: 3 },
+                    { id: "S-W3-18", name: "18. Partially centralized contracts", priority: 4 }
+                ]
+            }
+        ];
+
+        // Core Application State Setup
+        let activeMode = localStorage.getItem('curriculum-active-mode') || 'mern'; // 'mern' or 'screenshot'
+        let mernChecked = JSON.parse(localStorage.getItem('mern-checked-videos')) || {};
+        let screenshotChecked = JSON.parse(localStorage.getItem('screenshot-zones-checked-videos')) || {};
+        
+        let searchQuery = '';
+        let mernFilter = 'all'; // 'all', 'stars' (priority 5), 'optional' (Phase 6B)
+        let screenshotZoneFilter = localStorage.getItem('screenshot-active-zone') || 'web'; 
+
+        // Dynamic Syllabus Registries (cloned on startup)
+        let mernSyllabusData = [];
+        let screenshotSyllabusData = [];
+
+        // Load custom topics and merge with original datasets
+        function initSyllabusDatasets() {
+            // Clone deep copies of original static data to keep them safe
+            mernSyllabusData = JSON.parse(JSON.stringify(BASE_MERN_SYLLABUS));
+            screenshotSyllabusData = JSON.parse(JSON.stringify(BASE_SCREENSHOT_SYLLABUS));
+
+            // Load custom MERN lectures
+            const customMern = JSON.parse(localStorage.getItem('custom-mern-lectures')) || [];
+            customMern.forEach(lec => {
+                if(mernSyllabusData[lec.phaseIdx]) {
+                    mernSyllabusData[lec.phaseIdx].lectures.push(lec);
+                }
+            });
+
+            // Load custom Screenshot Topics
+            const customScreenshot = JSON.parse(localStorage.getItem('custom-screenshot-topics')) || [];
+            customScreenshot.forEach(topic => {
+                const zone = screenshotSyllabusData.find(z => z.id === topic.zoneId);
+                if(zone) {
+                    zone.topics.push(topic);
+                }
+            });
+        }
+
+        // Render target options inside selector dropdown dynamically
+        function updateTargetModuleDropdown() {
+            const dropdown = document.getElementById('topic-target-module');
+            const targetLabel = document.getElementById('target-phase-label');
+            const durationContainer = document.getElementById('duration-input-container');
+            dropdown.innerHTML = '';
+
+            if (activeMode === 'mern') {
+                targetLabel.textContent = "Select Target Phase Location";
+                durationContainer.style.display = 'block';
+                mernSyllabusData.forEach((phase, idx) => {
+                    const opt = document.createElement('option');
+                    opt.value = idx;
+                    opt.textContent = `Phase ${idx + 1}: ${phase.phaseTitle.split(':')[0]}`;
+                    dropdown.appendChild(opt);
+                });
+            } else {
+                targetLabel.textContent = "Current Active Zone";
+                durationContainer.style.display = 'none';
+                const currentZone = screenshotSyllabusData.find(z => z.id === screenshotZoneFilter);
+                if (currentZone) {
+                    const opt = document.createElement('option');
+                    opt.value = currentZone.id;
+                    opt.textContent = currentZone.name;
+                    dropdown.appendChild(opt);
+                }
+            }
+        }
+
+        // Process adding custom topics dynamically
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const topicName = document.getElementById('topic-name-input').value.trim();
+            const isImportant = document.getElementById('topic-important-input').checked;
+            const targetValue = document.getElementById('topic-target-module').value;
+            const priority = isImportant ? 5 : 3;
+
+            if (activeMode === 'mern') {
+                const duration = document.getElementById('topic-duration-input').value.trim() || "30m 00s";
+                const phaseIdx = parseInt(targetValue, 10);
+                
+                // Get maximum current lecture ID to assign next unique sequence id
+                let maxId = 100;
+                mernSyllabusData.forEach(p => {
+                    p.lectures.forEach(l => { if (l.id > maxId) maxId = l.id; });
+                });
+                const nextId = maxId + 1;
+
+                const newLec = {
+                    id: nextId,
+                    name: topicName + " (Custom)",
+                    duration: duration,
+                    priority: priority,
+                    seconds: 1800, // standard default
+                    isCustom: true // marker to allow deletion
+                };
+
+                const customMern = JSON.parse(localStorage.getItem('custom-mern-lectures')) || [];
+                newLec.phaseIdx = phaseIdx;
+                customMern.push(newLec);
+                localStorage.setItem('custom-mern-lectures', JSON.stringify(customMern));
+                showToast("Custom lecture added successfully!", "success");
+
+            } else {
+                const zoneId = targetValue;
+                const zone = screenshotSyllabusData.find(z => z.id === zoneId);
+                const nextId = `S-CUSTOM-${Date.now()}`;
+
+                const newTopic = {
+                    id: nextId,
+                    name: topicName + " (Custom)",
+                    priority: priority,
+                    zoneId: zoneId,
+                    isCustom: true // marker to allow deletion
+                };
+
+                const customScreenshot = JSON.parse(localStorage.getItem('custom-screenshot-topics')) || [];
+                customScreenshot.push(newTopic);
+                localStorage.setItem('custom-screenshot-topics', JSON.stringify(customScreenshot));
+                showToast("Custom topic added successfully to Zone!", "success");
+            }
+
+            // Reset Form Fields
+            document.getElementById('topic-name-input').value = '';
+            document.getElementById('topic-duration-input').value = '';
+            document.getElementById('topic-important-input').checked = false;
+
+            // Re-render
+            initSyllabusDatasets();
+            renderWorkspace();
+        }
+
+        // Delete Custom items
+        function deleteCustomMernLecture(id) {
+            let customMern = JSON.parse(localStorage.getItem('custom-mern-lectures')) || [];
+            customMern = customMern.filter(l => l.id !== id);
+            localStorage.setItem('custom-mern-lectures', JSON.stringify(customMern));
+            
+            // Clean checked state if it was checked
+            if (mernChecked[id]) {
+                delete mernChecked[id];
+                localStorage.setItem('mern-checked-videos', JSON.stringify(mernChecked));
+            }
+
+            showToast("Custom topic removed.", "info");
+            initSyllabusDatasets();
+            renderWorkspace();
+        }
+
+        function deleteCustomScreenshotTopic(id) {
+            let customScreenshot = JSON.parse(localStorage.getItem('custom-screenshot-topics')) || [];
+            customScreenshot = customScreenshot.filter(t => t.id !== id);
+            localStorage.setItem('custom-screenshot-topics', JSON.stringify(customScreenshot));
+
+            // Clean checked state if it was checked
+            if (screenshotChecked[id]) {
+                delete screenshotChecked[id];
+                localStorage.setItem('screenshot-zones-checked-videos', JSON.stringify(screenshotChecked));
+            }
+
+            showToast("Custom topic removed.", "info");
+            initSyllabusDatasets();
+            renderWorkspace();
+        }
+
+        // Render Workspace Content Based on mode
+        function renderWorkspace() {
+            const container = document.getElementById('workspace-container');
+            container.innerHTML = '';
+
+            if (activeMode === 'mern') {
+                renderMernSyllabus(container);
+            } else {
+                renderScreenshotSyllabus(container);
+            }
+
+            calculateStatistics();
+            renderFilters();
+            updateTargetModuleDropdown();
+            updateTabButtonHighlightStates();
+        }
+
+        // Render pristine MERN stack
+        function renderMernSyllabus(container) {
+            mernSyllabusData.forEach((phase, phaseIdx) => {
+                // Apply search and filter criteria
+                const filteredLectures = phase.lectures.filter(lec => {
+                    const matchesSearch = lec.name.toLowerCase().includes(searchQuery.toLowerCase());
+                    if (!matchesSearch) return false;
+
+                    if (mernFilter === 'stars') {
+                        return lec.priority === 5;
+                    } else if (mernFilter === 'optional') {
+                        return phase.phaseTitle.includes("Phase 6B");
+                    }
+                    return true;
+                });
+
+                if (filteredLectures.length === 0) return;
+
+                const card = document.createElement('div');
+                card.className = "bg-white dark:bg-slate-950 rounded-2xl shadow-md border border-slate-200 dark:border-slate-800 overflow-hidden phase-card transition duration-200 hover:shadow-lg";
+                
+                const starsHTML = (priority) => {
+                    if (priority === 0) return `<span class="text-slate-400 dark:text-slate-500 text-xs italic">Optional Relational</span>`;
+                    return `<span class="text-goldstar text-base">` + '★'.repeat(priority) + `</span>`;
+                };
+
+                let tableRows = filteredLectures.map(lec => {
+                    const isChecked = mernChecked[lec.id] ? 'checked' : '';
+                    const isImportant = lec.priority === 5;
+                    
+                    // Extra Bold classing and visual callout for Must-Need items
+                    const nameClass = isImportant 
+                        ? 'font-black text-slate-900 dark:text-white tracking-wide border-l-4 border-amber-500 pl-2' 
+                        : 'font-semibold text-slate-800 dark:text-slate-200';
+
+                    const rowHighlightClass = isImportant
+                        ? 'bg-amber-50/25 dark:bg-amber-950/5 border-b border-slate-100 dark:border-slate-900 hover:bg-amber-50/40 dark:hover:bg-amber-950/10'
+                        : 'border-b border-slate-100 dark:border-slate-900 hover:bg-slate-50/50 dark:hover:bg-slate-900/40';
+
+                    const priorityBadge = isImportant
+                        ? `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-extrabold uppercase tracking-wide bg-amber-100 text-amber-800 dark:bg-amber-950/50 dark:text-amber-400 border border-amber-200 dark:border-amber-900/40 mr-1.5 select-none">🔥 Must Need</span>`
+                        : '';
+
+                    const deleteButton = lec.isCustom
+                        ? `<button onclick="deleteCustomMernLecture(${lec.id})" class="ml-2 text-red-500 hover:text-red-700 text-sm no-print" title="Delete Topic">❌</button>`
+                        : '';
+
+                    return `
+                        <tr class="${rowHighlightClass} transition">
+                            <td class="px-4 py-3.5 text-center font-bold text-slate-400 dark:text-slate-600 text-xs">${lec.id}</td>
+                            <td class="px-4 py-3.5">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <input type="checkbox" ${isChecked} onchange="toggleMernLecture(${lec.id}, ${lec.seconds})" class="interactive-checkbox w-4.5 h-4.5 rounded text-brandteal focus:ring-brandteal border-slate-350 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 cursor-pointer transition">
+                                        <span class="print-checkbox-indicator hidden"></span>
+                                        <div class="flex flex-wrap items-center gap-1">
+                                            ${priorityBadge}
+                                            <span class="${nameClass} text-sm leading-snug">${lec.name}</span>
+                                        </div>
+                                    </div>
+                                    ${deleteButton}
+                                </div>
+                            </td>
+                            <td class="px-4 py-3.5 text-slate-600 dark:text-slate-400 text-sm font-bold whitespace-nowrap">${lec.duration}</td>
+                            <td class="px-4 py-3.5 text-right">${starsHTML(lec.priority)}</td>
+                        </tr>
+                    `;
+                }).join('');
+
+                card.innerHTML = `
+                    <div class="bg-slate-50 dark:bg-slate-900/80 px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-2 phase-header">
+                        <div>
+                            <h2 class="text-lg font-bold text-slate-900 dark:text-white leading-tight">${phase.phaseTitle}</h2>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 italic">${phase.phaseObjective}</p>
+                        </div>
+                        <span class="text-xs font-bold text-brandteal bg-teal-50 dark:bg-teal-950/60 px-3 py-1 rounded-full shadow-sm whitespace-nowrap">${phase.phaseDuration}</span>
+                    </div>
+                    <div class="overflow-x-auto phase-content">
+                        <table class="min-w-full divide-y divide-slate-100 dark:divide-slate-800">
+                            <thead class="bg-slate-50/30 dark:bg-slate-950/30">
+                                <tr>
+                                    <th scope="col" class="px-4 py-3 text-center text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider w-16">No.</th>
+                                    <th scope="col" class="px-4 py-3 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Video Lecture Topic</th>
+                                    <th scope="col" class="px-4 py-3 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider w-32">Duration</th>
+                                    <th scope="col" class="px-4 py-3 text-right text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider w-36">Job Priority</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-900 bg-white dark:bg-slate-950">
+                                ${tableRows}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Render Screenshot-aligned tracks as 99-video format tables
+        function renderScreenshotSyllabus(container) {
+            screenshotSyllabusData.forEach((zone) => {
+                if (screenshotZoneFilter !== 'all' && zone.id !== screenshotZoneFilter) return;
+
+                const filteredTopics = zone.topics.filter(top => {
+                    return top.name.toLowerCase().includes(searchQuery.toLowerCase());
+                });
+
+                if (filteredTopics.length === 0 && searchQuery !== '') return;
+
+                const card = document.createElement('div');
+                card.className = "bg-white dark:bg-slate-950 rounded-2xl shadow-md border border-slate-200 dark:border-slate-800 overflow-hidden phase-card transition duration-200 hover:shadow-lg";
+
+                // Build project checklists that auto-save state
+                const projectsDescription = zone.projects ? `
+                    <div class="p-3 bg-slate-100 dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800">
+                        <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">💡 Target Projects Matrix</span>
+                        <div class="flex flex-wrap gap-2">
+                            ${zone.projects.map((proj, idx) => {
+                                const storageKey = `screenshot-checked-${zone.id}-proj-${idx}`;
+                                const isChecked = localStorage.getItem(storageKey) === 'true' ? 'checked' : '';
+                                return `
+                                    <label class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-md text-xs font-semibold cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-900 select-none">
+                                        <input type="checkbox" ${isChecked} onchange="toggleProjectKey('${storageKey}')" class="w-4 h-4 rounded text-brandteal focus:ring-brandteal bg-slate-50 cursor-pointer">
+                                        <span class="text-slate-700 dark:text-slate-300">${proj}</span>
+                                    </label>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                ` : '';
+
+                const resourcesDescription = zone.resources ? `
+                    <div class="p-3 bg-slate-100 dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800">
+                        <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">📚 Recommended Learning Resources</span>
+                        <ul class="list-disc list-inside space-y-0.5">
+                            ${zone.resources.map(res => `<li class="text-xs text-slate-600 dark:text-slate-300">${res}</li>`).join('')}
+                        </ul>
+                    </div>
+                ` : '';
+
+                const headerMetadataBlock = `
+                    <div class="px-6 py-4 bg-slate-50 dark:bg-slate-900/40 border-b border-slate-200 dark:border-slate-800 space-y-3">
+                        <div class="flex items-center gap-2">
+                            <span class="text-2xl">${zone.emoji}</span>
+                            <h2 class="text-lg font-bold text-slate-900 dark:text-white leading-tight">${zone.name}</h2>
+                        </div>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 italic">${zone.description}</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+                            ${projectsDescription}
+                            ${resourcesDescription}
+                        </div>
+                    </div>
+                `;
+
+                const starsHTML = (priority) => {
+                    return `<span class="text-goldstar text-base">` + '★'.repeat(priority) + `</span>`;
+                };
+
+                let tableRows = filteredTopics.map(top => {
+                    const isChecked = screenshotChecked[top.id] ? 'checked' : '';
+                    const isImportant = top.priority === 5;
+
+                    // Extra Bold styling & borders on critical items
+                    const nameClass = isImportant 
+                        ? 'font-black text-slate-900 dark:text-white tracking-wide border-l-4 border-amber-500 pl-2' 
+                        : 'font-semibold text-slate-800 dark:text-slate-200';
+
+                    const rowHighlightClass = isImportant
+                        ? 'bg-amber-50/25 dark:bg-amber-950/5 border-b border-slate-100 dark:border-slate-900 hover:bg-amber-50/40 dark:hover:bg-amber-950/10'
+                        : 'border-b border-slate-100 dark:border-slate-900 hover:bg-slate-50/50 dark:hover:bg-slate-900/40';
+
+                    const priorityBadge = isImportant
+                        ? `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-extrabold uppercase tracking-wide bg-amber-100 text-amber-800 dark:bg-amber-950/50 dark:text-amber-400 border border-amber-200 dark:border-amber-900/40 mr-1.5 select-none">🔥 Must Need</span>`
+                        : '';
+
+                    const deleteButton = top.isCustom
+                        ? `<button onclick="deleteCustomScreenshotTopic('${top.id}')" class="ml-2 text-red-500 hover:text-red-700 text-sm no-print" title="Delete Topic">❌</button>`
+                        : '';
+
+                    return `
+                        <tr class="${rowHighlightClass} transition">
+                            <td class="px-4 py-3.5 text-center font-bold text-slate-400 dark:text-slate-600 text-xs">${top.id}</td>
+                            <td class="px-4 py-3.5">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <input type="checkbox" ${isChecked} onchange="toggleScreenshotTopic('${top.id}')" class="interactive-checkbox w-4.5 h-4.5 rounded text-brandteal focus:ring-brandteal border-slate-350 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 cursor-pointer transition">
+                                        <span class="print-checkbox-indicator hidden"></span>
+                                        <div class="flex flex-wrap items-center gap-1">
+                                            ${priorityBadge}
+                                            <span class="${nameClass} text-sm leading-snug">${top.name}</span>
+                                        </div>
+                                    </div>
+                                    ${deleteButton}
+                                </div>
+                            </td>
+                            <td class="px-4 py-3.5 text-right">${starsHTML(top.priority)}</td>
+                        </tr>
+                    `;
+                }).join('');
+
+                card.innerHTML = `
+                    ${headerMetadataBlock}
+                    <div class="overflow-x-auto phase-content">
+                        <table class="min-w-full divide-y divide-slate-100 dark:divide-slate-800">
+                            <thead class="bg-slate-50/30 dark:bg-slate-950/30">
+                                <tr>
+                                    <th scope="col" class="px-4 py-3 text-center text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider w-24">Code</th>
+                                    <th scope="col" class="px-4 py-3 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Whiteboard Topic Checklist Item</th>
+                                    <th scope="col" class="px-4 py-3 text-right text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider w-36">Priority Rating</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-900 bg-white dark:bg-slate-950">
+                                ${tableRows || `<tr><td colspan="3" class="text-center py-6 text-xs text-slate-400">No matching topics found.</td></tr>`}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Navigation button highlights based on active track selection
+        function updateTabButtonHighlightStates() {
+            const buttonIds = ['mern', 'web', 'devops', 'dsa', 'ml', 'system_design', 'web3'];
+            buttonIds.forEach(id => {
+                const btn = document.getElementById(`nav-btn-${id}`);
+                if (btn) {
+                    btn.className = "px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800";
+                }
+            });
+
+            // Highlight the active button
+            let activeTargetId = activeMode === 'mern' ? 'mern' : screenshotZoneFilter;
+            const activeBtn = document.getElementById(`nav-btn-${activeTargetId}`);
+            if (activeBtn) {
+                activeBtn.className = "px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-md flex items-center gap-1.5 border bg-brandteal text-white border-brandteal hover:brightness-110";
+            }
+        }
+
+        // Checklist State Mutators
+        function toggleMernLecture(id, seconds) {
+            if (mernChecked[id]) {
+                delete mernChecked[id];
+                showToast("MERN Video marked as pending 📝", "info");
+            } else {
+                mernChecked[id] = seconds;
+                showToast("MERN Video marked as completed! 🎉", "success");
+            }
+            localStorage.setItem('mern-checked-videos', JSON.stringify(mernChecked));
+            calculateStatistics();
+        }
+
+        // Project Key Persistency
+        function toggleProjectKey(key) {
+            const current = localStorage.getItem(key) === 'true';
+            localStorage.setItem(key, !current);
+            showToast("Project matrix item updated.", "success");
+        }
+
+        function toggleScreenshotTopic(id) {
+            if (screenshotChecked[id]) {
+                delete screenshotChecked[id];
+                showToast("Whiteboard topic set to pending.", "info");
+            } else {
+                screenshotChecked[id] = true;
+                showToast("Whiteboard topic completed! 🌟", "success");
+            }
+            localStorage.setItem('screenshot-zones-checked-videos', JSON.stringify(screenshotChecked));
+            calculateStatistics();
+        }
+
+        // Dynamic statistics computation
+        function calculateStatistics() {
+            if (activeMode === 'mern') {
+                document.getElementById('metrics-syllabus-title').textContent = "MERN Course Blueprint";
+                
+                // Dynamic counts that respect custom topics added
+                let totalLectures = 0;
+                mernSyllabusData.forEach(p => {
+                    totalLectures += p.lectures.length;
+                });
+
+                document.getElementById('metrics-count-total').textContent = `${totalLectures} Lectures`;
+                document.getElementById('metrics-description-sub').textContent = "Uncompromised sequence tracking structured across 12 targeted placement phases.";
+                document.getElementById('metrics-duration').textContent = "114h 51m";
+
+                let completedCount = 0;
+                let completedSeconds = 0;
+                for (const key in mernChecked) {
+                    completedCount++;
+                    completedSeconds += mernChecked[key];
+                }
+
+                document.getElementById('completed-fraction').textContent = `${completedCount} / ${totalLectures}`;
+                
+                const percentage = totalLectures > 0 ? Math.round((completedCount / totalLectures) * 100) : 0;
+                document.getElementById('overall-percentage').textContent = `${percentage}%`;
+                document.getElementById('overall-progress-bar').style.width = `${percentage}%`;
+            } else {
+                const currentZone = screenshotSyllabusData.find(z => z.id === screenshotZoneFilter);
+                const zoneTitle = currentZone ? currentZone.name : "Screenshot Track";
+                const totalTopics = currentZone ? currentZone.topics.length : 0;
+
+                document.getElementById('metrics-syllabus-title').textContent = zoneTitle;
+                document.getElementById('metrics-description-sub').textContent = currentZone ? currentZone.description : "Specialized structural sequence roadmap.";
+
+                document.getElementById('metrics-count-total').textContent = `${totalTopics} Topics`;
+                document.getElementById('metrics-duration').textContent = "Sunday Track Focus";
+
+                let completedCount = 0;
+                if (currentZone) {
+                    currentZone.topics.forEach(topic => {
+                        if (screenshotChecked[topic.id]) {
+                            completedCount++;
+                        }
+                    });
+                }
+
+                document.getElementById('completed-fraction').textContent = `${completedCount} / ${totalTopics}`;
+                const percentage = totalTopics > 0 ? Math.round((completedCount / totalTopics) * 100) : 0;
+                document.getElementById('overall-percentage').textContent = `${percentage}%`;
+                document.getElementById('overall-progress-bar').style.width = `${percentage}%`;
+            }
+        }
+
+        // Set specific View Track from navigation panel
+        function setTrackView(mode, zoneFilter) {
+            activeMode = mode;
+            screenshotZoneFilter = zoneFilter;
+            
+            localStorage.setItem('curriculum-active-mode', mode);
+            if (mode === 'screenshot') {
+                localStorage.setItem('screenshot-active-zone', zoneFilter);
+            }
+
+            searchQuery = '';
+            document.getElementById('search-bar').value = '';
+            renderWorkspace();
+        }
+
+        // Render dynamic filtering buttons
+        function renderFilters() {
+            const filterWrapper = document.getElementById('filters-wrapper');
+            filterWrapper.innerHTML = '';
+
+            if (activeMode === 'mern') {
+                filterWrapper.innerHTML = `
+                    <span class="text-xs font-bold text-slate-400 mr-1">Blueprint Filters:</span>
+                    <button onclick="setMernFilter('all')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${mernFilter === 'all' ? 'bg-brandteal text-white' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }">All Lectures</button>
+                    <button onclick="setMernFilter('stars')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${mernFilter === 'stars' ? 'bg-brandteal text-white' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }">⭐⭐⭐⭐⭐ Job Priority</button>
+                    <button onclick="setMernFilter('optional')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${mernFilter === 'optional' ? 'bg-brandteal text-white' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }">Phase 6B (Optional SQL)</button>
+                `;
+            } else {
+                filterWrapper.innerHTML = `
+                    <span class="text-xs font-bold text-slate-400 mr-1">Zone Status:</span>
+                    <span class="text-xs font-extrabold text-brandteal bg-teal-50 dark:bg-teal-950/40 px-3 py-1.5 rounded-lg border border-teal-100 dark:border-teal-900/40">
+                        Active Tracker Module
+                    </span>
+                `;
+            }
+        }
+
+        function setMernFilter(f) {
+            mernFilter = f;
+            renderWorkspace();
+        }
+
+        function markCurrentSyllabusComplete() {
+            if (activeMode === 'mern') {
+                mernSyllabusData.forEach(p => {
+                    p.lectures.forEach(l => {
+                        mernChecked[l.id] = l.seconds;
+                    });
+                });
+                localStorage.setItem('mern-checked-videos', JSON.stringify(mernChecked));
+                showToast("All MERN Stack lectures completed! 🏆", "success");
+            } else {
+                const currentZone = screenshotSyllabusData.find(z => z.id === screenshotZoneFilter);
+                if (currentZone) {
+                    currentZone.topics.forEach(t => {
+                        screenshotChecked[t.id] = true;
+                    });
+                    localStorage.setItem('screenshot-zones-checked-videos', JSON.stringify(screenshotChecked));
+                    showToast(`All ${currentZone.name} targets completed! 🏆`, "success");
+                }
+            }
+            renderWorkspace();
+        }
+
+        function resetCurrentSyllabusProgress() {
+            if (activeMode === 'mern') {
+                mernChecked = {};
+                localStorage.setItem('mern-checked-videos', JSON.stringify(mernChecked));
+                showToast("MERN Stack progress reset successfully. 💪", "info");
+            } else {
+                const currentZone = screenshotSyllabusData.find(z => z.id === screenshotZoneFilter);
+                if (currentZone) {
+                    currentZone.topics.forEach(t => {
+                        delete screenshotChecked[t.id];
+                    });
+                    localStorage.setItem('screenshot-zones-checked-videos', JSON.stringify(screenshotChecked));
+                    
+                    currentZone.projects.forEach((_, idx) => {
+                        localStorage.removeItem(`screenshot-checked-${currentZone.id}-proj-${idx}`);
+                    });
+                    showToast(`${currentZone.name} progress reset successfully. 💪`, "info");
+                }
+            }
+            renderWorkspace();
+        }
+
+        // Toast Notification Pipeline
+        function showToast(message, type = "success") {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `p-3.5 rounded-xl shadow-lg border text-xs font-bold flex items-center gap-2 transform translate-y-4 opacity-0 transition-all duration-300 pointer-events-auto bg-white dark:bg-slate-900 ${
+                type === 'success' ? 'border-emerald-500/30 text-emerald-600 dark:text-emerald-400' : 'border-blue-500/30 text-blue-500 dark:text-blue-400'
+            }`;
+            
+            toast.innerHTML = `
+                <span>${type === 'success' ? '✅' : 'ℹ️'}</span>
+                <span>${message}</span>
+            `;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-4', 'opacity-0');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-4', 'opacity-0');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 2500);
+        }
+
+        // Theme Switcher Initializer
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const lightIcon = document.getElementById('light-icon');
+        const darkIcon = document.getElementById('dark-icon');
+        
+        function initTheme() {
+            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                lightIcon.classList.remove('hidden');
+                darkIcon.classList.add('hidden');
+            } else {
+                document.documentElement.classList.remove('dark');
+                darkIcon.classList.remove('hidden');
+                lightIcon.classList.add('hidden');
+            }
+        }
+        
+        themeToggleBtn.addEventListener('click', function() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+                darkIcon.classList.remove('hidden');
+                lightIcon.classList.add('hidden');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+                lightIcon.classList.remove('hidden');
+                darkIcon.classList.add('hidden');
+            }
+        });
+
+        // Search Action Listener
+        document.getElementById('search-bar').addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            renderWorkspace();
+        });
+
+        // App startup
+        window.onload = function() {
+            initTheme();
+            initSyllabusDatasets();
+            renderWorkspace();
+        }
+    </script>
+</body>
+</html>
