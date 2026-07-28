@@ -174,7 +174,7 @@
                     🏗️ System Design
                 </button>
 
-                <button id="nav-btn-roadmap" onclick="setTrackView('roadmap')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-emerald-300 bg-emerald-50 text-emerald-800 hover:bg-emerald-100 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
+                <button id="nav-btn-roadmap" onclick="setTrackView('roadmap')" class="order-first px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-emerald-300 bg-emerald-50 text-emerald-800 hover:bg-emerald-100 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
                     Clarity Roadmap
                 </button>
 
@@ -236,6 +236,11 @@
                     <p class="text-xs font-black uppercase tracking-[0.2em] text-emerald-300">Dedicated long-term roadmap | September 2026 to September 2027+</p>
                     <h2 class="mt-2 text-3xl md:text-4xl font-black">Clarity Roadmap: step-by-step execution plan</h2>
                     <p class="mt-3 max-w-4xl text-sm leading-6 text-slate-200">This is a separate page. Tick every action only after it is completed. Your progress is saved in this browser.</p>
+                    <div class="mt-6 border-t border-white/20 pt-5">
+                        <h3 class="text-4xl font-black tracking-tight text-emerald-200 md:text-5xl">NATURALL FARM Startup</h3>
+                        <p class="mt-3 max-w-5xl text-sm font-bold leading-6 text-white md:text-base">Full Stack Developer (DSA, System Design, DevOps and Applied AI) | September 2026 - December 2027: onsite job period for 30K - 40K</p>
+                        <p class="mt-2 max-w-5xl text-sm leading-6 text-emerald-100 md:text-base">Weekend R&amp;D: NATURALL FARM &rarr; Remote foreign job &rarr; Practical agriculture-startup experiments that execute and implement the R&amp;D learning &rarr; Build a globally impactful startup in the agriculture field.</p>
+                    </div>
                     <div class="mt-5 flex flex-wrap gap-2 text-xs font-bold">
                         <span class="rounded-full bg-white/15 px-3 py-1.5">Weekdays: maximum 3 hours self-study</span>
                         <span class="rounded-full bg-white/15 px-3 py-1.5">Weekends: farm R&D, field visits & documentation</span>
@@ -1180,7 +1185,7 @@
 
         // Navigation button highlights based on active track selection
         function updateTabButtonHighlightStates() {
-            const buttonIds = ['mern', 'web', 'devops', 'dsa', 'ml', 'system_design', 'roadmap', 'web3'];
+            const buttonIds = ['roadmap', 'mern', 'web', 'devops', 'dsa', 'ml', 'system_design', 'web3'];
             buttonIds.forEach(id => {
                 const btn = document.getElementById(`nav-btn-${id}`);
                 if (btn) {
