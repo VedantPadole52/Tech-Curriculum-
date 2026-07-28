@@ -30,6 +30,10 @@
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
+
+        html {
+            scroll-behavior: smooth;
+        }
         
         /* Custom scrollbar */
         ::-webkit-scrollbar {
@@ -170,6 +174,10 @@
                     🏗️ System Design
                 </button>
 
+                <button onclick="document.getElementById('clarity-roadmap').scrollIntoView({ behavior: 'smooth', block: 'start' })" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-emerald-300 bg-emerald-50 text-emerald-800 hover:bg-emerald-100 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
+                    Clarity Roadmap
+                </button>
+
                 <!-- Web3 Button -->
                 <button id="nav-btn-web3" onclick="setTrackView('screenshot', 'web3')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
                     🌐 Web3 (Sunday)
@@ -217,6 +225,91 @@
                 </div>
                 <div class="mt-4 text-xs text-amber-500 font-semibold no-print flex items-center gap-1">
                     <span>⭐⭐⭐⭐⭐ Junior Job Ready rating system</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Personal Career & Agriculture Operating Roadmap -->
+        <section id="clarity-roadmap" class="mb-8 scroll-mt-6">
+            <div class="rounded-3xl overflow-hidden shadow-xl border border-emerald-200 dark:border-emerald-900 bg-white dark:bg-slate-950">
+                <div class="p-6 md:p-8 bg-gradient-to-br from-emerald-800 via-teal-800 to-slate-900 text-white">
+                    <p class="text-xs font-black uppercase tracking-[0.2em] text-emerald-300">Personal operating plan · September 2026 → September 2027+</p>
+                    <h2 class="mt-2 text-3xl md:text-4xl font-black">Clarity Roadmap: Build skills, protect focus, fund the farm</h2>
+                    <p class="mt-3 max-w-4xl text-sm leading-6 text-slate-200">The goal is not to chase every technology or work endlessly. Build proof of skill, keep a professional boundary at work, and run small agriculture experiments that earn the right to scale.</p>
+                    <div class="mt-5 flex flex-wrap gap-2 text-xs font-bold">
+                        <span class="rounded-full bg-white/15 px-3 py-1.5">Weekdays: maximum 3 hours self-study</span>
+                        <span class="rounded-full bg-white/15 px-3 py-1.5">Weekends: farm R&D, field visits & documentation</span>
+                        <span class="rounded-full bg-white/15 px-3 py-1.5">Principle: portfolio before promises</span>
+                    </div>
+                </div>
+
+                <div class="p-6 md:p-8 space-y-8">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div class="rounded-2xl border border-slate-200 dark:border-slate-800 p-4 bg-slate-50 dark:bg-slate-900"><p class="text-xs font-bold text-slate-500 uppercase">Sep–Nov 2026</p><h3 class="mt-1 font-extrabold text-slate-900 dark:text-white">Full-stack foundation</h3><p class="mt-2 text-xs text-slate-600 dark:text-slate-400">HTML/CSS, JavaScript, React, Node, databases. Ship one deployed CRUD product.</p></div>
+                        <div class="rounded-2xl border border-slate-200 dark:border-slate-800 p-4 bg-slate-50 dark:bg-slate-900"><p class="text-xs font-bold text-slate-500 uppercase">Dec 2026–Feb 2027</p><h3 class="mt-1 font-extrabold text-slate-900 dark:text-white">Production engineering</h3><p class="mt-2 text-xs text-slate-600 dark:text-slate-400">TypeScript, testing, Docker, CI/CD, cloud basics. Deploy and monitor a real app.</p></div>
+                        <div class="rounded-2xl border border-slate-200 dark:border-slate-800 p-4 bg-slate-50 dark:bg-slate-900"><p class="text-xs font-bold text-slate-500 uppercase">Mar–May 2027</p><h3 class="mt-1 font-extrabold text-slate-900 dark:text-white">DSA + Applied AI</h3><p class="mt-2 text-xs text-slate-600 dark:text-slate-400">Patterns to medium level, then APIs, RAG and evaluations. Build one useful AI workflow.</p></div>
+                        <div class="rounded-2xl border border-slate-200 dark:border-slate-800 p-4 bg-slate-50 dark:bg-slate-900"><p class="text-xs font-bold text-slate-500 uppercase">Jun–Sep 2027</p><h3 class="mt-1 font-extrabold text-slate-900 dark:text-white">System design + interviews</h3><p class="mt-2 text-xs text-slate-600 dark:text-slate-400">Design simple scalable systems, polish portfolio, practise interviews and begin targeted applications.</p></div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <article class="rounded-2xl border border-slate-200 dark:border-slate-800 p-5">
+                            <h3 class="font-extrabold text-slate-900 dark:text-white">Weekly learning system</h3>
+                            <ol class="mt-4 space-y-3 text-sm text-slate-600 dark:text-slate-300 list-decimal list-inside">
+                                <li><strong>Mon–Thu:</strong> 90 minutes building + 60 minutes curriculum/DSA + 30 minutes notes or communication practice.</li>
+                                <li><strong>Friday:</strong> deploy, write a short project update, and close unfinished work—no new course.</li>
+                                <li><strong>Weekend:</strong> farm visit, farmer/institute conversation, field photos, cost log, and one experiment task.</li>
+                                <li><strong>Every month:</strong> publish one project or case study and review what created evidence of progress.</li>
+                            </ol>
+                        </article>
+                        <article class="rounded-2xl border border-slate-200 dark:border-slate-800 p-5">
+                            <h3 class="font-extrabold text-slate-900 dark:text-white">Professional without becoming trapped</h3>
+                            <ul class="mt-4 space-y-3 text-sm text-slate-600 dark:text-slate-300">
+                                <li><strong>Be reliable:</strong> clarify scope, give realistic estimates, document decisions, and communicate risks early.</li>
+                                <li><strong>Set boundaries:</strong> overtime is an exception with a clear reason, priority and recovery plan—not a permanent default.</li>
+                                <li><strong>Separate identity from the job:</strong> take feedback on the work, not as a judgement of your worth. Keep savings and skills as your freedom fund.</li>
+                                <li><strong>Measure your return:</strong> choose work that improves craft, portfolio, network, compensation or time flexibility.</li>
+                            </ul>
+                        </article>
+                    </div>
+
+                    <div class="rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900 p-5">
+                        <h3 class="font-extrabold text-amber-950 dark:text-amber-200">50 LPA / foreign remote role: treat it as a direction, not a September 2027 guarantee</h3>
+                        <p class="mt-2 text-sm leading-6 text-amber-900/80 dark:text-amber-100/80">A high-paying remote role generally follows demonstrated senior-level ownership, strong communication and hiring-market timing. From this plan, aim first for a stronger role and compounding evidence. Build 3 production-quality case studies, practise DSA/system-design interviews weekly from March 2027, write clear engineering notes, and apply selectively. Networking matters when it is genuine: share useful work, ask informed questions, request feedback, and seek referrals after you have proof—not before.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <article class="rounded-2xl border border-emerald-200 dark:border-emerald-900 p-5 bg-emerald-50/50 dark:bg-emerald-950/20">
+                            <p class="text-xs font-black uppercase tracking-wider text-emerald-700 dark:text-emerald-400">Morshi, Maharashtra · ₹20,000 experiment</p>
+                            <h3 class="mt-1 font-extrabold text-slate-900 dark:text-white">Start with a small, measurable micro-plot—not one acre of risk</h3>
+                            <p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">₹20,000 is too small for a reliable one-acre commercial launch. Use a 0.05–0.10 acre test plot first, keep the remaining land for the existing low-risk crop, and scale only after two profitable cycles. Confirm soil, water availability, local buyer and pest pressure with a KVK/agriculture officer before buying seed.</p>
+                            <ol class="mt-4 space-y-2 text-sm text-slate-600 dark:text-slate-300 list-decimal list-inside">
+                                <li>Week 1–2: soil and water test; map irrigation; speak with 10 local buyers/farmers.</li>
+                                <li>Week 3: pick one crop and one buyer path; write expected price, yield, cost and failure threshold.</li>
+                                <li>Weeks 4–16: drip/mulch only where practical, record every input, weekly photos, pest observations and sales.</li>
+                                <li>After harvest: calculate net profit per sq ft, labour hours and buyer repeat rate before expanding.</li>
+                            </ol>
+                        </article>
+                        <article class="rounded-2xl border border-emerald-200 dark:border-emerald-900 p-5">
+                            <h3 class="font-extrabold text-slate-900 dark:text-white">Crop decision shortlist: validate locally</h3>
+                            <div class="mt-4 space-y-3 text-sm text-slate-600 dark:text-slate-300">
+                                <p><strong>1. Leafy greens / coriander:</strong> fast learning cycles and local demand; sensitive to water, heat and same-day selling.</p>
+                                <p><strong>2. Marigold:</strong> possible local/seasonal demand; price volatility is high, so secure a buyer before planting.</p>
+                                <p><strong>3. Lemongrass or palmarosa:</strong> lower day-to-day labour once established and useful for value-addition; only choose after confirming a distillation/processor buyer.</p>
+                                <p><strong>4. Nursery seedlings:</strong> often a better first business than one crop: small space, repeat customers and tech-enabled order tracking. Learn propagation first.</p>
+                            </div>
+                            <p class="mt-4 text-xs font-semibold text-rose-700 dark:text-rose-300">Do not choose solely by headline profit margins. Water, market distance, harvest labour and buyer commitment decide the actual margin.</p>
+                        </article>
+                    </div>
+
+                    <div class="rounded-2xl border border-slate-200 dark:border-slate-800 p-5">
+                        <h3 class="font-extrabold text-slate-900 dark:text-white">Bootstrap path: farm → local brand → Pan-India → export-ready</h3>
+                        <div class="mt-4 grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
+                            <div><strong class="text-emerald-700 dark:text-emerald-400">1. Validate</strong><p class="mt-1 text-slate-600 dark:text-slate-400">2026–27: small tests, farm visits, buyer interviews, transparent records.</p></div>
+                            <div><strong class="text-emerald-700 dark:text-emerald-400">2. Repeat</strong><p class="mt-1 text-slate-600 dark:text-slate-400">2027–28: repeat the profitable unit; standardise quality, packaging and delivery.</p></div>
+                            <div><strong class="text-emerald-700 dark:text-emerald-400">3. Value add</strong><p class="mt-1 text-slate-600 dark:text-slate-400">Build a local brand around traceability, seedlings, dried/herbal products or farm experiences.</p></div>
+                            <div><strong class="text-emerald-700 dark:text-emerald-400">4. Scale responsibly</strong><p class="mt-1 text-slate-600 dark:text-slate-400">Only after repeatable unit economics: compliance, quality systems, logistics and larger contracts.</p></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
