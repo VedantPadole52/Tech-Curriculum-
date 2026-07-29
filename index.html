@@ -30,10 +30,6 @@
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
-
-        html {
-            scroll-behavior: smooth;
-        }
         
         /* Custom scrollbar */
         ::-webkit-scrollbar {
@@ -174,13 +170,12 @@
                     🏗️ System Design
                 </button>
 
-                <button id="nav-btn-roadmap" onclick="setTrackView('roadmap')" class="order-first px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-emerald-300 bg-emerald-50 text-emerald-800 hover:bg-emerald-100 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
-                    Clarity Roadmap
-                </button>
-
                 <!-- Web3 Button -->
                 <button id="nav-btn-web3" onclick="setTrackView('screenshot', 'web3')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
                     🌐 Web3 (Sunday)
+                </button>
+                <button id="nav-btn-clarity" onclick="setTrackView('clarity', 'clarity')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
+                    🧭 Clarity Roadmap
                 </button>
             </div>
         </div>
@@ -229,41 +224,8 @@
             </div>
         </section>
 
-        <!-- Personal Career & Agriculture Operating Roadmap -->
-        <section id="clarity-roadmap" class="hidden mb-8 scroll-mt-6">
-            <div class="rounded-3xl overflow-hidden shadow-xl border border-emerald-200 dark:border-emerald-900 bg-white dark:bg-slate-950">
-                <div class="p-6 md:p-8 bg-gradient-to-br from-emerald-800 via-teal-800 to-slate-900 text-white">
-                    <p class="text-xs font-black uppercase tracking-[0.2em] text-emerald-300">Dedicated long-term roadmap | September 2026 to September 2027+</p>
-                    <h2 class="mt-2 text-3xl md:text-4xl font-black">Clarity Roadmap: step-by-step execution plan</h2>
-                    <p class="mt-3 max-w-4xl text-sm leading-6 text-slate-200">This is a separate page. Tick every action only after it is completed. Your progress is saved in this browser.</p>
-                    <div class="mt-6 border-t border-white/20 pt-5">
-                        <h3 class="text-4xl font-black tracking-tight text-emerald-200 md:text-5xl">NATURALL FARM Startup</h3>
-                        <p class="mt-3 max-w-5xl text-sm font-bold leading-6 text-white md:text-base">Full Stack Developer (DSA, System Design, DevOps and Applied AI) | September 2026 - December 2027: onsite job period for 30K - 40K</p>
-                        <p class="mt-2 max-w-5xl text-sm leading-6 text-emerald-100 md:text-base">Weekend R&amp;D: NATURALL FARM &rarr; Remote foreign job &rarr; Practical agriculture-startup experiments that execute and implement the R&amp;D learning &rarr; Build a globally impactful startup in the agriculture field.</p>
-                    </div>
-                    <div class="mt-5 flex flex-wrap gap-2 text-xs font-bold">
-                        <span class="rounded-full bg-white/15 px-3 py-1.5">Weekdays: maximum 3 hours self-study</span>
-                        <span class="rounded-full bg-white/15 px-3 py-1.5">Weekends: farm R&D, field visits & documentation</span>
-                        <span id="roadmap-progress-label" class="rounded-full bg-white/15 px-3 py-1.5">0 / 0 actions completed</span>
-                    </div>
-                </div>
-
-                <div class="p-6 md:p-8 space-y-8">
-                    <div class="space-y-5">
-                        <article class="border-l-4 border-teal-500 pl-5 py-1"><p class="text-xs font-black uppercase tracking-wider text-teal-700 dark:text-teal-400">Always-on weekly operating system | Sep 2026-Sep 2027</p><h3 class="mt-1 text-lg font-extrabold text-slate-900 dark:text-white">Use this combination every week</h3><div class="mt-3 grid gap-2 text-sm text-slate-700 dark:text-slate-300"><label class="flex gap-3"><input data-roadmap-step="weekly-morning-dsa" onchange="toggleRoadmapStep(this.dataset.roadmapStep)" type="checkbox"> Every weekday morning: 45-60 minutes DSA. Start basic, then patterns, then medium problems. Keep one error notebook.</label><label class="flex gap-3"><input data-roadmap-step="weekly-evening-build" onchange="toggleRoadmapStep(this.dataset.roadmapStep)" type="checkbox"> Weekday evening: maximum 2 hours for the current main topic and 30 minutes for notes/communication.</label><label class="flex gap-3"><input data-roadmap-step="weekly-friday-review" onchange="toggleRoadmapStep(this.dataset.roadmapStep)" type="checkbox"> Friday: deploy or document one improvement; review work boundaries and next-week priorities.</label><label class="flex gap-3"><input data-roadmap-step="weekly-weekend-agri" onchange="toggleRoadmapStep(this.dataset.roadmapStep)" type="checkbox"> Weekend: agriculture R&D only - farm visits, buyer conversations, books, online research and a written field log.</label></div></article>
-                        <article class="border-l-4 border-blue-500 pl-5 py-1"><p class="text-xs font-black uppercase tracking-wider text-blue-700 dark:text-blue-400">Phase 1 | Sep-Nov 2026 | Full-stack basic</p><h3 class="mt-1 text-lg font-extrabold text-slate-900 dark:text-white">Learn the web from browser to database</h3><div class="mt-3 grid gap-2 text-sm text-slate-700 dark:text-slate-300"><label class="flex gap-3"><input data-roadmap-step="p1-web-core" onchange="toggleRoadmapStep(this.dataset.roadmapStep)" type="checkbox"> HTML, CSS, responsive design, JavaScript fundamentals, async code and Git/GitHub.</label><label class="flex gap-3"><input data-roadmap-step="p1-react" onchange="toggleRoadmapStep(this.dataset.roadmapStep)" type="checkbox"> React fundamentals: components, state, routing, forms and API integration.</label><label class="flex gap-3"><input data-roadmap-step="p1-backend" onchange="toggleRoadmapStep(this.dataset.roadmapStep)" type="checkbox"> Node, Express, REST APIs, authentication and SQL/Postgres basics.</label><label class="flex gap-3"><input data-roadmap-step="p1-dsa" onchange="toggleRoadmapStep(this.dataset.roadmapStep)" type="checkbox"> DSA morning focus: arrays, strings, hashing, sorting, binary search and two pointers.</label></div></article>
-                        <article class="border-l-4 border-violet-500 pl-5 py-1"><p class="text-xs font-black uppercase tracking-wider text-violet-700 dark:text-violet-400">Phase 2 | Dec 2026-Feb 2027 | Full-stack advanced + Project 1</p><h3 class="mt-1 text-lg font-extrabold text-slate-900 dark:text-white">Build a production-quality farm operations platform</h3><div class="mt-3 grid gap-2 text-sm text-slate-700 dark:text-slate-300"><label class="flex gap-3"><input data-roadmap-step="p2-ts-testing" onchange="toggleRoadmapStep(this.dataset.roadmapStep)" type="checkbox"> Learn TypeScript, validation, testing, error handling, security and role-based access.</label><label class="flex gap-3"><input data-roadmap-step="p2-project-one" onchange="toggleRoadmapStep(this.dataset.roadmapStep)" type="checkbox"> Project 1: FarmOps - crop/expense/inventory/sales tracker with dashboard, authentication and reports.</label><label class="flex gap-3"><input data-roadmap-step="p2-case-study" onchange="toggleRoadmapStep(this.dataset.roadmapStep)" type="checkbox"> Publish Project 1 with live demo, clean README, architecture diagram and lessons learned.</label><label class="flex gap-3"><input data-roadmap-step="p2-dsa" onchange="toggleRoadmapStep(this.dataset.roadmapStep)" type="checkbox"> DSA morning focus: linked lists, stacks, queues, recursion, trees, heaps and sliding window.</label></div></article>
-                        <article class="border-l-4 border-amber-500 pl-5 py-1"><p class="text-xs font-black uppercase tracking-wider text-amber-700 dark:text-amber-400">Phase 3 | Mar-May 2027 | DevOps + Project 2</p><h3 class="mt-1 text-lg font-extrabold text-slate-900 dark:text-white">Learn how reliable products are built and operated</h3><div class="mt-3 grid gap-2 text-sm text-slate-700 dark:text-slate-300"><label class="flex gap-3"><input data-roadmap-step="p3-devops" onchange="toggleRoadmapStep(this.dataset.roadmapStep)" type="checkbox"> Learn Linux/Bash, Docker, CI/CD, cloud basics, logging, monitoring and deployment.</label><label class="flex gap-3"><input data-roadmap-step="p3-project-two" onchange="toggleRoadmapStep(this.dataset.roadmapStep)" type="checkbox"> Project 2: AgriMarket - local producer/buyer marketplace with listings, orders, notifications and analytics.</label><label class="flex gap-3"><input data-roadmap-step="p3-prod-project" onchange="toggleRoadmapStep(this.dataset.roadmapStep)" type="checkbox"> Deploy Project 2 with Docker, automated tests, CI/CD and basic monitoring.</label><label class="flex gap-3"><input data-roadmap-step="p3-dsa" onchange="toggleRoadmapStep(this.dataset.roadmapStep)" type="checkbox"> DSA morning focus: graphs, greedy, dynamic programming and medium interview problems.</label></div></article>
-                        <article class="border-l-4 border-rose-500 pl-5 py-1"><p class="text-xs font-black uppercase tracking-wider text-rose-700 dark:text-rose-400">Phase 4 | Jun-Jul 2027 | Applied AI</p><h3 class="mt-1 text-lg font-extrabold text-slate-900 dark:text-white">Add AI only after you can build and deploy normal software</h3><div class="mt-3 grid gap-2 text-sm text-slate-700 dark:text-slate-300"><label class="flex gap-3"><input data-roadmap-step="p4-ai-core" onchange="toggleRoadmapStep(this.dataset.roadmapStep)" type="checkbox"> Learn Python basics, LLM APIs, embeddings, RAG, structured output and evaluation.</label><label class="flex gap-3"><input data-roadmap-step="p4-ai-feature" onchange="toggleRoadmapStep(this.dataset.roadmapStep)" type="checkbox"> Add an AI feature to Project 1 or 2: crop/farm document search, buyer support or report summary.</label><label class="flex gap-3"><input data-roadmap-step="p4-ai-case-study" onchange="toggleRoadmapStep(this.dataset.roadmapStep)" type="checkbox"> Publish an AI case study explaining the problem, data limits, evaluation and business value.</label><label class="flex gap-3"><input data-roadmap-step="p4-interview-start" onchange="toggleRoadmapStep(this.dataset.roadmapStep)" type="checkbox"> Begin one mock interview per week: DSA, project explanation and behavioural communication.</label></div></article>
-                        <article class="border-l-4 border-cyan-500 pl-5 py-1"><p class="text-xs font-black uppercase tracking-wider text-cyan-700 dark:text-cyan-400">Phase 5 | Aug-Sep 2027 | System design + remote-job preparation</p><h3 class="mt-1 text-lg font-extrabold text-slate-900 dark:text-white">Package proof of work for the next role</h3><div class="mt-3 grid gap-2 text-sm text-slate-700 dark:text-slate-300"><label class="flex gap-3"><input data-roadmap-step="p5-design" onchange="toggleRoadmapStep(this.dataset.roadmapStep)" type="checkbox"> Learn APIs, databases, caching, queues, rate limits, scaling, observability and trade-offs.</label><label class="flex gap-3"><input data-roadmap-step="p5-resume" onchange="toggleRoadmapStep(this.dataset.roadmapStep)" type="checkbox"> Finalise portfolio, GitHub, resume and two-minute project explanations.</label><label class="flex gap-3"><input data-roadmap-step="p5-apply" onchange="toggleRoadmapStep(this.dataset.roadmapStep)" type="checkbox"> Apply selectively, practise interviews weekly and build genuine relationships through useful public work.</label><label class="flex gap-3"><input data-roadmap-step="p5-job-boundary" onchange="toggleRoadmapStep(this.dataset.roadmapStep)" type="checkbox"> Choose a remote job with predictable hours; reserve a fixed startup fund and protect weekend R&D time.</label></div></article>
-                        <article class="border-l-4 border-emerald-500 pl-5 py-1"><p class="text-xs font-black uppercase tracking-wider text-emerald-700 dark:text-emerald-400">Startup execution | Sep 2027-Sep 2028 | Remote job funds bootstrap</p><h3 class="mt-1 text-lg font-extrabold text-slate-900 dark:text-white">One year of agriculture experimentation before scale</h3><div class="mt-3 grid gap-2 text-sm text-slate-700 dark:text-slate-300"><label class="flex gap-3"><input data-roadmap-step="farm-discovery" onchange="toggleRoadmapStep(this.dataset.roadmapStep)" type="checkbox"> Sep-Nov: validate soil/water, visit farms and institutions, interview 10 farmers and 10 buyers, select one problem.</label><label class="flex gap-3"><input data-roadmap-step="farm-microtest" onchange="toggleRoadmapStep(this.dataset.roadmapStep)" type="checkbox"> Dec-Feb: run a small 0.05-0.10 acre or nursery test; record every cost, yield, labour hour and sale.</label><label class="flex gap-3"><input data-roadmap-step="farm-repeat" onchange="toggleRoadmapStep(this.dataset.roadmapStep)" type="checkbox"> Mar-Jun: repeat only the best unit for two cycles; improve quality, packaging, direct buyer relationships and unit economics.</label><label class="flex gap-3"><input data-roadmap-step="farm-execute" onchange="toggleRoadmapStep(this.dataset.roadmapStep)" type="checkbox"> Jul-Sep: create a small brand and operating system; scale only if profit, customer repeat and your job-life balance are proven.</label></div></article>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- Add Custom Topic Panel (Dynamic & Persistent) -->
-        <section id="custom-topic-panel" class="mb-8 p-6 bg-white dark:bg-slate-950 rounded-2xl shadow border border-slate-200 dark:border-slate-800 no-print custom-topic-panel">
+        <section class="mb-8 p-6 bg-white dark:bg-slate-950 rounded-2xl shadow border border-slate-200 dark:border-slate-800 no-print custom-topic-panel">
             <div class="flex items-center gap-2.5 mb-4">
                 <span class="text-xl">➕</span>
                 <h3 class="text-base font-bold text-slate-900 dark:text-white">Add Topic to Current Active Track</h3>
@@ -768,11 +730,20 @@
         let activeMode = localStorage.getItem('curriculum-active-mode') || 'mern'; // 'mern' or 'screenshot'
         let mernChecked = JSON.parse(localStorage.getItem('mern-checked-videos')) || {};
         let screenshotChecked = JSON.parse(localStorage.getItem('screenshot-zones-checked-videos')) || {};
-        let roadmapChecked = JSON.parse(localStorage.getItem('clarity-roadmap-checked')) || {};
         
         let searchQuery = '';
         let mernFilter = 'all'; // 'all', 'stars' (priority 5), 'optional' (Phase 6B)
         let screenshotZoneFilter = localStorage.getItem('screenshot-active-zone') || 'web'; 
+
+        const CLARITY_ITEMS = [
+            { id: 'foundation', title: 'Sep–Dec 2026 · Full-stack foundation', detail: 'Ship 2 responsive full-stack projects. Master HTML/CSS, JavaScript/TypeScript, React, Node.js, SQL, Git and deployment.' },
+            { id: 'production', title: 'Jan–Mar 2027 · Production engineering + DevOps', detail: 'Build one production-quality product: authentication, tests, Docker, CI/CD, cloud deployment, monitoring and a clear README.' },
+            { id: 'dsa', title: 'Apr–May 2027 · DSA basics to medium', detail: 'Solve patterns, not random questions: arrays, strings, hash maps, two pointers, trees, graphs, recursion and dynamic programming.' },
+            { id: 'ai', title: 'Jun–Jul 2027 · Applied AI', detail: 'Deliver a useful RAG or workflow-automation product with evaluations, observability, structured outputs and a real user problem.' },
+            { id: 'design', title: 'Aug–Sep 2027 · System design + interview proof', detail: 'Practice APIs, databases, caching, queues, reliability and trade-offs. Publish 3 case studies and complete mock interviews.' },
+            { id: 'farm', title: 'Every weekend · Morshi farm research', detail: 'Visit farms and institutions, record costs/yield/buyer feedback, and run one small measured trial before expanding.' },
+            { id: 'professional', title: 'Every week · Communication & professional habits', detail: 'Write a weekly update, practise one spoken explanation, protect work boundaries, and document outcomes instead of chasing overtime.' }
+        ];
 
         // Dynamic Syllabus Registries (cloned on startup)
         let mernSyllabusData = [];
@@ -804,7 +775,6 @@
 
         // Render target options inside selector dropdown dynamically
         function updateTargetModuleDropdown() {
-            if (activeMode === 'roadmap') return;
             const dropdown = document.getElementById('topic-target-module');
             const targetLabel = document.getElementById('target-phase-label');
             const durationContainer = document.getElementById('duration-input-container');
@@ -931,17 +901,14 @@
         // Render Workspace Content Based on mode
         function renderWorkspace() {
             const container = document.getElementById('workspace-container');
-            const isRoadmap = activeMode === 'roadmap';
-            document.getElementById('clarity-roadmap').classList.toggle('hidden', !isRoadmap);
-            document.getElementById('executive-summary').classList.toggle('hidden', isRoadmap);
-            document.getElementById('custom-topic-panel').classList.toggle('hidden', isRoadmap);
-            document.getElementById('controls').classList.toggle('hidden', isRoadmap);
             container.innerHTML = '';
+            document.querySelector('.custom-topic-panel').style.display = activeMode === 'clarity' ? 'none' : '';
+            document.getElementById('controls').style.display = activeMode === 'clarity' ? 'none' : '';
 
-            if (isRoadmap) {
-                renderRoadmapChecklist();
-            } else if (activeMode === 'mern') {
+            if (activeMode === 'mern') {
                 renderMernSyllabus(container);
+            } else if (activeMode === 'clarity') {
+                renderClarityRoadmap(container);
             } else {
                 renderScreenshotSyllabus(container);
             }
@@ -952,15 +919,76 @@
             updateTabButtonHighlightStates();
         }
 
-        function renderRoadmapChecklist() {
-            const steps = document.querySelectorAll('[data-roadmap-step]');
-            let completed = 0;
-            steps.forEach(step => {
-                const checked = Boolean(roadmapChecked[step.dataset.roadmapStep]);
-                step.checked = checked;
-                if (checked) completed++;
-            });
-            document.getElementById('roadmap-progress-label').textContent = `${completed} / ${steps.length} actions completed`;
+        function renderClarityRoadmap(container) {
+            const completed = JSON.parse(localStorage.getItem('clarity-roadmap-checked')) || {};
+            const itemCards = CLARITY_ITEMS.map((item, index) => `
+                <label class="block cursor-pointer rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 p-4 transition hover:border-brandteal hover:shadow-sm">
+                    <div class="flex gap-3">
+                        <input type="checkbox" ${completed[item.id] ? 'checked' : ''} onchange="toggleClarityItem('${item.id}')" class="mt-1 h-4 w-4 rounded text-brandteal focus:ring-brandteal">
+                        <div>
+                            <span class="text-[10px] font-black tracking-widest text-brandteal">STEP ${String(index + 1).padStart(2, '0')}</span>
+                            <h3 class="mt-1 text-sm font-extrabold text-slate-900 dark:text-white">${item.title}</h3>
+                            <p class="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-300">${item.detail}</p>
+                        </div>
+                    </div>
+                </label>
+            `).join('');
+
+            container.innerHTML = `
+                <section class="overflow-hidden rounded-2xl bg-gradient-to-br from-brandnavy via-brandteal to-slate-900 p-6 text-white shadow-xl">
+                    <p class="text-xs font-bold uppercase tracking-[0.2em] text-teal-200">Personal operating plan · September 2026 → September 2027</p>
+                    <h2 class="mt-2 text-3xl font-black tracking-tight">Build skills. Fund the farm. Keep your freedom.</h2>
+                    <article class="relative mt-5 overflow-hidden rounded-2xl border border-teal-200/40 bg-white/10 p-5 shadow-lg backdrop-blur-sm">
+                        <div class="absolute -right-8 -top-8 h-28 w-28 rounded-full bg-cyan-300/20 blur-2xl"></div>
+                        <div class="relative">
+                            <div class="flex flex-wrap items-center gap-2">
+                                <span class="rounded-full border border-teal-100/30 bg-teal-200/15 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-teal-100">12-Month Career Target</span>
+                                <span class="text-xs font-bold text-teal-200">Remote-ready AI engineering path</span>
+                            </div>
+                            <p class="mt-3 max-w-4xl text-base font-extrabold leading-7 text-white sm:text-lg">Full Stack Development + Applied AI + System Design + Very Basic DevOps (Docker / AWS Deployment) + Build 2 Production-Grade Full-Stack Projects with AI Integration = <span class="text-teal-200">Remote Job - 50 LPA</span> <span class="whitespace-nowrap">(Full Stack AI Engineer within 12 months)</span></p>
+                        </div>
+                    </article>
+                    <p class="mt-3 max-w-3xl text-sm leading-6 text-slate-200">Use the job as a disciplined source of learning and capital—not as your identity. The target is a strong remote-ready portfolio, careful agricultural validation in Morshi, and options to choose work that supports your long-term mission.</p>
+                    <div class="mt-5 grid gap-3 sm:grid-cols-3 text-xs">
+                        <div class="rounded-lg border border-white/15 bg-white/10 p-3"><b class="block text-teal-200">Weekdays</b>Maximum 3 focused study hours after office; sustainable consistency beats burnout.</div>
+                        <div class="rounded-lg border border-white/15 bg-white/10 p-3"><b class="block text-teal-200">Weekends</b>Farm visits, farmer interviews, experiments, bookkeeping and buyer discovery.</div>
+                        <div class="rounded-lg border border-white/15 bg-white/10 p-3"><b class="block text-teal-200">Sep 2027 onward</b>Scale only a validated experiment while pursuing higher-paying, remote-friendly product engineering roles.</div>
+                    </div>
+                </section>
+
+                <section class="grid gap-4 md:grid-cols-2">${itemCards}</section>
+
+                <section class="grid gap-5 lg:grid-cols-3">
+                    <article class="rounded-2xl border border-amber-200 bg-amber-50 p-5 dark:border-amber-900/50 dark:bg-amber-950/20">
+                        <h3 class="font-extrabold text-amber-900 dark:text-amber-200">₹20K farm experiment rule</h3>
+                        <p class="mt-2 text-xs leading-5 text-amber-900/80 dark:text-amber-100/80">Do not plant a full acre on a prediction. Start with a small plot, one crop, a water plan and a buyer hypothesis. Track every rupee, labour hour, yield, pest issue and sale price. Expand only after two profitable cycles.</p>
+                    </article>
+                    <article class="rounded-2xl border border-emerald-200 bg-emerald-50 p-5 dark:border-emerald-900/50 dark:bg-emerald-950/20">
+                        <h3 class="font-extrabold text-emerald-900 dark:text-emerald-200">Agriculture direction</h3>
+                        <p class="mt-2 text-xs leading-5 text-emerald-900/80 dark:text-emerald-100/80">For a low-budget Morshi trial, validate high-value, short-cycle options with local buyers first—vegetable nursery seedlings, leafy greens, herbs or a small protected-cultivation pilot. Crop choice must follow soil test, water availability, season and confirmed demand.</p>
+                    </article>
+                    <article class="rounded-2xl border border-indigo-200 bg-indigo-50 p-5 dark:border-indigo-900/50 dark:bg-indigo-950/20">
+                        <h3 class="font-extrabold text-indigo-900 dark:text-indigo-200">50 LPA readiness</h3>
+                        <p class="mt-2 text-xs leading-5 text-indigo-900/80 dark:text-indigo-100/80">Treat this as a multi-year outcome, not a September 2027 guarantee. Build public proof: 3 excellent projects, strong English communication, system-design explanations, open-source contributions and referrals from real relationships.</p>
+                    </article>
+                </section>
+
+                <section class="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-950">
+                    <h3 class="text-lg font-black text-slate-900 dark:text-white">Professional operating system</h3>
+                    <div class="mt-4 grid gap-4 md:grid-cols-3 text-xs leading-5 text-slate-600 dark:text-slate-300">
+                        <p><b class="text-slate-900 dark:text-white">At work:</b> agree on priorities in writing, communicate risk early, deliver visibly and learn the business context. Avoid emotional decisions during conflict—pause, collect facts, respond calmly.</p>
+                        <p><b class="text-slate-900 dark:text-white">Networking:</b> yes, it matters when it is useful. Every month help 2 people, share one genuine build/learning note, ask for feedback and request referrals only after demonstrating value.</p>
+                        <p><b class="text-slate-900 dark:text-white">Boundaries:</b> define normal hours, keep a shutdown ritual, and choose extra work only when it creates a skill, relationship or measurable portfolio outcome.</p>
+                    </div>
+                </section>
+            `;
+        }
+
+        function toggleClarityItem(id) {
+            const checked = JSON.parse(localStorage.getItem('clarity-roadmap-checked')) || {};
+            checked[id] = !checked[id];
+            localStorage.setItem('clarity-roadmap-checked', JSON.stringify(checked));
+            renderWorkspace();
         }
 
         // Render pristine MERN stack
@@ -1185,7 +1213,7 @@
 
         // Navigation button highlights based on active track selection
         function updateTabButtonHighlightStates() {
-            const buttonIds = ['roadmap', 'mern', 'web', 'devops', 'dsa', 'ml', 'system_design', 'web3'];
+            const buttonIds = ['mern', 'web', 'devops', 'dsa', 'ml', 'system_design', 'web3', 'clarity'];
             buttonIds.forEach(id => {
                 const btn = document.getElementById(`nav-btn-${id}`);
                 if (btn) {
@@ -1194,7 +1222,7 @@
             });
 
             // Highlight the active button
-            let activeTargetId = activeMode === 'mern' ? 'mern' : activeMode === 'roadmap' ? 'roadmap' : screenshotZoneFilter;
+            let activeTargetId = activeMode === 'mern' ? 'mern' : activeMode === 'clarity' ? 'clarity' : screenshotZoneFilter;
             const activeBtn = document.getElementById(`nav-btn-${activeTargetId}`);
             if (activeBtn) {
                 activeBtn.className = "px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-md flex items-center gap-1.5 border bg-brandteal text-white border-brandteal hover:brightness-110";
@@ -1233,17 +1261,9 @@
             calculateStatistics();
         }
 
-        function toggleRoadmapStep(id) {
-            roadmapChecked[id] = !roadmapChecked[id];
-            localStorage.setItem('clarity-roadmap-checked', JSON.stringify(roadmapChecked));
-            renderRoadmapChecklist();
-        }
-
         // Dynamic statistics computation
         function calculateStatistics() {
-            if (activeMode === 'roadmap') {
-                return;
-            } else if (activeMode === 'mern') {
+            if (activeMode === 'mern') {
                 document.getElementById('metrics-syllabus-title').textContent = "MERN Course Blueprint";
                 
                 // Dynamic counts that respect custom topics added
@@ -1266,6 +1286,17 @@
                 document.getElementById('completed-fraction').textContent = `${completedCount} / ${totalLectures}`;
                 
                 const percentage = totalLectures > 0 ? Math.round((completedCount / totalLectures) * 100) : 0;
+                document.getElementById('overall-percentage').textContent = `${percentage}%`;
+                document.getElementById('overall-progress-bar').style.width = `${percentage}%`;
+            } else if (activeMode === 'clarity') {
+                const completed = JSON.parse(localStorage.getItem('clarity-roadmap-checked')) || {};
+                const completedCount = CLARITY_ITEMS.filter(item => completed[item.id]).length;
+                document.getElementById('metrics-syllabus-title').textContent = 'Clarity Roadmap';
+                document.getElementById('metrics-description-sub').textContent = 'A balanced career, skill and agriculture validation plan.';
+                document.getElementById('metrics-count-total').textContent = `${CLARITY_ITEMS.length} Milestones`;
+                document.getElementById('metrics-duration').textContent = 'Sep 2026 – Sep 2027';
+                document.getElementById('completed-fraction').textContent = `${completedCount} / ${CLARITY_ITEMS.length}`;
+                const percentage = Math.round((completedCount / CLARITY_ITEMS.length) * 100);
                 document.getElementById('overall-percentage').textContent = `${percentage}%`;
                 document.getElementById('overall-progress-bar').style.width = `${percentage}%`;
             } else {
@@ -1298,7 +1329,7 @@
         // Set specific View Track from navigation panel
         function setTrackView(mode, zoneFilter) {
             activeMode = mode;
-            if (zoneFilter) screenshotZoneFilter = zoneFilter;
+            screenshotZoneFilter = zoneFilter;
             
             localStorage.setItem('curriculum-active-mode', mode);
             if (mode === 'screenshot') {
@@ -1315,15 +1346,15 @@
             const filterWrapper = document.getElementById('filters-wrapper');
             filterWrapper.innerHTML = '';
 
-            if (activeMode === 'roadmap') {
-                return;
-            } else if (activeMode === 'mern') {
+            if (activeMode === 'mern') {
                 filterWrapper.innerHTML = `
                     <span class="text-xs font-bold text-slate-400 mr-1">Blueprint Filters:</span>
                     <button onclick="setMernFilter('all')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${mernFilter === 'all' ? 'bg-brandteal text-white' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }">All Lectures</button>
                     <button onclick="setMernFilter('stars')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${mernFilter === 'stars' ? 'bg-brandteal text-white' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }">⭐⭐⭐⭐⭐ Job Priority</button>
                     <button onclick="setMernFilter('optional')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${mernFilter === 'optional' ? 'bg-brandteal text-white' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }">Phase 6B (Optional SQL)</button>
                 `;
+            } else if (activeMode === 'clarity') {
+                filterWrapper.innerHTML = '<span class="text-xs font-extrabold text-brandteal bg-teal-50 dark:bg-teal-950/40 px-3 py-1.5 rounded-lg border border-teal-100 dark:border-teal-900/40">Personal execution tracker</span>';
             } else {
                 filterWrapper.innerHTML = `
                     <span class="text-xs font-bold text-slate-400 mr-1">Zone Status:</span>
@@ -1348,6 +1379,10 @@
                 });
                 localStorage.setItem('mern-checked-videos', JSON.stringify(mernChecked));
                 showToast("All MERN Stack lectures completed! 🏆", "success");
+            } else if (activeMode === 'clarity') {
+                const checked = Object.fromEntries(CLARITY_ITEMS.map(item => [item.id, true]));
+                localStorage.setItem('clarity-roadmap-checked', JSON.stringify(checked));
+                showToast('All clarity milestones marked complete! 🏆', 'success');
             } else {
                 const currentZone = screenshotSyllabusData.find(z => z.id === screenshotZoneFilter);
                 if (currentZone) {
@@ -1366,6 +1401,9 @@
                 mernChecked = {};
                 localStorage.setItem('mern-checked-videos', JSON.stringify(mernChecked));
                 showToast("MERN Stack progress reset successfully. 💪", "info");
+            } else if (activeMode === 'clarity') {
+                localStorage.removeItem('clarity-roadmap-checked');
+                showToast('Clarity Roadmap progress reset successfully. 💪', 'info');
             } else {
                 const currentZone = screenshotSyllabusData.find(z => z.id === screenshotZoneFilter);
                 if (currentZone) {
