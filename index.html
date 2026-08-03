@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>100xdevs Career Curriculum Syllabus Dashboard</title>
+    <title>100xdevs Career & Naturall Farm Startup Dashboard</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- GSAP CDN for High Performance Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -29,6 +31,7 @@
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
+            position: relative;
         }
         
         /* Custom scrollbar */
@@ -47,8 +50,31 @@
             background: rgba(255,255,255,0.2);
         }
 
+        /* 3D Animated Background Canvas */
+        #bg-agri-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.45;
+        }
+
+        .content-layer {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Glowing Animated Arrow Effects */
+        .blasting-arrow {
+            filter: drop-shadow(0px 0px 8px #2DD4BF);
+        }
+
         /* Print-specific layout parameters to generate standard PDF pages */
         @media print {
+            #bg-agri-canvas { display: none !important; }
             @page {
                 size: A4 portrait;
                 margin: 12mm 15mm 12mm 15mm;
@@ -101,195 +127,202 @@
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 min-h-screen flex flex-col">
 
-    <!-- Sticky Floating Action bar for Web Interface -->
-    <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-4 py-3 no-print">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div class="flex items-center gap-3">
-                <span class="text-2xl">🚀</span>
-                <div>
-                    <h1 class="font-bold text-lg text-slate-900 dark:text-white leading-tight">100xdevs Professional Hub</h1>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">Pristine 99-Video Course, Cloud, System Design, Applied AI & Web3 Sunday Tracks</p>
-                </div>
-            </div>
-            
-            <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto justify-end">
-                <button onclick="markCurrentSyllabusComplete()" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-lg text-xs font-semibold transition">
-                    Mark Selected Complete
-                </button>
-                <button onclick="resetCurrentSyllabusProgress()" class="px-3 py-1.5 bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900/50 hover:bg-red-100 rounded-lg text-xs font-semibold transition">
-                    Reset Selected Progress
-                </button>
+    <!-- Dynamic Interactive 3D Background Canvas -->
+    <canvas id="bg-agri-canvas"></canvas>
 
-                <!-- Theme toggle button -->
-                <button id="theme-toggle" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:scale-105 transition-transform" title="Toggle Theme">
-                    <svg id="light-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m2.122-10.607l-.707-.707m12.728 12.728l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"></path></svg>
-                    <svg id="dark-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                </button>
-
-                <!-- Trigger Print To PDF -->
-                <button onclick="window.print()" class="px-4 py-2.5 bg-brandteal hover:bg-teal-800 text-white rounded-xl font-semibold text-xs shadow-md flex items-center gap-1.5 hover:scale-105 transition duration-200">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                    Save as Printable PDF
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Unified Navigation Buttons (MERN Stack list & dedicated Whiteboard channels) -->
-    <nav class="bg-slate-100 dark:bg-slate-950 py-3 px-4 border-b border-slate-200 dark:border-slate-800 no-print tab-navigation">
-        <div class="max-w-7xl mx-auto flex flex-col gap-3">
-            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Select Learning Syllabus Track:</span>
-            <div class="flex flex-wrap gap-2">
-                <!-- 99 Videos Main Button -->
-                <button id="nav-btn-mern" onclick="setTrackView('mern', 'all')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
-                    🚀 MERN Course (99 Videos)
-                </button>
-                
-                <!-- Web Dev Button -->
-                <button id="nav-btn-web" onclick="setTrackView('screenshot', 'web')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
-                    💻 Web Dev
-                </button>
-                
-                <!-- DevOps and Cloud Button -->
-                <button id="nav-btn-devops" onclick="setTrackView('screenshot', 'devops')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
-                    ⚙️ DevOps & Cloud
-                </button>
-                
-                <!-- DSA Button -->
-                <button id="nav-btn-dsa" onclick="setTrackView('screenshot', 'dsa')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
-                    🧠 DSA Track
-                </button>
-                
-                <!-- AI Button -->
-                <button id="nav-btn-ml" onclick="setTrackView('screenshot', 'ml')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
-                    🤖 Applied AI
-                </button>
-                
-                <!-- System Design Button -->
-                <button id="nav-btn-system_design" onclick="setTrackView('screenshot', 'system_design')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
-                    🏗️ System Design
-                </button>
-
-                <!-- Web3 Button -->
-                <button id="nav-btn-web3" onclick="setTrackView('screenshot', 'web3')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
-                    🌐 Web3 (Sunday)
-                </button>
-                <button id="nav-btn-clarity" onclick="setTrackView('clarity', 'clarity')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
-                    🧭 Clarity Roadmap
-                </button>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Workspace Container -->
-    <main class="max-w-7xl mx-auto px-4 py-6 flex-1 w-full">
-        
-        <!-- Dashboard Executive Summary Cards -->
-        <section id="executive-summary" class="mb-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-gradient-to-tr from-brandnavy to-slate-800 text-white p-5 rounded-2xl shadow-xl card flex flex-col justify-between">
-                <div>
-                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-teal-400" id="metrics-syllabus-title">MERN Course Blueprint</span>
-                    <h3 class="text-3xl font-black mt-1" id="metrics-count-total">99 Lectures</h3>
-                    <p class="text-xs text-slate-300 mt-2" id="metrics-description-sub">Uncompromised sequence tracking structured across 12 targeted placement phases.</p>
-                </div>
-                <div class="mt-4 pt-3 border-t border-slate-700/30 flex justify-between items-center text-xs">
-                    <span class="text-slate-400">Rating Tier:</span>
-                    <span class="font-bold text-teal-400">System Architect Focus</span>
-                </div>
-            </div>
-            
-            <div class="bg-white dark:bg-slate-950 p-5 rounded-2xl shadow-md border border-slate-200 dark:border-slate-800 card flex flex-col justify-between">
-                <div>
-                    <span class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Completed Syllabus Work</span>
-                    <h3 class="text-3xl font-extrabold mt-1 text-slate-900 dark:text-white" id="completed-fraction">0 / 99</h3>
-                    <div class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2 mt-3 overflow-hidden">
-                        <div id="overall-progress-bar" class="bg-brandteal h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+    <div class="content-layer min-h-screen flex flex-col">
+        <!-- Sticky Floating Action bar for Web Interface -->
+        <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-4 py-3 no-print">
+            <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                    <span class="text-2xl">🌱</span>
+                    <div>
+                        <h1 class="font-bold text-lg text-slate-900 dark:text-white leading-tight">100xdevs Professional Hub</h1>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Pristine 99-Video Course, Cloud, System Design, Applied AI & Web3 Sunday Tracks</p>
                     </div>
                 </div>
-                <div class="mt-4 text-[11px] text-slate-500 dark:text-slate-400 flex justify-between">
-                    <span>Overall Checklist Completion:</span>
-                    <span id="overall-percentage" class="font-bold text-brandteal">0%</span>
-                </div>
-            </div>
-
-            <div class="bg-white dark:bg-slate-950 p-5 rounded-2xl shadow-md border border-slate-200 dark:border-slate-800 card flex flex-col justify-between">
-                <div>
-                    <span class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Database & Scale Status</span>
-                    <h3 class="text-3xl font-extrabold mt-1 text-emerald-600 dark:text-emerald-400" id="metrics-duration">114h 51m</h3>
-                    <p class="text-xs text-slate-400 mt-2">Combined video runtime metrics with real-time checkbox status adjustment.</p>
-                </div>
-                <div class="mt-4 text-xs text-amber-500 font-semibold no-print flex items-center gap-1">
-                    <span>⭐⭐⭐⭐⭐ Junior Job Ready rating system</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- Add Custom Topic Panel (Dynamic & Persistent) -->
-        <section class="mb-8 p-6 bg-white dark:bg-slate-950 rounded-2xl shadow border border-slate-200 dark:border-slate-800 no-print custom-topic-panel">
-            <div class="flex items-center gap-2.5 mb-4">
-                <span class="text-xl">➕</span>
-                <h3 class="text-base font-bold text-slate-900 dark:text-white">Add Topic to Current Active Track</h3>
-            </div>
-            
-            <form id="add-topic-form" onsubmit="handleFormSubmit(event)" class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
-                <div class="md:col-span-4">
-                    <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2" id="target-phase-label">Select Phase/Module Location</label>
-                    <select id="topic-target-module" class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-850 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brandteal">
-                        <!-- Populated programmatically -->
-                    </select>
-                </div>
                 
-                <div class="md:col-span-4">
-                    <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">Topic / Video Name</label>
-                    <input type="text" id="topic-name-input" placeholder="e.g. Advanced CI/CD Strategies" required class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-850 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brandteal">
-                </div>
+                <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto justify-end">
+                    <button onclick="markCurrentSyllabusComplete()" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-lg text-xs font-semibold transition">
+                        Mark Selected Complete
+                    </button>
+                    <button onclick="resetCurrentSyllabusProgress()" class="px-3 py-1.5 bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900/50 hover:bg-red-100 rounded-lg text-xs font-semibold transition">
+                        Reset Selected Progress
+                    </button>
 
-                <div class="md:col-span-2" id="duration-input-container">
-                    <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">Duration</label>
-                    <input type="text" id="topic-duration-input" placeholder="e.g. 1h 45m" class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-850 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brandteal">
-                </div>
+                    <!-- Theme toggle button -->
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:scale-105 transition-transform" title="Toggle Theme">
+                        <svg id="light-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m2.122-10.607l-.707-.707m12.728 12.728l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"></path></svg>
+                        <svg id="dark-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    </button>
 
-                <div class="md:col-span-2 flex flex-col items-start pb-2">
-                    <label class="flex items-center gap-2 cursor-pointer select-none">
-                        <input type="checkbox" id="topic-important-input" class="w-4.5 h-4.5 rounded text-brandteal focus:ring-brandteal border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 cursor-pointer transition">
-                        <span class="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide">Must Need? 🔥</span>
-                    </label>
-                </div>
-
-                <div class="md:col-span-12 flex justify-end">
-                    <button type="submit" class="px-4 py-2 bg-brandteal hover:bg-teal-800 text-white font-bold rounded-lg text-xs shadow transition-transform duration-200 hover:scale-105">
-                        Add to Syllabus
+                    <!-- Trigger Print To PDF -->
+                    <button onclick="window.print()" class="px-4 py-2.5 bg-brandteal hover:bg-teal-800 text-white rounded-xl font-semibold text-xs shadow-md flex items-center gap-1.5 hover:scale-105 transition duration-200">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                        Save as Printable PDF
                     </button>
                 </div>
-            </form>
-        </section>
+            </div>
+        </header>
 
-        <!-- Digital Filtering and Controls (Hidden during PDF print) -->
-        <section id="controls" class="mb-8 p-4 bg-white dark:bg-slate-950 rounded-xl shadow border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4 no-print">
+        <!-- Unified Navigation Buttons -->
+        <nav class="bg-slate-100 dark:bg-slate-950 py-3 px-4 border-b border-slate-200 dark:border-slate-800 no-print tab-navigation">
+            <div class="max-w-7xl mx-auto flex flex-col gap-3">
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Select Learning Syllabus Track:</span>
+                <div class="flex flex-wrap gap-2">
+                    <!-- Naturall Farm Startup Roadmap Button (Default Homepage) -->
+                    <button id="nav-btn-clarity" onclick="setTrackView('clarity', 'clarity')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
+                        🧭 Naturall Farm Startup Roadmap
+                    </button>
+
+                    <!-- 99 Videos Main Button -->
+                    <button id="nav-btn-mern" onclick="setTrackView('mern', 'all')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
+                        🚀 MERN Course (99 Videos)
+                    </button>
+                    
+                    <!-- Web Dev Button -->
+                    <button id="nav-btn-web" onclick="setTrackView('screenshot', 'web')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
+                        💻 Web Dev
+                    </button>
+                    
+                    <!-- DevOps and Cloud Button -->
+                    <button id="nav-btn-devops" onclick="setTrackView('screenshot', 'devops')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
+                        ⚙️ DevOps & Cloud
+                    </button>
+                    
+                    <!-- DSA Button -->
+                    <button id="nav-btn-dsa" onclick="setTrackView('screenshot', 'dsa')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
+                        🧠 DSA Track
+                    </button>
+                    
+                    <!-- AI Button -->
+                    <button id="nav-btn-ml" onclick="setTrackView('screenshot', 'ml')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
+                        🤖 Applied AI
+                    </button>
+                    
+                    <!-- System Design Button -->
+                    <button id="nav-btn-system_design" onclick="setTrackView('screenshot', 'system_design')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
+                        🏗️ System Design
+                    </button>
+
+                    <!-- Web3 Button -->
+                    <button id="nav-btn-web3" onclick="setTrackView('screenshot', 'web3')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
+                        🌐 Web3 (Sunday)
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Workspace Container -->
+        <main class="max-w-7xl mx-auto px-4 py-6 flex-1 w-full">
             
-            <!-- Search -->
-            <div class="relative w-full md:w-80">
-                <input type="text" id="search-bar" placeholder="Search syllabus topics..." class="w-full pl-9 pr-4 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-brandteal text-slate-800 dark:text-slate-100 placeholder-slate-400">
-                <svg class="absolute left-3 top-2.5 w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-            </div>
+            <!-- Dashboard Executive Summary Cards -->
+            <section id="executive-summary" class="mb-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-gradient-to-tr from-brandnavy to-slate-800 text-white p-5 rounded-2xl shadow-xl card flex flex-col justify-between">
+                    <div>
+                        <span class="text-[10px] font-extrabold uppercase tracking-widest text-teal-400" id="metrics-syllabus-title">Naturall Farm Startup Roadmap</span>
+                        <h3 class="text-3xl font-black mt-1" id="metrics-count-total">7 Milestones</h3>
+                        <p class="text-xs text-slate-300 mt-2" id="metrics-description-sub">A balanced career, skill, and agriculture validation plan.</p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-700/30 flex justify-between items-center text-xs">
+                        <span class="text-slate-400">Rating Tier:</span>
+                        <span class="font-bold text-teal-400">System Architect Focus</span>
+                    </div>
+                </div>
+                
+                <div class="bg-white/90 dark:bg-slate-950/90 backdrop-blur-md p-5 rounded-2xl shadow-md border border-slate-200 dark:border-slate-800 card flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Completed Syllabus Work</span>
+                        <h3 class="text-3xl font-extrabold mt-1 text-slate-900 dark:text-white" id="completed-fraction">0 / 7</h3>
+                        <div class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2 mt-3 overflow-hidden">
+                            <div id="overall-progress-bar" class="bg-brandteal h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-[11px] text-slate-500 dark:text-slate-400 flex justify-between">
+                        <span>Overall Checklist Completion:</span>
+                        <span id="overall-percentage" class="font-bold text-brandteal">0%</span>
+                    </div>
+                </div>
 
-            <!-- Custom Filters and Quick Actions (Mode Dependent) -->
-            <div class="flex flex-wrap items-center gap-2 w-full md:w-auto md:justify-end" id="filters-wrapper">
-                <!-- Injected programmatically based on activeMode -->
-            </div>
-        </section>
+                <div class="bg-white/90 dark:bg-slate-950/90 backdrop-blur-md p-5 rounded-2xl shadow-md border border-slate-200 dark:border-slate-800 card flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Database & Scale Status</span>
+                        <h3 class="text-3xl font-extrabold mt-1 text-emerald-600 dark:text-emerald-400" id="metrics-duration">Sep 2026 – Sep 2027</h3>
+                        <p class="text-xs text-slate-400 mt-2">Combined video runtime metrics with real-time checkbox status adjustment.</p>
+                    </div>
+                    <div class="mt-4 text-xs text-amber-500 font-semibold no-print flex items-center gap-1">
+                        <span>⭐⭐⭐⭐⭐ Junior Job Ready rating system</span>
+                    </div>
+                </div>
+            </section>
 
-        <!-- Dynamic Workspace Content Holder -->
-        <section id="workspace-container" class="space-y-8">
-            <!-- Programmatic syllabus components mount here -->
-        </section>
+            <!-- Add Custom Topic Panel (Dynamic & Persistent) -->
+            <section class="mb-8 p-6 bg-white/90 dark:bg-slate-950/90 backdrop-blur-md rounded-2xl shadow border border-slate-200 dark:border-slate-800 no-print custom-topic-panel">
+                <div class="flex items-center gap-2.5 mb-4">
+                    <span class="text-xl">➕</span>
+                    <h3 class="text-base font-bold text-slate-900 dark:text-white">Add Topic to Current Active Track</h3>
+                </div>
+                
+                <form id="add-topic-form" onsubmit="handleFormSubmit(event)" class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
+                    <div class="md:col-span-4">
+                        <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2" id="target-phase-label">Select Phase/Module Location</label>
+                        <select id="topic-target-module" class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-850 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brandteal">
+                            <!-- Populated programmatically -->
+                        </select>
+                    </div>
+                    
+                    <div class="md:col-span-4">
+                        <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">Topic / Video Name</label>
+                        <input type="text" id="topic-name-input" placeholder="e.g. Advanced CI/CD Strategies" required class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-850 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brandteal">
+                    </div>
 
-    </main>
+                    <div class="md:col-span-2" id="duration-input-container">
+                        <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">Duration</label>
+                        <input type="text" id="topic-duration-input" placeholder="e.g. 1h 45m" class="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-850 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-brandteal">
+                    </div>
+
+                    <div class="md:col-span-2 flex flex-col items-start pb-2">
+                        <label class="flex items-center gap-2 cursor-pointer select-none">
+                            <input type="checkbox" id="topic-important-input" class="w-4.5 h-4.5 rounded text-brandteal focus:ring-brandteal border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 cursor-pointer transition">
+                            <span class="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide">Must Need? 🔥</span>
+                        </label>
+                    </div>
+
+                    <div class="md:col-span-12 flex justify-end">
+                        <button type="submit" class="px-4 py-2 bg-brandteal hover:bg-teal-800 text-white font-bold rounded-lg text-xs shadow transition-transform duration-200 hover:scale-105">
+                            Add to Syllabus
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Digital Filtering and Controls (Hidden during PDF print) -->
+            <section id="controls" class="mb-8 p-4 bg-white/90 dark:bg-slate-950/90 backdrop-blur-md rounded-xl shadow border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4 no-print">
+                
+                <!-- Search -->
+                <div class="relative w-full md:w-80">
+                    <input type="text" id="search-bar" placeholder="Search syllabus topics..." class="w-full pl-9 pr-4 py-2 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-brandteal text-slate-800 dark:text-slate-100 placeholder-slate-400">
+                    <svg class="absolute left-3 top-2.5 w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+
+                <!-- Custom Filters -->
+                <div class="flex flex-wrap items-center gap-2 w-full md:w-auto md:justify-end" id="filters-wrapper">
+                    <!-- Injected programmatically based on activeMode -->
+                </div>
+            </section>
+
+            <!-- Dynamic Workspace Content Holder -->
+            <section id="workspace-container" class="space-y-8">
+                <!-- Programmatic syllabus components mount here -->
+            </section>
+
+        </main>
+    </div>
 
     <!-- Dynamic Toast Notification Container -->
     <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-    <!-- Complete Databases: MERN & Screenshot Multi-Zones -->
+    <!-- Complete Databases & GSAP Canvas Engine -->
     <script>
         // BASE UNTOUCHED MERN DATA
         const BASE_MERN_SYLLABUS = [
@@ -726,13 +759,23 @@
             }
         ];
 
+        // Agriculture Startup Matrix Data
+        const AGRI_MATRIX_DATA = [
+            { step: "Step 1 (Core)", idea: "Agronomy Agency & Registered Farmer Network", decision: "ACCEPT", complexity: "Low–Medium", competition: "Low", margin: "50% – 70%", revenue: "Very High", role: "Root Foundation: Builds rural trust, acquires registered land, drives yield increases, and secures exclusive supply under 20% profit-share." },
+            { step: "Step 2", idea: "Single Unified Super-App (SaaS Platform)", decision: "ACCEPT", complexity: "Medium", competition: "High", margin: "65% – 80%", revenue: "Massive Scale", role: "Digital Spine: Digitizes field activity, tracks harvest yields, calculates baseline profits transparently, and manages community." },
+            { step: "Step 3", idea: "Integrated D2C & B2B Brand (Premium + Mass)", decision: "ACCEPT", complexity: "Medium–High", competition: "High", margin: "35% – 50%", revenue: "World-Class (Global)", role: "Value Multiplier: Monetizes pure, verified farm output directly to domestic consumers and international export markets." },
+            { step: "Step 4", idea: "Bio-Fertilizer & Organic Input Sales", decision: "ACCEPT", complexity: "Medium", competition: "Moderate", margin: "45% – 65%", revenue: "High Recurring", role: "Quality Standardizer: Replaces synthetic inputs across your network with in-house organic bio-fertilizers to guarantee zero residue." },
+            { step: "Step 5", idea: "Lagvan Sheti Land Lease Platform", decision: "ACCEPT (Later)", complexity: "High", competition: "Low", margin: "20% – 35%", revenue: "High Asset Scale", role: "Asset Expander: Aggregates non-cultivated land from urban landowners, paying base rent + 10% profit cut." },
+            { step: "Excluded", idea: "Full Physical Logistics & Cold Chain Fleet", decision: "REJECT", complexity: "Very High", competition: "High", margin: "10% – 15%", revenue: "Low Margin", role: "Outsourced: Heavy capital burn and thin margins. Partner with existing logistics providers instead of building a truck fleet." }
+        ];
+
         // Core Application State Setup
-        let activeMode = localStorage.getItem('curriculum-active-mode') || 'mern'; // 'mern' or 'screenshot'
+        let activeMode = localStorage.getItem('curriculum-active-mode') || 'clarity';
         let mernChecked = JSON.parse(localStorage.getItem('mern-checked-videos')) || {};
         let screenshotChecked = JSON.parse(localStorage.getItem('screenshot-zones-checked-videos')) || {};
         
         let searchQuery = '';
-        let mernFilter = 'all'; // 'all', 'stars' (priority 5), 'optional' (Phase 6B)
+        let mernFilter = 'all';
         let screenshotZoneFilter = localStorage.getItem('screenshot-active-zone') || 'web'; 
 
         const CLARITY_ITEMS = [
@@ -745,17 +788,14 @@
             { id: 'professional', title: 'Every week · Communication & professional habits', detail: 'Write a weekly update, practise one spoken explanation, protect work boundaries, and document outcomes instead of chasing overtime.' }
         ];
 
-        // Dynamic Syllabus Registries (cloned on startup)
+        // Dynamic Syllabus Registries
         let mernSyllabusData = [];
         let screenshotSyllabusData = [];
 
-        // Load custom topics and merge with original datasets
         function initSyllabusDatasets() {
-            // Clone deep copies of original static data to keep them safe
             mernSyllabusData = JSON.parse(JSON.stringify(BASE_MERN_SYLLABUS));
             screenshotSyllabusData = JSON.parse(JSON.stringify(BASE_SCREENSHOT_SYLLABUS));
 
-            // Load custom MERN lectures
             const customMern = JSON.parse(localStorage.getItem('custom-mern-lectures')) || [];
             customMern.forEach(lec => {
                 if(mernSyllabusData[lec.phaseIdx]) {
@@ -763,7 +803,6 @@
                 }
             });
 
-            // Load custom Screenshot Topics
             const customScreenshot = JSON.parse(localStorage.getItem('custom-screenshot-topics')) || [];
             customScreenshot.forEach(topic => {
                 const zone = screenshotSyllabusData.find(z => z.id === topic.zoneId);
@@ -773,7 +812,6 @@
             });
         }
 
-        // Render target options inside selector dropdown dynamically
         function updateTargetModuleDropdown() {
             const dropdown = document.getElementById('topic-target-module');
             const targetLabel = document.getElementById('target-phase-label');
@@ -802,7 +840,6 @@
             }
         }
 
-        // Process adding custom topics dynamically
         function handleFormSubmit(e) {
             e.preventDefault();
             const topicName = document.getElementById('topic-name-input').value.trim();
@@ -814,7 +851,6 @@
                 const duration = document.getElementById('topic-duration-input').value.trim() || "30m 00s";
                 const phaseIdx = parseInt(targetValue, 10);
                 
-                // Get maximum current lecture ID to assign next unique sequence id
                 let maxId = 100;
                 mernSyllabusData.forEach(p => {
                     p.lectures.forEach(l => { if (l.id > maxId) maxId = l.id; });
@@ -826,8 +862,8 @@
                     name: topicName + " (Custom)",
                     duration: duration,
                     priority: priority,
-                    seconds: 1800, // standard default
-                    isCustom: true // marker to allow deletion
+                    seconds: 1800,
+                    isCustom: true
                 };
 
                 const customMern = JSON.parse(localStorage.getItem('custom-mern-lectures')) || [];
@@ -846,7 +882,7 @@
                     name: topicName + " (Custom)",
                     priority: priority,
                     zoneId: zoneId,
-                    isCustom: true // marker to allow deletion
+                    isCustom: true
                 };
 
                 const customScreenshot = JSON.parse(localStorage.getItem('custom-screenshot-topics')) || [];
@@ -855,23 +891,19 @@
                 showToast("Custom topic added successfully to Zone!", "success");
             }
 
-            // Reset Form Fields
             document.getElementById('topic-name-input').value = '';
             document.getElementById('topic-duration-input').value = '';
             document.getElementById('topic-important-input').checked = false;
 
-            // Re-render
             initSyllabusDatasets();
             renderWorkspace();
         }
 
-        // Delete Custom items
         function deleteCustomMernLecture(id) {
             let customMern = JSON.parse(localStorage.getItem('custom-mern-lectures')) || [];
             customMern = customMern.filter(l => l.id !== id);
             localStorage.setItem('custom-mern-lectures', JSON.stringify(customMern));
             
-            // Clean checked state if it was checked
             if (mernChecked[id]) {
                 delete mernChecked[id];
                 localStorage.setItem('mern-checked-videos', JSON.stringify(mernChecked));
@@ -887,7 +919,6 @@
             customScreenshot = customScreenshot.filter(t => t.id !== id);
             localStorage.setItem('custom-screenshot-topics', JSON.stringify(customScreenshot));
 
-            // Clean checked state if it was checked
             if (screenshotChecked[id]) {
                 delete screenshotChecked[id];
                 localStorage.setItem('screenshot-zones-checked-videos', JSON.stringify(screenshotChecked));
@@ -898,7 +929,6 @@
             renderWorkspace();
         }
 
-        // Render Workspace Content Based on mode
         function renderWorkspace() {
             const container = document.getElementById('workspace-container');
             container.innerHTML = '';
@@ -917,12 +947,23 @@
             renderFilters();
             updateTargetModuleDropdown();
             updateTabButtonHighlightStates();
+            
+            // Re-trigger GSAP animations if present
+            if (window.gsap && activeMode === 'clarity') {
+                gsap.from(".agri-phase-box", {
+                    duration: 0.8,
+                    y: 30,
+                    opacity: 0,
+                    stagger: 0.15,
+                    ease: "power3.out"
+                });
+            }
         }
 
         function renderClarityRoadmap(container) {
             const completed = JSON.parse(localStorage.getItem('clarity-roadmap-checked')) || {};
             const itemCards = CLARITY_ITEMS.map((item, index) => `
-                <label class="block cursor-pointer rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 p-4 transition hover:border-brandteal hover:shadow-sm">
+                <label class="block cursor-pointer rounded-xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/90 p-4 transition hover:border-brandteal hover:shadow-sm backdrop-blur-sm">
                     <div class="flex gap-3">
                         <input type="checkbox" ${completed[item.id] ? 'checked' : ''} onchange="toggleClarityItem('${item.id}')" class="mt-1 h-4 w-4 rounded text-brandteal focus:ring-brandteal">
                         <div>
@@ -934,9 +975,27 @@
                 </label>
             `).join('');
 
+            const matrixRows = AGRI_MATRIX_DATA.map(row => {
+                const decisionClass = row.decision.includes('ACCEPT') 
+                    ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300' 
+                    : 'bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-300';
+                return `
+                    <tr class="border-b border-slate-100 dark:border-slate-800/80 hover:bg-slate-50/50 dark:hover:bg-slate-900/40 transition">
+                        <td class="px-3 py-3 text-xs font-black text-brandteal whitespace-nowrap">${row.step}</td>
+                        <td class="px-3 py-3 font-bold text-slate-900 dark:text-white text-xs">${row.idea}</td>
+                        <td class="px-3 py-3 whitespace-nowrap"><span class="px-2 py-0.5 rounded text-[10px] font-black ${decisionClass}">${row.decision}</span></td>
+                        <td class="px-3 py-3 text-xs text-slate-600 dark:text-slate-300 whitespace-nowrap">${row.complexity}</td>
+                        <td class="px-3 py-3 text-xs text-slate-600 dark:text-slate-300 whitespace-nowrap">${row.competition}</td>
+                        <td class="px-3 py-3 font-bold text-emerald-600 dark:text-emerald-400 text-xs whitespace-nowrap">${row.margin}</td>
+                        <td class="px-3 py-3 font-bold text-slate-800 dark:text-slate-200 text-xs whitespace-nowrap">${row.revenue}</td>
+                        <td class="px-3 py-3 text-xs leading-relaxed text-slate-500 dark:text-slate-400">${row.role}</td>
+                    </tr>
+                `;
+            }).join('');
+
             container.innerHTML = `
                 <!-- Hero Banner -->
-                <section class="overflow-hidden rounded-2xl bg-gradient-to-br from-brandnavy via-brandteal to-slate-900 p-6 text-white shadow-xl">
+                <section class="overflow-hidden rounded-2xl bg-gradient-to-br from-brandnavy via-brandteal to-slate-900 p-6 text-white shadow-xl relative">
                     <p class="text-xs font-bold uppercase tracking-[0.2em] text-teal-200">Personal Operating Plan · September 2026 → September 2027</p>
                     <h2 class="mt-2 text-3xl font-black tracking-tight">MY Ikigai = Naturall Farm Startup make impact on the world</h2>
                     <p class="mt-1 text-base font-semibold text-teal-100">Build skills. Fund the farm. Keep your freedom.</p>
@@ -950,11 +1009,209 @@
                             <p class="mt-3 max-w-4xl text-base font-extrabold leading-7 text-white sm:text-lg">Full Stack Development + Applied AI + System Design + Very Basic DevOps (Docker / AWS Deployment) + Build 2 Production-Grade Full-Stack Projects with AI Integration = <span class="text-teal-200">Remote Job - 50 LPA</span> <span class="whitespace-nowrap">(Full Stack AI Engineer within 12 months)</span></p>
                         </div>
                     </article>
-                    <p class="mt-3 max-w-3xl text-sm leading-6 text-slate-200">Use the job as a disciplined source of learning and capital—not as your identity. The target is a strong remote-ready portfolio, careful agricultural validation in Morshi, and options to choose work that supports your long-term mission.</p>
-                    <div class="mt-5 grid gap-3 sm:grid-cols-3 text-xs">
-                        <div class="rounded-lg border border-white/15 bg-white/10 p-3"><b class="block text-teal-200">Weekdays</b>Maximum 3 focused study hours after office; sustainable consistency beats burnout.</div>
-                        <div class="rounded-lg border border-white/15 bg-white/10 p-3"><b class="block text-teal-200">Weekends</b>Farm visits, farmer interviews, experiments, bookkeeping and buyer discovery.</div>
-                        <div class="rounded-lg border border-white/15 bg-white/10 p-3"><b class="block text-teal-200">Sep 2027 onward</b>Scale only a validated experiment while pursuing higher-paying, remote-friendly product engineering roles.</div>
+                </section>
+
+                <!-- NEW FEATURE: Animated Phase Roadmap Box with Blasting Arrow GSAP Visuals -->
+                <section class="rounded-2xl border border-emerald-500/30 bg-white/90 dark:bg-slate-950/90 p-6 shadow-2xl backdrop-blur-md">
+                    <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4 mb-6">
+                        <div>
+                            <span class="text-[10px] font-black uppercase tracking-widest text-emerald-500">Execution Flow</span>
+                            <h3 class="text-2xl font-black text-slate-900 dark:text-white flex items-center gap-2">🚀 NATURALL FARM STARTUP PHASE ROADMAP</h3>
+                        </div>
+                        <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 font-extrabold text-xs">Sequenced Growth</span>
+                    </div>
+
+                    <!-- Flowchart Phase Blocks -->
+                    <div class="flex flex-col items-center gap-2 max-w-4xl mx-auto">
+                        
+                        <!-- Phase 1 Box -->
+                        <div class="agri-phase-box w-full p-4 rounded-xl border border-teal-500/40 bg-gradient-to-r from-teal-950/20 via-slate-900/60 to-slate-950 text-white shadow-lg">
+                            <h4 class="text-sm font-black text-teal-400 uppercase tracking-wide">PHASE 1: OWN PROOF & CINEMATIC DOCUMENTARY</h4>
+                            <ul class="mt-2 space-y-1 text-xs text-slate-300 list-disc list-inside">
+                                <li>Cultivate high-value/natural crops on your own land.</li>
+                                <li>Document every step, cost, yield, and profit transparently.</li>
+                                <li>Export and sell domestically under your brand.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Blasting Arrow 1 -->
+                        <div class="py-1 text-teal-400 font-black text-2xl blasting-arrow animate-bounce">
+                            ▼
+                        </div>
+
+                        <!-- Phase 2 Box -->
+                        <div class="agri-phase-box w-full p-4 rounded-xl border border-cyan-500/40 bg-gradient-to-r from-cyan-950/20 via-slate-900/60 to-slate-950 text-white shadow-lg">
+                            <h4 class="text-sm font-black text-cyan-400 uppercase tracking-wide">PHASE 2: LAUNCH SINGLE SUPER-APP & SAAS</h4>
+                            <ul class="mt-2 space-y-1 text-xs text-slate-300 list-disc list-inside">
+                                <li>Productize your farm data into the SaaS management tool.</li>
+                                <li>Enable weather tracking, soil logging, and market rates.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Blasting Arrow 2 -->
+                        <div class="py-1 text-cyan-400 font-black text-2xl blasting-arrow animate-bounce">
+                            ▼
+                        </div>
+
+                        <!-- Phase 3 Box -->
+                        <div class="agri-phase-box w-full p-4 rounded-xl border border-emerald-500/40 bg-gradient-to-r from-emerald-950/20 via-slate-900/60 to-slate-950 text-white shadow-lg">
+                            <h4 class="text-sm font-black text-emerald-400 uppercase tracking-wide">PHASE 3: AGRONOMY AGENCY & EXCLUSIVE CONTRACTS</h4>
+                            <ul class="mt-2 space-y-1 text-xs text-slate-300 list-disc list-inside">
+                                <li>Use documentary proof to onboard first batch of farmers.</li>
+                                <li>Sign 100% exclusive off-take & brand registration contracts.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Blasting Arrow 3 -->
+                        <div class="py-1 text-emerald-400 font-black text-2xl blasting-arrow animate-bounce">
+                            ▼
+                        </div>
+
+                        <!-- Phase 4 Box -->
+                        <div class="agri-phase-box w-full p-4 rounded-xl border border-amber-500/40 bg-gradient-to-r from-amber-950/20 via-slate-900/60 to-slate-950 text-white shadow-lg">
+                            <h4 class="text-sm font-black text-amber-400 uppercase tracking-wide">PHASE 4: BIO-FERTILIZERS & "LAGVAN SHETI" LEASING</h4>
+                            <ul class="mt-2 space-y-1 text-xs text-slate-300 list-disc list-inside">
+                                <li>Produce and distribute in-house organic bio-inputs.</li>
+                                <li>Take non-cultivated land under Lagvan Sheti leases.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Blasting Arrow 4 -->
+                        <div class="py-1 text-amber-400 font-black text-2xl blasting-arrow animate-bounce">
+                            ▼
+                        </div>
+
+                        <!-- Phase 5 Box -->
+                        <div class="agri-phase-box w-full p-5 rounded-xl border-2 border-goldstar bg-gradient-to-r from-amber-600/30 via-brandnavy to-slate-950 text-white shadow-2xl">
+                            <h4 class="text-base font-black text-goldstar uppercase tracking-wider">PHASE 5: GLOBAL & DOMESTIC BRAND DOMINANCE</h4>
+                            <ul class="mt-2 space-y-1 text-xs text-slate-200 list-disc list-inside font-semibold">
+                                <li>Supply premium natural produce to domestic retail and export markets.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- NEW FEATURE: Integrated Skill Stack & Creative Mastery Box -->
+                <section class="rounded-2xl border border-teal-500/30 bg-white/90 dark:bg-slate-950/90 p-6 shadow-xl backdrop-blur-md">
+                    <h3 class="text-xl font-black text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-3">⚡ Integrated Skill Engine & Personal Mastery Plan</h3>
+                    <div class="mt-4 grid gap-4 md:grid-cols-3">
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                            <b class="text-brandteal dark:text-teal-400 text-sm block mb-1">💻 Software Engineering</b>
+                            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">Develop the Single Super-App combining field logging, land leasing, bio-input ordering, community feeds, and D2C sales into a seamless platform.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                            <b class="text-emerald-600 dark:text-emerald-400 text-sm block mb-1">🧪 Agronomy & R&D</b>
+                            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">Formulate proprietary bio-fertilizers and crop protocols that boost crop yields and create the "extra profit" needed for performance payouts.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                            <b class="text-amber-600 dark:text-amber-400 text-sm block mb-1">🎬 Cinematic Storytelling</b>
+                            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">Create compelling visual stories that build consumer trust, demonstrate pure chemical-free farming, and position the company as a global leader in natural produce.</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-4 rounded-xl bg-gradient-to-r from-teal-950/40 via-brandnavy to-slate-900 text-white border border-teal-500/40">
+                        <b class="text-teal-300 text-xs font-black uppercase tracking-widest block mb-1">🎭 Creative Marketing & Performance Mastery Target</b>
+                        <p class="text-xs text-slate-200 leading-relaxed">I should learn acting, comedy, and marketing, and master algorithm dynamics to connect with youth and build unmatched brand trust across India and globally.</p>
+                    </div>
+                </section>
+
+                <!-- Interactive Tree Diagram -->
+                <section class="rounded-2xl border border-slate-200 bg-white/90 dark:bg-slate-950/90 p-6 shadow-md dark:border-slate-800 backdrop-blur-md">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-slate-800">
+                        <div>
+                            <h3 class="text-xl font-black text-slate-900 dark:text-white">🌳 Agriculture Startup Architecture Tree Diagram</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">The Core Agronomy Agency & Registered Farmer Network fueling 4 specialized business branches.</p>
+                        </div>
+                        <span class="rounded-full bg-teal-50 px-3 py-1 text-xs font-black text-brandteal dark:bg-teal-950/50 dark:text-teal-300 border border-teal-200 dark:border-teal-800">Supply-Chain Engine</span>
+                    </div>
+
+                    <div class="mt-6 flex justify-center overflow-x-auto">
+                        <svg class="w-full max-w-4xl" viewBox="0 0 850 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M 425 90 L 110 200" stroke="#0A5C6F" stroke-width="3" stroke-dasharray="6 6" />
+                            <path d="M 425 90 L 320 200" stroke="#0A5C6F" stroke-width="3" />
+                            <path d="M 425 90 L 530 200" stroke="#0A5C6F" stroke-width="3" />
+                            <path d="M 425 90 L 740 200" stroke="#0A5C6F" stroke-width="3" stroke-dasharray="6 6" />
+
+                            <g transform="translate(250, 15)">
+                                <rect width="350" height="75" rx="16" fill="#1A365D" stroke="#0A5C6F" stroke-width="3"/>
+                                <text x="175" y="32" text-anchor="middle" fill="#2DD4BF" font-size="11" font-weight="900" letter-spacing="1.5">CORE BUSINESS ENGINE (FOUNDATION)</text>
+                                <text x="175" y="52" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="800">Agronomy Agency & Registered Network</text>
+                                <text x="175" y="67" text-anchor="middle" fill="#94A3B8" font-size="10">20% Incremental Profit Cut · Exclusive Off-Take</text>
+                            </g>
+
+                            <g transform="translate(10, 200)">
+                                <rect width="200" height="110" rx="12" fill="#0F172A" stroke="#38BDF8" stroke-width="2"/>
+                                <rect x="10" y="10" width="180" height="20" rx="6" fill="#38BDF8" fill-opacity="0.2"/>
+                                <text x="100" y="24" text-anchor="middle" fill="#38BDF8" font-size="10" font-weight="800">BRANCH 1: DIGITAL SPINE</text>
+                                <text x="100" y="50" text-anchor="middle" fill="#FFFFFF" font-size="13" font-weight="800">Single Super-App</text>
+                                <text x="100" y="68" text-anchor="middle" fill="#FFFFFF" font-size="12" font-weight="700">(SaaS Platform)</text>
+                                <text x="100" y="90" text-anchor="middle" fill="#94A3B8" font-size="9">Yield tracking & baseline math</text>
+                            </g>
+
+                            <g transform="translate(220, 200)">
+                                <rect width="200" height="110" rx="12" fill="#0F172A" stroke="#34D399" stroke-width="2"/>
+                                <rect x="10" y="10" width="180" height="20" rx="6" fill="#34D399" fill-opacity="0.2"/>
+                                <text x="100" y="24" text-anchor="middle" fill="#34D399" font-size="10" font-weight="800">BRANCH 2: VALUE MULTIPLIER</text>
+                                <text x="100" y="50" text-anchor="middle" fill="#FFFFFF" font-size="13" font-weight="800">Integrated D2C & B2B</text>
+                                <text x="100" y="68" text-anchor="middle" fill="#FFFFFF" font-size="12" font-weight="700">Pure Food Brand</text>
+                                <text x="100" y="90" text-anchor="middle" fill="#94A3B8" font-size="9">Premium export & mass market</text>
+                            </g>
+
+                            <g transform="translate(430, 200)">
+                                <rect width="200" height="110" rx="12" fill="#0F172A" stroke="#FBBF24" stroke-width="2"/>
+                                <rect x="10" y="10" width="180" height="20" rx="6" fill="#FBBF24" fill-opacity="0.2"/>
+                                <text x="100" y="24" text-anchor="middle" fill="#FBBF24" font-size="10" font-weight="800">BRANCH 3: INPUT CONTROL</text>
+                                <text x="100" y="50" text-anchor="middle" fill="#FFFFFF" font-size="13" font-weight="800">Bio-Fertilizers &</text>
+                                <text x="100" y="68" text-anchor="middle" fill="#FFFFFF" font-size="12" font-weight="700">Organic Inputs</text>
+                                <text x="100" y="90" text-anchor="middle" fill="#94A3B8" font-size="9">In-house quality standardization</text>
+                            </g>
+
+                            <g transform="translate(640, 200)">
+                                <rect width="200" height="110" rx="12" fill="#0F172A" stroke="#A855F7" stroke-width="2"/>
+                                <rect x="10" y="10" width="180" height="20" rx="6" fill="#A855F7" fill-opacity="0.2"/>
+                                <text x="100" y="24" text-anchor="middle" fill="#A855F7" font-size="10" font-weight="800">BRANCH 4: ASSET SCALE</text>
+                                <text x="100" y="50" text-anchor="middle" fill="#FFFFFF" font-size="13" font-weight="800">"Lagvan Sheti"</text>
+                                <text x="100" y="68" text-anchor="middle" fill="#FFFFFF" font-size="12" font-weight="700">Land Lease Platform</text>
+                                <text x="100" y="90" text-anchor="middle" fill="#94A3B8" font-size="9">Base rent + 10% profit cut</text>
+                            </g>
+
+                            <path d="M 110 310 L 110 350 L 740 350 L 740 310" stroke="#0A5C6F" stroke-width="2" stroke-dasharray="4 4" />
+                            <path d="M 425 350 L 425 370" stroke="#0A5C6F" stroke-width="2" />
+                            <g transform="translate(260, 370)">
+                                <rect width="330" height="40" rx="20" fill="#0A5C6F" />
+                                <text x="165" y="25" text-anchor="middle" fill="#FFFFFF" font-size="12" font-weight="800">UNIFIED BRAND & GLOBAL EXPORT ECOSYSTEM</text>
+                            </g>
+                        </svg>
+                    </div>
+                </section>
+
+                <!-- Agriculture Startup Ideas Matrix Table -->
+                <section class="rounded-2xl border border-slate-200 bg-white/90 dark:bg-slate-950/90 p-6 shadow-md dark:border-slate-800 overflow-hidden backdrop-blur-md">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-slate-800">
+                        <div>
+                            <h3 class="text-xl font-black text-slate-900 dark:text-white">📊 Agriculture Startup Idea Strategic Matrix</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Evaluation of profit margins, market competition, implementation complexity, and ecosystem decisions.</p>
+                        </div>
+                        <span class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-black text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">5 Accept · 1 Reject</span>
+                    </div>
+
+                    <div class="mt-4 overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-50 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-800 text-[11px] font-black uppercase text-slate-500 dark:text-slate-400">
+                                    <th class="px-3 py-3">Step Ranking</th>
+                                    <th class="px-3 py-3">Startup Idea</th>
+                                    <th class="px-3 py-3">Decision</th>
+                                    <th class="px-3 py-3">Complexity</th>
+                                    <th class="px-3 py-3">Competition</th>
+                                    <th class="px-3 py-3">Profit Margin</th>
+                                    <th class="px-3 py-3">Revenue Potential</th>
+                                    <th class="px-3 py-3">Ecosystem Role & Strategic Advantage</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${matrixRows}
+                            </tbody>
+                        </table>
                     </div>
                 </section>
 
@@ -963,194 +1220,18 @@
 
                 <!-- Strategic Guidelines -->
                 <section class="grid gap-5 lg:grid-cols-3">
-                    <article class="rounded-2xl border border-amber-200 bg-amber-50 p-5 dark:border-amber-900/50 dark:bg-amber-950/20">
+                    <article class="rounded-2xl border border-amber-200 bg-amber-50/90 p-5 dark:border-amber-900/50 dark:bg-amber-950/20 backdrop-blur-md">
                         <h3 class="font-extrabold text-amber-900 dark:text-amber-200">₹20K farm experiment rule</h3>
                         <p class="mt-2 text-xs leading-5 text-amber-900/80 dark:text-amber-100/80">Do not plant a full acre on a prediction. Start with a small plot, one crop, a water plan and a buyer hypothesis. Track every rupee, labour hour, yield, pest issue and sale price. Expand only after two profitable cycles.</p>
                     </article>
-                    <article class="rounded-2xl border border-emerald-200 bg-emerald-50 p-5 dark:border-emerald-900/50 dark:bg-emerald-950/20">
+                    <article class="rounded-2xl border border-emerald-200 bg-emerald-50/90 p-5 dark:border-emerald-900/50 dark:bg-emerald-950/20 backdrop-blur-md">
                         <h3 class="font-extrabold text-emerald-900 dark:text-emerald-200">Agriculture direction</h3>
                         <p class="mt-2 text-xs leading-5 text-emerald-900/80 dark:text-emerald-100/80">For a low-budget Morshi trial, validate high-value, short-cycle options with local buyers first—vegetable nursery seedlings, leafy greens, herbs or a small protected-cultivation pilot. Crop choice must follow soil test, water availability, season and confirmed demand.</p>
                     </article>
-                    <article class="rounded-2xl border border-indigo-200 bg-indigo-50 p-5 dark:border-indigo-900/50 dark:bg-indigo-950/20">
+                    <article class="rounded-2xl border border-indigo-200 bg-indigo-50/90 p-5 dark:border-indigo-900/50 dark:bg-indigo-950/20 backdrop-blur-md">
                         <h3 class="font-extrabold text-indigo-900 dark:text-indigo-200">50 LPA readiness</h3>
                         <p class="mt-2 text-xs leading-5 text-indigo-900/80 dark:text-indigo-100/80">Treat this as a multi-year outcome, not a September 2027 guarantee. Build public proof: 3 excellent projects, strong English communication, system-design explanations, open-source contributions and referrals from real relationships.</p>
                     </article>
-                </section>
-
-                <!-- Month-by-Month Hiring Trends Section -->
-                <section class="space-y-6">
-                    <div class="border-b border-slate-200 dark:border-slate-800 pb-2">
-                        <h3 class="text-2xl font-black text-slate-900 dark:text-white">📊 Full-Stack Developer Hiring Trends Analysis</h3>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Multi-year recruitment data for MERN Full-Stack Engineers in Indian Metro Hubs & Foreign Remote Markets.</p>
-                    </div>
-
-                    <!-- 1. Indian Tech Hubs Box Model -->
-                    <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 overflow-hidden shadow-sm">
-                        <div class="bg-slate-100 dark:bg-slate-900 p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center flex-wrap gap-2">
-                            <h4 class="font-bold text-slate-900 dark:text-white text-base">🇮🇳 1. Indian Tech Hubs: Month-by-Month Hiring Trends</h4>
-                            <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Bengaluru | NCR | Hyderabad | Pune | Mumbai | Chennai</span>
-                        </div>
-                        <div class="p-5 space-y-4 text-xs leading-relaxed text-slate-700 dark:text-slate-300">
-                            <p class="italic text-slate-500 dark:text-slate-400">The Indian hiring landscape is driven heavily by the Indian Financial Year (April–March), Q1 corporate budget renewals (January), campus placements (July–October), and the festive season (October–November).</p>
-                            
-                            <!-- Visual Cycle Summary Box -->
-                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center font-mono text-[11px] py-2">
-                                <div class="p-2 rounded bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800">
-                                    <div class="font-bold text-emerald-700 dark:text-emerald-300">JAN - MAR</div>
-                                    <div class="text-[10px] text-emerald-800 dark:text-emerald-400 font-bold">[ Peak Hiring ]</div>
-                                    <div class="text-[9px] text-slate-500">Fresh Budgets</div>
-                                </div>
-                                <div class="p-2 rounded bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800">
-                                    <div class="font-bold text-amber-700 dark:text-amber-300">APR - JUN</div>
-                                    <div class="text-[10px] text-amber-800 dark:text-amber-400 font-bold">[ Budget Reset ]</div>
-                                    <div class="text-[9px] text-slate-500">Appraisals</div>
-                                </div>
-                                <div class="p-2 rounded bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800">
-                                    <div class="font-bold text-blue-700 dark:text-blue-300">JUL - SEP</div>
-                                    <div class="text-[10px] text-blue-800 dark:text-blue-400 font-bold">[ Mid-Year Spike ]</div>
-                                    <div class="text-[9px] text-slate-500">Product Push</div>
-                                </div>
-                                <div class="p-2 rounded bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800">
-                                    <div class="font-bold text-rose-700 dark:text-rose-300">OCT - DEC</div>
-                                    <div class="text-[10px] text-rose-800 dark:text-rose-400 font-bold">[ Holiday Slowdown ]</div>
-                                    <div class="text-[9px] text-slate-500">Festive Lull</div>
-                                </div>
-                            </div>
-
-                            <!-- Details Grid -->
-                            <div class="grid gap-3 sm:grid-cols-2">
-                                <div class="p-3 rounded-lg border border-slate-100 dark:border-slate-900 bg-slate-50/50 dark:bg-slate-900/30">
-                                    <b class="text-slate-900 dark:text-white block text-sm mb-1">🗓️ January – March (🔥 Peak Hiring Volume)</b>
-                                    <ul class="list-disc list-inside space-y-1">
-                                        <li><b>Market Activity:</b> Highest in the year (100% Volume).</li>
-                                        <li><b>India Hub Dynamics:</b> Companies start calendar year with fresh Q1 budgets. Service giants, IT consultancies, and growth-stage startups fill seats aggressively.</li>
-                                        <li><b>MERN Focus:</b> Mid-to-senior MERN engineers with Next.js, TypeScript, and AWS/Docker.</li>
-                                        <li><b>Notice Period Impact:</b> High activity of engineers serving 30-to-90-day notice periods from late Q4.</li>
-                                    </ul>
-                                </div>
-
-                                <div class="p-3 rounded-lg border border-slate-100 dark:border-slate-900 bg-slate-50/50 dark:bg-slate-900/30">
-                                    <b class="text-slate-900 dark:text-white block text-sm mb-1">🗓️ April – June (🟡 Appraisal & Slower Transition)</b>
-                                    <ul class="list-disc list-inside space-y-1">
-                                        <li><b>Market Activity:</b> Moderate (65–75% Volume).</li>
-                                        <li><b>India Hub Dynamics:</b> Start of financial year. Developers delay switching until appraisals/bonuses drop (April/May).</li>
-                                        <li><b>MERN Focus:</b> Startups in Pune/Mumbai look for fast joiners (0–15 day notice) and contract-to-hire roles.</li>
-                                    </ul>
-                                </div>
-
-                                <div class="p-3 rounded-lg border border-slate-100 dark:border-slate-900 bg-slate-50/50 dark:bg-slate-900/30">
-                                    <b class="text-slate-900 dark:text-white block text-sm mb-1">🗓️ July – September (🚀 Mid-Year Project Expansion)</b>
-                                    <ul class="list-disc list-inside space-y-1">
-                                        <li><b>Market Activity:</b> High (85–90% Volume).</li>
-                                        <li><b>India Hub Dynamics:</b> Post-appraisal attrition settles down. Product tech companies push to deliver late-year roadmap items.</li>
-                                        <li><b>MERN Focus:</b> High demand in Bengaluru, Hyderabad, and Chennai for MERN engineers with Redux/Zustand, microservices, and SQL/NoSQL experience.</li>
-                                    </ul>
-                                </div>
-
-                                <div class="p-3 rounded-lg border border-slate-100 dark:border-slate-900 bg-slate-50/50 dark:bg-slate-900/30">
-                                    <b class="text-slate-900 dark:text-white block text-sm mb-1">🗓️ October – December (😴 Festive & Year-End Lull)</b>
-                                    <ul class="list-disc list-inside space-y-1">
-                                        <li><b>Market Activity:</b> Lowest (40–50% Volume).</li>
-                                        <li><b>India Hub Dynamics:</b> Major festive period (Dussehra, Diwali, Christmas). Decision-makers on leave; long interview loops.</li>
-                                        <li><b>MERN Focus:</b> Niche urgent backfills. Ideal window for preparing applications ahead of January.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 2. Foreign Remote Market Box Model -->
-                    <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 overflow-hidden shadow-sm">
-                        <div class="bg-slate-100 dark:bg-slate-900 p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center flex-wrap gap-2">
-                            <h4 class="font-bold text-slate-900 dark:text-white text-base">🌐 2. Foreign Remote Market: Month-by-Month Hiring Trends</h4>
-                            <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Wellfound | Turing | Arc.dev | Remotive | We Work Remotely</span>
-                        </div>
-                        <div class="p-5 space-y-4 text-xs leading-relaxed text-slate-700 dark:text-slate-300">
-                            <p class="italic text-slate-500 dark:text-slate-400">Foreign remote hiring follows Western corporate fiscal calendars (Jan–Dec) with distinct quarterly budget cycles.</p>
-
-                            <!-- Visual Cycle Summary Box -->
-                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center font-mono text-[11px] py-2">
-                                <div class="p-2 rounded bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800">
-                                    <div class="font-bold text-emerald-700 dark:text-emerald-300">Q1 (Jan-Mar)</div>
-                                    <div class="text-[10px] text-emerald-800 dark:text-emerald-400 font-bold">[ Budget Flush ]</div>
-                                    <div class="text-[9px] text-slate-500">High Volume</div>
-                                </div>
-                                <div class="p-2 rounded bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800">
-                                    <div class="font-bold text-blue-700 dark:text-blue-300">Q2 (Apr-Jun)</div>
-                                    <div class="text-[10px] text-blue-800 dark:text-blue-400 font-bold">[ Product Build ]</div>
-                                    <div class="text-[9px] text-slate-500">Steady Scale</div>
-                                </div>
-                                <div class="p-2 rounded bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800">
-                                    <div class="font-bold text-amber-700 dark:text-amber-300">Q3 (Jul-Sep)</div>
-                                    <div class="text-[10px] text-amber-800 dark:text-amber-400 font-bold">[ Mid-Year Sprint ]</div>
-                                    <div class="text-[9px] text-slate-500">Pre-Q4 Launch</div>
-                                </div>
-                                <div class="p-2 rounded bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800">
-                                    <div class="font-bold text-rose-700 dark:text-rose-300">Q4 (Oct-Dec)</div>
-                                    <div class="text-[10px] text-rose-800 dark:text-rose-400 font-bold">[ Thanksgiving Freeze ]</div>
-                                    <div class="text-[9px] text-slate-500">Budget Freeze</div>
-                                </div>
-                            </div>
-
-                            <!-- Details Grid -->
-                            <div class="grid gap-3 sm:grid-cols-2">
-                                <div class="p-3 rounded-lg border border-slate-100 dark:border-slate-900 bg-slate-50/50 dark:bg-slate-900/30">
-                                    <b class="text-slate-900 dark:text-white block text-sm mb-1">🗓️ January – March (🚀 Massive Global Remote Hiring)</b>
-                                    <ul class="list-disc list-inside space-y-1">
-                                        <li><b>Remote Activity:</b> Peak Window (100% Volume).</li>
-                                        <li><b>Global Market Dynamics:</b> US/EU startups release annual VC/budget allocations. Founders hire remote Indian talent to scale speed while managing burn rate.</li>
-                                        <li><b>MERN Focus:</b> Full-Stack MERN + TypeScript / GraphQL / Serverless (AWS Lambda, Vercel).</li>
-                                        <li><b>Salary Trend:</b> $30,000 to $60,000+ USD remote base (~₹25L – ₹50L+).</li>
-                                    </ul>
-                                </div>
-
-                                <div class="p-3 rounded-lg border border-slate-100 dark:border-slate-900 bg-slate-50/50 dark:bg-slate-900/30">
-                                    <b class="text-slate-900 dark:text-white block text-sm mb-1">🗓️ April – June (⚡ Steady Growth & Product Building)</b>
-                                    <ul class="list-disc list-inside space-y-1">
-                                        <li><b>Remote Activity:</b> Steady (75–80% Volume).</li>
-                                        <li><b>Global Market Dynamics:</b> Focus shifts to active building. European tech firms hire heavily before summer breaks.</li>
-                                        <li><b>MERN Focus:</b> Full-Stack MERN with Applied AI experience (OpenAI APIs, LangChain, Vector DBs).</li>
-                                    </ul>
-                                </div>
-
-                                <div class="p-3 rounded-lg border border-slate-100 dark:border-slate-900 bg-slate-50/50 dark:bg-slate-900/30">
-                                    <b class="text-slate-900 dark:text-white block text-sm mb-1">🗓️ July – August (🏖️ Western Summer Slowdown)</b>
-                                    <ul class="list-disc list-inside space-y-1">
-                                        <li><b>Remote Activity:</b> Slower (55–65% Volume).</li>
-                                        <li><b>Global Market Dynamics:</b> US/EU executives on vacation; interview loops delayed.</li>
-                                        <li><b>Strategy:</b> Great time to apply for async remote roles with reduced application noise.</li>
-                                    </ul>
-                                </div>
-
-                                <div class="p-3 rounded-lg border border-slate-100 dark:border-slate-900 bg-slate-50/50 dark:bg-slate-900/30">
-                                    <b class="text-slate-900 dark:text-white block text-sm mb-1">🗓️ September – October (🔥 Pre-Q4 Feature Rush)</b>
-                                    <ul class="list-disc list-inside space-y-1">
-                                        <li><b>Remote Activity:</b> High Surge (85–90% Volume).</li>
-                                        <li><b>Global Market Dynamics:</b> Post-summer sprint to ship major product features before holiday freeze.</li>
-                                    </ul>
-                                </div>
-
-                                <div class="p-3 rounded-lg border border-slate-100 dark:border-slate-900 bg-slate-50/50 dark:bg-slate-900/30 sm:col-span-2">
-                                    <b class="text-slate-900 dark:text-white block text-sm mb-1">🗓️ November – December (❄️ Global Holiday Freeze)</b>
-                                    <ul class="list-disc list-inside space-y-1">
-                                        <li><b>Remote Activity:</b> Minimal (30–40% Volume).</li>
-                                        <li><b>Global Market Dynamics:</b> US Thanksgiving through Christmas/New Year holiday period. General hiring freezes.</li>
-                                        <li><b>Exception:</b> Bootstrapped startups sourcing cost-effective remote contractors for Jan 1 starts.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Professional Operating System -->
-                <section class="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-950">
-                    <h3 class="text-lg font-black text-slate-900 dark:text-white">Professional operating system</h3>
-                    <div class="mt-4 grid gap-4 md:grid-cols-3 text-xs leading-5 text-slate-600 dark:text-slate-300">
-                        <p><b class="text-slate-900 dark:text-white">At work:</b> agree on priorities in writing, communicate risk early, deliver visibly and learn the business context. Avoid emotional decisions during conflict—pause, collect facts, respond calmly.</p>
-                        <p><b class="text-slate-900 dark:text-white">Networking:</b> yes, it matters when it is useful. Every month help 2 people, share one genuine build/learning note, ask for feedback and request referrals only after demonstrating value.</p>
-                        <p><b class="text-slate-900 dark:text-white">Boundaries:</b> define normal hours, keep a shutdown ritual, and choose extra work only when it creates a skill, relationship or measurable portfolio outcome.</p>
-                    </div>
                 </section>
             `;
         }
@@ -1162,10 +1243,8 @@
             renderWorkspace();
         }
 
-        // Render pristine MERN stack
         function renderMernSyllabus(container) {
             mernSyllabusData.forEach((phase, phaseIdx) => {
-                // Apply search and filter criteria
                 const filteredLectures = phase.lectures.filter(lec => {
                     const matchesSearch = lec.name.toLowerCase().includes(searchQuery.toLowerCase());
                     if (!matchesSearch) return false;
@@ -1181,7 +1260,7 @@
                 if (filteredLectures.length === 0) return;
 
                 const card = document.createElement('div');
-                card.className = "bg-white dark:bg-slate-950 rounded-2xl shadow-md border border-slate-200 dark:border-slate-800 overflow-hidden phase-card transition duration-200 hover:shadow-lg";
+                card.className = "bg-white/90 dark:bg-slate-950/90 backdrop-blur-md rounded-2xl shadow-md border border-slate-200 dark:border-slate-800 overflow-hidden phase-card transition duration-200 hover:shadow-lg";
                 
                 const starsHTML = (priority) => {
                     if (priority === 0) return `<span class="text-slate-400 dark:text-slate-500 text-xs italic">Optional Relational</span>`;
@@ -1192,7 +1271,6 @@
                     const isChecked = mernChecked[lec.id] ? 'checked' : '';
                     const isImportant = lec.priority === 5;
                     
-                    // Extra Bold classing and visual callout for Must-Need items
                     const nameClass = isImportant 
                         ? 'font-black text-slate-950 dark:text-white tracking-wide border-l-4 border-amber-500 pl-2' 
                         : 'font-semibold text-slate-850 dark:text-slate-200';
@@ -1259,7 +1337,6 @@
             });
         }
 
-        // Render Screenshot-aligned tracks as 99-video format tables
         function renderScreenshotSyllabus(container) {
             screenshotSyllabusData.forEach((zone) => {
                 if (screenshotZoneFilter !== 'all' && zone.id !== screenshotZoneFilter) return;
@@ -1271,9 +1348,8 @@
                 if (filteredTopics.length === 0 && searchQuery !== '') return;
 
                 const card = document.createElement('div');
-                card.className = "bg-white dark:bg-slate-950 rounded-2xl shadow-md border border-slate-200 dark:border-slate-800 overflow-hidden phase-card transition duration-200 hover:shadow-lg";
+                card.className = "bg-white/90 dark:bg-slate-950/90 backdrop-blur-md rounded-2xl shadow-md border border-slate-200 dark:border-slate-800 overflow-hidden phase-card transition duration-200 hover:shadow-lg";
 
-                // Build project checklists that auto-save state
                 const projectsDescription = zone.projects ? `
                     <div class="p-3 bg-slate-100 dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800">
                         <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">💡 Target Projects Matrix</span>
@@ -1323,7 +1399,6 @@
                     const isChecked = screenshotChecked[top.id] ? 'checked' : '';
                     const isImportant = top.priority === 5;
 
-                    // Extra Bold styling & borders on critical items
                     const nameClass = isImportant 
                         ? 'font-black text-slate-950 dark:text-white tracking-wide border-l-4 border-amber-500 pl-2' 
                         : 'font-semibold text-slate-800 dark:text-slate-200';
@@ -1382,7 +1457,6 @@
             });
         }
 
-        // Navigation button highlights based on active track selection
         function updateTabButtonHighlightStates() {
             const buttonIds = ['mern', 'web', 'devops', 'dsa', 'ml', 'system_design', 'web3', 'clarity'];
             buttonIds.forEach(id => {
@@ -1392,7 +1466,6 @@
                 }
             });
 
-            // Highlight the active button
             let activeTargetId = activeMode === 'mern' ? 'mern' : activeMode === 'clarity' ? 'clarity' : screenshotZoneFilter;
             const activeBtn = document.getElementById(`nav-btn-${activeTargetId}`);
             if (activeBtn) {
@@ -1400,7 +1473,6 @@
             }
         }
 
-        // Checklist State Mutators
         function toggleMernLecture(id, seconds) {
             if (mernChecked[id]) {
                 delete mernChecked[id];
@@ -1413,7 +1485,6 @@
             calculateStatistics();
         }
 
-        // Project Key Persistency
         function toggleProjectKey(key) {
             const current = localStorage.getItem(key) === 'true';
             localStorage.setItem(key, !current);
@@ -1432,12 +1503,10 @@
             calculateStatistics();
         }
 
-        // Dynamic statistics computation
         function calculateStatistics() {
             if (activeMode === 'mern') {
                 document.getElementById('metrics-syllabus-title').textContent = "MERN Course Blueprint";
                 
-                // Dynamic counts that respect custom topics added
                 let totalLectures = 0;
                 mernSyllabusData.forEach(p => {
                     totalLectures += p.lectures.length;
@@ -1462,8 +1531,8 @@
             } else if (activeMode === 'clarity') {
                 const completed = JSON.parse(localStorage.getItem('clarity-roadmap-checked')) || {};
                 const completedCount = CLARITY_ITEMS.filter(item => completed[item.id]).length;
-                document.getElementById('metrics-syllabus-title').textContent = 'Clarity Roadmap';
-                document.getElementById('metrics-description-sub').textContent = 'A balanced career, skill and agriculture validation plan.';
+                document.getElementById('metrics-syllabus-title').textContent = 'Naturall Farm Startup Roadmap';
+                document.getElementById('metrics-description-sub').textContent = 'A balanced career, skill, and agriculture validation plan.';
                 document.getElementById('metrics-count-total').textContent = `${CLARITY_ITEMS.length} Milestones`;
                 document.getElementById('metrics-duration').textContent = 'Sep 2026 – Sep 2027';
                 document.getElementById('completed-fraction').textContent = `${completedCount} / ${CLARITY_ITEMS.length}`;
@@ -1497,7 +1566,6 @@
             }
         }
 
-        // Set specific View Track from navigation panel
         function setTrackView(mode, zoneFilter) {
             activeMode = mode;
             screenshotZoneFilter = zoneFilter;
@@ -1512,7 +1580,6 @@
             renderWorkspace();
         }
 
-        // Render dynamic filtering buttons
         function renderFilters() {
             const filterWrapper = document.getElementById('filters-wrapper');
             filterWrapper.innerHTML = '';
@@ -1574,7 +1641,7 @@
                 showToast("MERN Stack progress reset successfully. 💪", "info");
             } else if (activeMode === 'clarity') {
                 localStorage.removeItem('clarity-roadmap-checked');
-                showToast('Clarity Roadmap progress reset successfully. 💪', 'info');
+                showToast('Naturall Farm Startup Roadmap progress reset successfully. 💪', 'info');
             } else {
                 const currentZone = screenshotSyllabusData.find(z => z.id === screenshotZoneFilter);
                 if (currentZone) {
@@ -1592,7 +1659,6 @@
             renderWorkspace();
         }
 
-        // Toast Notification Pipeline
         function showToast(message, type = "success") {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -1618,7 +1684,6 @@
             }, 2500);
         }
 
-        // Theme Switcher Initializer
         const themeToggleBtn = document.getElementById('theme-toggle');
         const lightIcon = document.getElementById('light-icon');
         const darkIcon = document.getElementById('dark-icon');
@@ -1649,17 +1714,88 @@
             }
         });
 
-        // Search Action Listener
         document.getElementById('search-bar').addEventListener('input', (e) => {
             searchQuery = e.target.value;
             renderWorkspace();
         });
+
+        /* 3D Animated Agriculture Background GSAP Canvas Engine */
+        function initAgriCanvasEngine() {
+            const canvas = document.getElementById('bg-agri-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let width = canvas.width = window.innerWidth;
+            let height = canvas.height = window.innerHeight;
+
+            window.addEventListener('resize', () => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            });
+
+            // Particles Array (Bio-Nodes + Glow Floating Dots)
+            const particles = [];
+            const particleCount = 45;
+
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    radius: Math.random() * 3 + 1.5,
+                    color: i % 2 === 0 ? '#2DD4BF' : '#10B981',
+                    vx: (Math.random() - 0.5) * 0.8,
+                    vy: (Math.random() - 0.5) * 0.8,
+                    alpha: Math.random() * 0.6 + 0.2
+                });
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, width, height);
+
+                // Draw Connecting Network Rays
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+
+                        if (dist < 140) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = `rgba(13, 148, 136, ${0.25 - dist / 140})`;
+                            ctx.lineWidth = 0.8;
+                            ctx.stroke();
+                        }
+                    }
+                }
+
+                // Draw Floating Particles
+                particles.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = p.color;
+                    ctx.globalAlpha = p.alpha;
+                    ctx.fill();
+
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < 0 || p.x > width) p.vx *= -1;
+                    if (p.y < 0 || p.y > height) p.vy *= -1;
+                });
+
+                requestAnimationFrame(draw);
+            }
+
+            draw();
+        }
 
         // App startup
         window.onload = function() {
             initTheme();
             initSyllabusDatasets();
             renderWorkspace();
+            initAgriCanvasEngine();
         }
     </script>
 </body>
