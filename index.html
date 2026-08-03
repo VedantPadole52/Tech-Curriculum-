@@ -27,7 +27,7 @@
         }
     </script>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -70,6 +70,17 @@
         /* Glowing Animated Arrow Effects */
         .blasting-arrow {
             filter: drop-shadow(0px 0px 8px #2DD4BF);
+        }
+
+        /* 3D Perspective Card Styles */
+        .roadmap-node-3d {
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .roadmap-node-3d:hover {
+            transform: translateY(-6px) rotateX(4deg) rotateY(-2deg) scale(1.01);
+            box-shadow: 0 20px 30px -10px rgba(13, 148, 136, 0.3);
         }
 
         /* Print-specific layout parameters to generate standard PDF pages */
@@ -170,42 +181,42 @@
             <div class="max-w-7xl mx-auto flex flex-col gap-3">
                 <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Select Learning Syllabus Track:</span>
                 <div class="flex flex-wrap gap-2">
-                    <!-- Naturall Farm Startup Roadmap Button (Default Homepage) -->
+                    <!-- 1. Naturall Farm Startup Roadmap Button -->
                     <button id="nav-btn-clarity" onclick="setTrackView('clarity', 'clarity')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
                         🧭 Naturall Farm Startup Roadmap
                     </button>
 
-                    <!-- 99 Videos Main Button -->
+                    <!-- 2. MERN Course (99 Videos) Button -->
                     <button id="nav-btn-mern" onclick="setTrackView('mern', 'all')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
                         🚀 MERN Course (99 Videos)
                     </button>
                     
-                    <!-- Web Dev Button -->
+                    <!-- 3. Web Dev Button -->
                     <button id="nav-btn-web" onclick="setTrackView('screenshot', 'web')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
                         💻 Web Dev
                     </button>
-                    
-                    <!-- DevOps and Cloud Button -->
-                    <button id="nav-btn-devops" onclick="setTrackView('screenshot', 'devops')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
-                        ⚙️ DevOps & Cloud
-                    </button>
-                    
-                    <!-- DSA Button -->
-                    <button id="nav-btn-dsa" onclick="setTrackView('screenshot', 'dsa')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
-                        🧠 DSA Track
-                    </button>
-                    
-                    <!-- AI Button -->
+
+                    <!-- 4. Applied AI Button -->
                     <button id="nav-btn-ml" onclick="setTrackView('screenshot', 'ml')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
                         🤖 Applied AI
                     </button>
-                    
-                    <!-- System Design Button -->
+
+                    <!-- 5. System Design Button -->
                     <button id="nav-btn-system_design" onclick="setTrackView('screenshot', 'system_design')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
                         🏗️ System Design
                     </button>
 
-                    <!-- Web3 Button -->
+                    <!-- 6. DSA Button -->
+                    <button id="nav-btn-dsa" onclick="setTrackView('screenshot', 'dsa')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
+                        🧠 DSA Track
+                    </button>
+                    
+                    <!-- 7. DevOps and Cloud Button -->
+                    <button id="nav-btn-devops" onclick="setTrackView('screenshot', 'devops')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
+                        ⚙️ DevOps & Cloud
+                    </button>
+
+                    <!-- 8. Web3 Button -->
                     <button id="nav-btn-web3" onclick="setTrackView('screenshot', 'web3')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all duration-150 shadow-sm flex items-center gap-1.5 border border-slate-250 dark:border-slate-800">
                         🌐 Web3 (Sunday)
                     </button>
@@ -557,94 +568,8 @@
                 ]
             },
             {
-                id: "devops",
-                name: "Zone 2: Devops & Cloud (Every Friday Track)",
-                description: "Whiteboard track supplemented with Core Cloud Providers (AWS/GCP), Identity Management (IAM), Infrastructure as Code (Terraform), Secrets Security, and DevSecOps validations.",
-                emoji: "⚙️",
-                gradient: "from-blue-600 to-indigo-750",
-                projects: [
-                    "e2b VM sandbox orchestration",
-                    "Replit VM interactive environment",
-                    "cloudflare serverless workers",
-                    "Terraform multi-tier AWS deployment"
-                ],
-                resources: [
-                    "e2b sandbox deep dive blogs",
-                    "modal.com container scale layouts",
-                    "AWS Well-Architected Infrastructure checklist",
-                    "Terraform Registry official guidelines"
-                ],
-                topics: [
-                    { id: "S-DEV-1", name: "1. Bash/Terminal CLI", priority: 5 },
-                    { id: "S-DEV-2", name: "2. VMs / Baremetal physical machines", priority: 4 },
-                    { id: "S-DEV-3", name: "3. Process managers & reverse NGINX proxy configs", priority: 5 },
-                    { id: "S-DEV-4", name: "4. SSL Certificates and Certbot auto-rotation", priority: 4 },
-                    { id: "S-DEV-5", name: "5. Auto-Scaling Groups (ASGs) / MIGs", priority: 4 },
-                    { id: "S-DEV-6", name: "6. Container engines and container runtimes", priority: 4 },
-                    { id: "S-DEV-7", name: "7. Docker files & network isolation policies", priority: 5 },
-                    { id: "S-DEV-8", name: "8. Kubernetes clusters & Pod controller scheduling", priority: 5 },
-                    { id: "S-DEV-9", name: "9. Kubernetes networking, secrets & configurations", priority: 4 },
-                    { id: "S-DEV-10", name: "10. CI/CD automation pipelines (GitHub Actions, GitLab)", priority: 5 },
-                    { id: "S-DEV-11", name: "11. Monitoring dashboards & OpenTelemetry observability", priority: 4 },
-                    { id: "S-DEV-12", name: "12. Infrastructure as Code (IaC) architectures", priority: 4 },
-                    { id: "S-DEV-13", name: "13. CDNs & global S3 static object stores", priority: 5 },
-                    { id: "S-DEV-14", name: "14. Sandboxing and Firecracker MicroVM virtualization", priority: 4 },
-                    { id: "S-DEV-CL1", name: "15. Core Cloud Computing: AWS / GCP Compute, S3 Storage & VPC network topologies", priority: 5 },
-                    { id: "S-DEV-CL2", name: "16. Identity and Access Management (IAM): Least privilege roles & cloud service bounds", priority: 5 },
-                    { id: "S-DEV-CL3", name: "17. Declarative Infrastructure: Writing, executing & state tracking with Terraform", priority: 5 },
-                    { id: "S-DEV-CL4", name: "18. Cloud Security & Secrets Vaults: HashiCorp Vault, cloud parameter secrets protection", priority: 4 },
-                    { id: "S-DEV-CL5", name: "19. DevSecOps integration: Trivy vulnerability scans & OPA compliance inside pipelines", priority: 4 }
-                ]
-            },
-            {
-                id: "dsa",
-                name: "Zone 3: DSA (Every Thursday Track)",
-                description: "Whiteboard Track supplemented with foundational Sorting patterns, short Graph trajectories, and complex structural groupings.",
-                emoji: "🧠",
-                gradient: "from-purple-600 to-fuchsia-750",
-                projects: [
-                    "Competitive workflow presets",
-                    "Subarray computation tools",
-                    "Shortest path visualizer tool"
-                ],
-                resources: [
-                    "Harvard CS-50 introductory computer science",
-                    "Abdul Bari algorithm structures",
-                    "Pavel Marvin playlist walkthroughs",
-                    "Codeforces Edu / CP algorithmic pathways",
-                    "Interactive assessment spaces: Codeforces, Leetcode, Atcoder"
-                ],
-                topics: [
-                    { id: "S-DSA-1", name: "1. Introduction to C++", priority: 5 },
-                    { id: "S-DSA-2", name: "2. Loops and Pattern Printing", priority: 4 },
-                    { id: "S-DSA-3", name: "3. Arrays / 2D Arrays", priority: 5 },
-                    { id: "S-DSA-4", name: "4. Strings", priority: 5 },
-                    { id: "S-DSA-5", name: "5. Sorting and Searching foundations", priority: 5 },
-                    { id: "S-DSA-6", name: "6. Pointers / Pass by value, reference & memory address", priority: 5 },
-                    { id: "S-DSA-7", name: "7. Time and Space Complexity calculations", priority: 5 },
-                    { id: "S-DSA-8", name: "8. Sets and Maps", priority: 5 },
-                    { id: "S-DSA-9", name: "9. Prefix Sums / Sliding Window / Contribution formulas", priority: 5 },
-                    { id: "S-DSA-10", name: "10. Bit Manipulation basics", priority: 4 },
-                    { id: "S-DSA-11", name: "11. Number Theory Basics (Primes, GCD)", priority: 4 },
-                    { id: "S-DSA-12", name: "12. Recursion and Backtracking state tracks", priority: 5 },
-                    { id: "S-DSA-13", name: "13. Two Pointers algorithm designs", priority: 5 },
-                    { id: "S-DSA-14", name: "14. Linked List memory structures", priority: 5 },
-                    { id: "S-DSA-15", name: "15. Stack / Queue / Deque implementations", priority: 5 },
-                    { id: "S-DSA-16", name: "16. Binary Tree / Binary Search Tree (BST) designs", priority: 5 },
-                    { id: "S-DSA-17", name: "17. Priority Queue / Heap data arrays", priority: 4 },
-                    { id: "S-DSA-18", name: "18. Trie text-retrieval trees", priority: 3 },
-                    { id: "S-DSA-19", name: "19. Greedy choice optimization tracks", priority: 4 },
-                    { id: "S-DSA-20", name: "20. Dynamic Programming state memoization", priority: 5 },
-                    { id: "S-DSA-21", name: "21. Graphs (Adjacency matrices, DFS, BFS traversal)", priority: 5 },
-                    { id: "S-DSA-22", name: "22. Segment Tree / Ordered Set range queries", priority: 5 },
-                    { id: "S-DSA-DSU1", name: "23. Fast Sorting Algorithms: Merge Sort, Quick Sort (stable vs unstable partitions)", priority: 5 },
-                    { id: "S-DSA-DSU2", name: "24. Graph Shortest Paths: Dijkstra's Algorithm for routing logic", priority: 5 },
-                    { id: "S-DSA-DSU3", name: "25. Disjoint Set Union (DSU) & cyclic redundancy network leaks", priority: 5 }
-                ]
-            },
-            {
                 id: "ml",
-                name: "Zone 4: Applied AI Integration (Every Saturday Track)",
+                name: "Zone 2: Applied AI Integration (Every Saturday Track)",
                 description: "Overhauled to focus entirely on Applied AI Engineering. Build intelligent tools, write context windows, leverage vector searches, and deploy autonomous loop architectures.",
                 emoji: "🤖",
                 gradient: "from-amber-600 to-rose-750",
@@ -692,7 +617,7 @@
             },
             {
                 id: "system_design",
-                name: "Zone 5: System Design & Scalability (New)",
+                name: "Zone 3: System Design & Scalability (New)",
                 description: "Essential architectural layout patterns required for high-concurrency systems, stateless design patterns, and decoupled communications.",
                 emoji: "🏗️",
                 gradient: "from-emerald-600 to-teal-800",
@@ -716,6 +641,92 @@
                     { id: "S-SD-7", name: "7. The CAP Theorem: Balancing Consistency, Availability, and Partition Tolerance", priority: 4 },
                     { id: "S-SD-8", name: "8. API Guardrails: Rate Limiting Algorithms (Token Bucket, Leaky Bucket, Sliding Windows)", priority: 5 },
                     { id: "S-SD-9", name: "9. Resilient Systems: Circuit breakers, fallback triggers, and graceful service degradation", priority: 5 }
+                ]
+            },
+            {
+                id: "dsa",
+                name: "Zone 4: DSA (Every Thursday Track)",
+                description: "Whiteboard Track supplemented with foundational Sorting patterns, short Graph trajectories, and complex structural groupings.",
+                emoji: "🧠",
+                gradient: "from-purple-600 to-fuchsia-750",
+                projects: [
+                    "Competitive workflow presets",
+                    "Subarray computation tools",
+                    "Shortest path visualizer tool"
+                ],
+                resources: [
+                    "Harvard CS-50 introductory computer science",
+                    "Abdul Bari algorithm structures",
+                    "Pavel Marvin playlist walkthroughs",
+                    "Codeforces Edu / CP algorithmic pathways",
+                    "Interactive assessment spaces: Codeforces, Leetcode, Atcoder"
+                ],
+                topics: [
+                    { id: "S-DSA-1", name: "1. Introduction to C++", priority: 5 },
+                    { id: "S-DSA-2", name: "2. Loops and Pattern Printing", priority: 4 },
+                    { id: "S-DSA-3", name: "3. Arrays / 2D Arrays", priority: 5 },
+                    { id: "S-DSA-4", name: "4. Strings", priority: 5 },
+                    { id: "S-DSA-5", name: "5. Sorting and Searching foundations", priority: 5 },
+                    { id: "S-DSA-6", name: "6. Pointers / Pass by value, reference & memory address", priority: 5 },
+                    { id: "S-DSA-7", name: "7. Time and Space Complexity calculations", priority: 5 },
+                    { id: "S-DSA-8", name: "8. Sets and Maps", priority: 5 },
+                    { id: "S-DSA-9", name: "9. Prefix Sums / Sliding Window / Contribution formulas", priority: 5 },
+                    { id: "S-DSA-10", name: "10. Bit Manipulation basics", priority: 4 },
+                    { id: "S-DSA-11", name: "11. Number Theory Basics (Primes, GCD)", priority: 4 },
+                    { id: "S-DSA-12", name: "12. Recursion and Backtracking state tracks", priority: 5 },
+                    { id: "S-DSA-13", name: "13. Two Pointers algorithm designs", priority: 5 },
+                    { id: "S-DSA-14", name: "14. Linked List memory structures", priority: 5 },
+                    { id: "S-DSA-15", name: "15. Stack / Queue / Deque implementations", priority: 5 },
+                    { id: "S-DSA-16", name: "16. Binary Tree / Binary Search Tree (BST) designs", priority: 5 },
+                    { id: "S-DSA-17", name: "17. Priority Queue / Heap data arrays", priority: 4 },
+                    { id: "S-DSA-18", name: "18. Trie text-retrieval trees", priority: 3 },
+                    { id: "S-DSA-19", name: "19. Greedy choice optimization tracks", priority: 4 },
+                    { id: "S-DSA-20", name: "20. Dynamic Programming state memoization", priority: 5 },
+                    { id: "S-DSA-21", name: "21. Graphs (Adjacency matrices, DFS, BFS traversal)", priority: 5 },
+                    { id: "S-DSA-22", name: "22. Segment Tree / Ordered Set range queries", priority: 5 },
+                    { id: "S-DSA-DSU1", name: "23. Fast Sorting Algorithms: Merge Sort, Quick Sort (stable vs unstable partitions)", priority: 5 },
+                    { id: "S-DSA-DSU2", name: "24. Graph Shortest Paths: Dijkstra's Algorithm for routing logic", priority: 5 },
+                    { id: "S-DSA-DSU3", name: "25. Disjoint Set Union (DSU) & cyclic redundancy network leaks", priority: 5 }
+                ]
+            },
+            {
+                id: "devops",
+                name: "Zone 5: Devops & Cloud (Every Friday Track)",
+                description: "Whiteboard track supplemented with Core Cloud Providers (AWS/GCP), Identity Management (IAM), Infrastructure as Code (Terraform), Secrets Security, and DevSecOps validations.",
+                emoji: "⚙️",
+                gradient: "from-blue-600 to-indigo-750",
+                projects: [
+                    "e2b VM sandbox orchestration",
+                    "Replit VM interactive environment",
+                    "cloudflare serverless workers",
+                    "Terraform multi-tier AWS deployment"
+                ],
+                resources: [
+                    "e2b sandbox deep dive blogs",
+                    "modal.com container scale layouts",
+                    "AWS Well-Architected Infrastructure checklist",
+                    "Terraform Registry official guidelines"
+                ],
+                topics: [
+                    { id: "S-DEV-1", name: "1. Bash/Terminal CLI", priority: 5 },
+                    { id: "S-DEV-2", name: "2. VMs / Baremetal physical machines", priority: 4 },
+                    { id: "S-DEV-3", name: "3. Process managers & reverse NGINX proxy configs", priority: 5 },
+                    { id: "S-DEV-4", name: "4. SSL Certificates and Certbot auto-rotation", priority: 4 },
+                    { id: "S-DEV-5", name: "5. Auto-Scaling Groups (ASGs) / MIGs", priority: 4 },
+                    { id: "S-DEV-6", name: "6. Container engines and container runtimes", priority: 4 },
+                    { id: "S-DEV-7", name: "7. Docker files & network isolation policies", priority: 5 },
+                    { id: "S-DEV-8", name: "8. Kubernetes clusters & Pod controller scheduling", priority: 5 },
+                    { id: "S-DEV-9", name: "9. Kubernetes networking, secrets & configurations", priority: 4 },
+                    { id: "S-DEV-10", name: "10. CI/CD automation pipelines (GitHub Actions, GitLab)", priority: 5 },
+                    { id: "S-DEV-11", name: "11. Monitoring dashboards & OpenTelemetry observability", priority: 4 },
+                    { id: "S-DEV-12", name: "12. Infrastructure as Code (IaC) architectures", priority: 4 },
+                    { id: "S-DEV-13", name: "13. CDNs & global S3 static object stores", priority: 5 },
+                    { id: "S-DEV-14", name: "14. Sandboxing and Firecracker MicroVM virtualization", priority: 4 },
+                    { id: "S-DEV-CL1", name: "15. Core Cloud Computing: AWS / GCP Compute, S3 Storage & VPC network topologies", priority: 5 },
+                    { id: "S-DEV-CL2", name: "16. Identity and Access Management (IAM): Least privilege roles & cloud service bounds", priority: 5 },
+                    { id: "S-DEV-CL3", name: "17. Declarative Infrastructure: Writing, executing & state tracking with Terraform", priority: 5 },
+                    { id: "S-DEV-CL4", name: "18. Cloud Security & Secrets Vaults: HashiCorp Vault, cloud parameter secrets protection", priority: 4 },
+                    { id: "S-DEV-CL5", name: "19. DevSecOps integration: Trivy vulnerability scans & OPA compliance inside pipelines", priority: 4 }
                 ]
             },
             {
@@ -779,11 +790,11 @@
         let screenshotZoneFilter = localStorage.getItem('screenshot-active-zone') || 'web'; 
 
         const CLARITY_ITEMS = [
-            { id: 'foundation', title: 'Sep–Dec 2026 · Full-stack foundation', detail: 'Ship 2 responsive full-stack projects. Master HTML/CSS, JavaScript/TypeScript, React, Node.js, SQL, Git and deployment.' },
-            { id: 'production', title: 'Jan–Mar 2027 · Production engineering + DevOps', detail: 'Build one production-quality product: authentication, tests, Docker, CI/CD, cloud deployment, monitoring and a clear README.' },
-            { id: 'dsa', title: 'Apr–May 2027 · DSA basics to medium', detail: 'Solve patterns, not random questions: arrays, strings, hash maps, two pointers, trees, graphs, recursion and dynamic programming.' },
-            { id: 'ai', title: 'Jun–Jul 2027 · Applied AI', detail: 'Deliver a useful RAG or workflow-automation product with evaluations, observability, structured outputs and a real user problem.' },
-            { id: 'design', title: 'Aug–Sep 2027 · System design + interview proof', detail: 'Practice APIs, databases, caching, queues, reliability and trade-offs. Publish 3 case studies and complete mock interviews.' },
+            { id: 'foundation', title: 'Phase 1 · Full-stack foundation', detail: 'Ship 2 responsive full-stack projects. Master HTML/CSS, JavaScript/TypeScript, React, Node.js, SQL, Git and deployment.' },
+            { id: 'production', title: 'Phase 2 · Production engineering + DevOps', detail: 'Build one production-quality product: authentication, tests, Docker, CI/CD, cloud deployment, monitoring and a clear README.' },
+            { id: 'dsa', title: 'Phase 3 · DSA basics to medium', detail: 'Solve patterns, not random questions: arrays, strings, hash maps, two pointers, trees, graphs, recursion and dynamic programming.' },
+            { id: 'ai', title: 'Phase 4 · Applied AI', detail: 'Deliver a useful RAG or workflow-automation product with evaluations, observability, structured outputs and a real user problem.' },
+            { id: 'design', title: 'Phase 5 · System design + interview proof', detail: 'Practice APIs, databases, caching, queues, reliability and trade-offs. Publish 3 case studies and complete mock interviews.' },
             { id: 'farm', title: 'Every weekend · Morshi farm research', detail: 'Visit farms and institutions, record costs/yield/buyer feedback, and run one small measured trial before expanding.' },
             { id: 'professional', title: 'Every week · Communication & professional habits', detail: 'Write a weekly update, practise one spoken explanation, protect work boundaries, and document outcomes instead of chasing overtime.' }
         ];
@@ -948,31 +959,35 @@
             updateTargetModuleDropdown();
             updateTabButtonHighlightStates();
             
-            // Re-trigger GSAP animations if present
+            // Re-trigger GSAP 3D animations when Clarity tab is active
             if (window.gsap && activeMode === 'clarity') {
                 gsap.from(".agri-phase-box", {
                     duration: 0.8,
                     y: 30,
                     opacity: 0,
-                    stagger: 0.15,
+                    stagger: 0.12,
                     ease: "power3.out"
+                });
+                gsap.from(".ai-roadmap-step", {
+                    duration: 0.9,
+                    scale: 0.92,
+                    opacity: 0,
+                    stagger: 0.15,
+                    ease: "back.out(1.5)"
                 });
             }
         }
 
         function renderClarityRoadmap(container) {
-            const completed = JSON.parse(localStorage.getItem('clarity-roadmap-checked')) || {};
+            // Checkboxes completely removed from milestone cards
             const itemCards = CLARITY_ITEMS.map((item, index) => `
-                <label class="block cursor-pointer rounded-xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/90 p-4 transition hover:border-brandteal hover:shadow-sm backdrop-blur-sm">
-                    <div class="flex gap-3">
-                        <input type="checkbox" ${completed[item.id] ? 'checked' : ''} onchange="toggleClarityItem('${item.id}')" class="mt-1 h-4 w-4 rounded text-brandteal focus:ring-brandteal">
-                        <div>
-                            <span class="text-[10px] font-black tracking-widest text-brandteal">STEP ${String(index + 1).padStart(2, '0')}</span>
-                            <h3 class="mt-1 text-sm font-extrabold text-slate-900 dark:text-white">${item.title}</h3>
-                            <p class="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-300">${item.detail}</p>
-                        </div>
+                <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/90 p-4 shadow-sm backdrop-blur-sm transition hover:border-brandteal">
+                    <div>
+                        <span class="text-[10px] font-black tracking-widest text-brandteal">MILESTONE ${String(index + 1).padStart(2, '0')}</span>
+                        <h3 class="mt-1 text-sm font-extrabold text-slate-900 dark:text-white">${item.title}</h3>
+                        <p class="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-300">${item.detail}</p>
                     </div>
-                </label>
+                </div>
             `).join('');
 
             const matrixRows = AGRI_MATRIX_DATA.map(row => {
@@ -994,24 +1009,113 @@
             }).join('');
 
             container.innerHTML = `
-                <!-- Hero Banner -->
+                <!-- Hero Header Banner -->
                 <section class="overflow-hidden rounded-2xl bg-gradient-to-br from-brandnavy via-brandteal to-slate-900 p-6 text-white shadow-xl relative">
-                    <p class="text-xs font-bold uppercase tracking-[0.2em] text-teal-200">Personal Operating Plan · September 2026 → September 2027</p>
+                    <p class="text-xs font-bold uppercase tracking-[0.2em] text-teal-200">Integrated Personal Operating Ecosystem</p>
                     <h2 class="mt-2 text-3xl font-black tracking-tight">MY Ikigai = Naturall Farm Startup make impact on the world</h2>
                     <p class="mt-1 text-base font-semibold text-teal-100">Build skills. Fund the farm. Keep your freedom.</p>
                     <article class="relative mt-5 overflow-hidden rounded-2xl border border-teal-200/40 bg-white/10 p-5 shadow-lg backdrop-blur-sm">
                         <div class="absolute -right-8 -top-8 h-28 w-28 rounded-full bg-cyan-300/20 blur-2xl"></div>
                         <div class="relative">
                             <div class="flex flex-wrap items-center gap-2">
-                                <span class="rounded-full border border-teal-100/30 bg-teal-200/15 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-teal-100">12-Month Career Target</span>
+                                <span class="rounded-full border border-teal-100/30 bg-teal-200/15 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-teal-100">12-Month Target</span>
                                 <span class="text-xs font-bold text-teal-200">Remote-ready AI engineering path</span>
                             </div>
-                            <p class="mt-3 max-w-4xl text-base font-extrabold leading-7 text-white sm:text-lg">Full Stack Development + Applied AI + System Design + Very Basic DevOps (Docker / AWS Deployment) + Build 2 Production-Grade Full-Stack Projects with AI Integration = <span class="text-teal-200">Remote Job - 50 LPA</span> <span class="whitespace-nowrap">(Full Stack AI Engineer within 12 months)</span></p>
+                            <p class="mt-3 max-w-4xl text-base font-extrabold leading-7 text-white sm:text-lg">Full Stack Development + Applied AI + System Design + Very Basic DevOps (Docker / AWS Deployment) + Build 2 Production-Grade Full-Stack Projects with AI Integration = <span class="text-teal-200 font-black">Remote Job - 50 LPA</span> <span class="whitespace-nowrap">(Full Stack AI Engineer within 12 months)</span></p>
                         </div>
                     </article>
                 </section>
 
-                <!-- NEW FEATURE: Animated Phase Roadmap Box with Blasting Arrow GSAP Visuals -->
+                <!-- CREATIVE 3D GSAP ANIMATED ROADMAP DIAGRAM FOR THE 12-MONTH AI PLAN -->
+                <section class="rounded-2xl border border-teal-500/30 bg-slate-950 p-6 shadow-2xl relative overflow-hidden">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
+                        <div>
+                            <span class="text-[10px] font-black uppercase tracking-widest text-teal-400">Interactive Visual Architecture</span>
+                            <h3 class="text-2xl font-black text-white flex items-center gap-2">⚡ 12-MONTH AI ENGINEERING ROADMAP (3D FLOW)</h3>
+                        </div>
+                        <span class="px-3 py-1 rounded-full bg-teal-950 text-teal-300 border border-teal-800/80 font-extrabold text-xs">GSAP Engine Active</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
+                        <!-- Phase 1 Card -->
+                        <div class="ai-roadmap-step roadmap-node-3d bg-slate-900/90 border border-teal-500/40 p-5 rounded-2xl flex flex-col justify-between shadow-xl">
+                            <div>
+                                <div class="flex justify-between items-center mb-3">
+                                    <span class="text-[10px] font-black uppercase tracking-widest text-teal-400 bg-teal-950/80 px-2.5 py-1 rounded-md border border-teal-800/50">PHASE 1 · MONTHS 1–3</span>
+                                    <span class="text-xl">💻</span>
+                                </div>
+                                <h4 class="text-base font-black text-white">Core Engineering & Systems</h4>
+                                <ul class="mt-3 space-y-2 text-xs text-slate-300">
+                                    <li class="flex items-start gap-1.5"><span class="text-teal-400 font-bold">•</span> Modern React, TypeScript & Next.js</li>
+                                    <li class="flex items-start gap-1.5"><span class="text-teal-400 font-bold">•</span> Node.js/Python, REST/GraphQL, SQL</li>
+                                    <li class="flex items-start gap-1.5"><span class="text-teal-400 font-bold">•</span> Daily DSA Core (Arrays, Trees, Search)</li>
+                                </ul>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-800/80 text-[10px] font-extrabold text-teal-300">
+                                ➔ Standard Full-Stack Baseline
+                            </div>
+                        </div>
+
+                        <!-- Phase 2 Card -->
+                        <div class="ai-roadmap-step roadmap-node-3d bg-slate-900/90 border border-cyan-500/40 p-5 rounded-2xl flex flex-col justify-between shadow-xl">
+                            <div>
+                                <div class="flex justify-between items-center mb-3">
+                                    <span class="text-[10px] font-black uppercase tracking-widest text-cyan-400 bg-cyan-950/80 px-2.5 py-1 rounded-md border border-cyan-800/50">PHASE 2 · MONTHS 4–6</span>
+                                    <span class="text-xl">🤖</span>
+                                </div>
+                                <h4 class="text-base font-black text-white">Applied AI & Cloud Infra</h4>
+                                <ul class="mt-3 space-y-2 text-xs text-slate-300">
+                                    <li class="flex items-start gap-1.5"><span class="text-cyan-400 font-bold">•</span> LangChain, LlamaIndex & RAG Pipelines</li>
+                                    <li class="flex items-start gap-1.5"><span class="text-cyan-400 font-bold">•</span> Vector DBs: Pinecone, Qdrant, PGVector</li>
+                                    <li class="flex items-start gap-1.5"><span class="text-cyan-400 font-bold">•</span> Docker, CI/CD & Deploy Project #1</li>
+                                </ul>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-800/80 text-[10px] font-extrabold text-cyan-300">
+                                ➔ Production AI App #1 Live
+                            </div>
+                        </div>
+
+                        <!-- Phase 3 Card -->
+                        <div class="ai-roadmap-step roadmap-node-3d bg-slate-900/90 border border-purple-500/40 p-5 rounded-2xl flex flex-col justify-between shadow-xl">
+                            <div>
+                                <div class="flex justify-between items-center mb-3">
+                                    <span class="text-[10px] font-black uppercase tracking-widest text-purple-400 bg-purple-950/80 px-2.5 py-1 rounded-md border border-purple-800/50">PHASE 3 · MONTHS 7–9</span>
+                                    <span class="text-xl">🏗️</span>
+                                </div>
+                                <h4 class="text-base font-black text-white">Advanced Scale & Agents</h4>
+                                <ul class="mt-3 space-y-2 text-xs text-slate-300">
+                                    <li class="flex items-start gap-1.5"><span class="text-purple-400 font-bold">•</span> Autonomous Agents & Function Calling</li>
+                                    <li class="flex items-start gap-1.5"><span class="text-purple-400 font-bold">•</span> Caching, Rate-limiting & Observability</li>
+                                    <li class="flex items-start gap-1.5"><span class="text-purple-400 font-bold">•</span> Production AI Enterprise Project #2</li>
+                                </ul>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-800/80 text-[10px] font-extrabold text-purple-300">
+                                ➔ Production AI App #2 Live
+                            </div>
+                        </div>
+
+                        <!-- Phase 4 Card -->
+                        <div class="ai-roadmap-step roadmap-node-3d bg-gradient-to-b from-slate-900 via-slate-900 to-teal-950/60 border-2 border-goldstar p-5 rounded-2xl flex flex-col justify-between shadow-2xl">
+                            <div>
+                                <div class="flex justify-between items-center mb-3">
+                                    <span class="text-[10px] font-black uppercase tracking-widest text-amber-300 bg-amber-950/90 px-2.5 py-1 rounded-md border border-amber-800/80">PHASE 4 · MONTHS 10–12</span>
+                                    <span class="text-xl">🏆</span>
+                                </div>
+                                <h4 class="text-base font-black text-goldstar">Global Market & 50 LPA Job</h4>
+                                <ul class="mt-3 space-y-2 text-xs text-slate-200">
+                                    <li class="flex items-start gap-1.5"><span class="text-amber-400 font-bold">•</span> Open-source Contributions & Proofs</li>
+                                    <li class="flex items-start gap-1.5"><span class="text-amber-400 font-bold">•</span> High-Yield US/EU Remote Outreach</li>
+                                    <li class="flex items-start gap-1.5"><span class="text-amber-400 font-bold">•</span> System Design Interviews & Offers</li>
+                                </ul>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-amber-500/30 text-[10px] font-extrabold text-goldstar uppercase tracking-wider">
+                                🎯 Remote Full Stack AI Engineer
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- NATURALL FARM STARTUP PHASE ROADMAP -->
                 <section class="rounded-2xl border border-emerald-500/30 bg-white/90 dark:bg-slate-950/90 p-6 shadow-2xl backdrop-blur-md">
                     <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4 mb-6">
                         <div>
@@ -1091,7 +1195,7 @@
                     </div>
                 </section>
 
-                <!-- NEW FEATURE: Integrated Skill Stack & Creative Mastery Box -->
+                <!-- Integrated Skill Stack & Creative Mastery Box -->
                 <section class="rounded-2xl border border-teal-500/30 bg-white/90 dark:bg-slate-950/90 p-6 shadow-xl backdrop-blur-md">
                     <h3 class="text-xl font-black text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-3">⚡ Integrated Skill Engine & Personal Mastery Plan</h3>
                     <div class="mt-4 grid gap-4 md:grid-cols-3">
@@ -1215,7 +1319,7 @@
                     </div>
                 </section>
 
-                <!-- Milestone Cards -->
+                <!-- Milestone Cards (Clean Read-Only Cards - Checkboxes Removed) -->
                 <section class="grid gap-4 md:grid-cols-2">${itemCards}</section>
 
                 <!-- Strategic Guidelines -->
@@ -1234,13 +1338,6 @@
                     </article>
                 </section>
             `;
-        }
-
-        function toggleClarityItem(id) {
-            const checked = JSON.parse(localStorage.getItem('clarity-roadmap-checked')) || {};
-            checked[id] = !checked[id];
-            localStorage.setItem('clarity-roadmap-checked', JSON.stringify(checked));
-            renderWorkspace();
         }
 
         function renderMernSyllabus(container) {
@@ -1529,16 +1626,13 @@
                 document.getElementById('overall-percentage').textContent = `${percentage}%`;
                 document.getElementById('overall-progress-bar').style.width = `${percentage}%`;
             } else if (activeMode === 'clarity') {
-                const completed = JSON.parse(localStorage.getItem('clarity-roadmap-checked')) || {};
-                const completedCount = CLARITY_ITEMS.filter(item => completed[item.id]).length;
                 document.getElementById('metrics-syllabus-title').textContent = 'Naturall Farm Startup Roadmap';
                 document.getElementById('metrics-description-sub').textContent = 'A balanced career, skill, and agriculture validation plan.';
                 document.getElementById('metrics-count-total').textContent = `${CLARITY_ITEMS.length} Milestones`;
                 document.getElementById('metrics-duration').textContent = 'Sep 2026 – Sep 2027';
-                document.getElementById('completed-fraction').textContent = `${completedCount} / ${CLARITY_ITEMS.length}`;
-                const percentage = Math.round((completedCount / CLARITY_ITEMS.length) * 100);
-                document.getElementById('overall-percentage').textContent = `${percentage}%`;
-                document.getElementById('overall-progress-bar').style.width = `${percentage}%`;
+                document.getElementById('completed-fraction').textContent = `7 / ${CLARITY_ITEMS.length}`;
+                document.getElementById('overall-percentage').textContent = `100%`;
+                document.getElementById('overall-progress-bar').style.width = `100%`;
             } else {
                 const currentZone = screenshotSyllabusData.find(z => z.id === screenshotZoneFilter);
                 const zoneTitle = currentZone ? currentZone.name : "Screenshot Track";
@@ -1618,9 +1712,7 @@
                 localStorage.setItem('mern-checked-videos', JSON.stringify(mernChecked));
                 showToast("All MERN Stack lectures completed! 🏆", "success");
             } else if (activeMode === 'clarity') {
-                const checked = Object.fromEntries(CLARITY_ITEMS.map(item => [item.id, true]));
-                localStorage.setItem('clarity-roadmap-checked', JSON.stringify(checked));
-                showToast('All clarity milestones marked complete! 🏆', 'success');
+                showToast('Naturall Farm Startup Roadmap is fully active! 🏆', 'success');
             } else {
                 const currentZone = screenshotSyllabusData.find(z => z.id === screenshotZoneFilter);
                 if (currentZone) {
@@ -1640,8 +1732,7 @@
                 localStorage.setItem('mern-checked-videos', JSON.stringify(mernChecked));
                 showToast("MERN Stack progress reset successfully. 💪", "info");
             } else if (activeMode === 'clarity') {
-                localStorage.removeItem('clarity-roadmap-checked');
-                showToast('Naturall Farm Startup Roadmap progress reset successfully. 💪', 'info');
+                showToast('Naturall Farm Startup Roadmap reset. 💪', 'info');
             } else {
                 const currentZone = screenshotSyllabusData.find(z => z.id === screenshotZoneFilter);
                 if (currentZone) {
